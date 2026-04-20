@@ -260,5 +260,6 @@ export function updateLevelProgress() {
     document.getElementById("levelProgressFill").style.width = `${percent}%`;
 }
 
-// Импорт из storage (циклическая зависимость разрешается через динамический импорт или перенос в main)
-import { isCrosswordCompleted, getCompletedCrosswords } from './storage.js';
+import {
+    isPuzzleUnlocked, getSelectedSkinEmoji, isCrosswordCompleted, getCompletedCrosswords
+} from './storage.js';
