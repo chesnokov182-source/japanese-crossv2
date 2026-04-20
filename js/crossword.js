@@ -1,3 +1,4 @@
+import { keyboard } from './keyboard.js';
 import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } from './utils.js';
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
