@@ -987,32 +987,43 @@ body.dark .k-key {
     background: #393956;
     color: white;
 }
-/* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
-        overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+        padding: 5px;
+        overflow-x: hidden;
+        align-items: flex-start; /* Чтобы кроссворд был сверху */
     }
 
+    .crossword-container {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .grid-section {
+        min-width: 100%;
+    }
+
+    /* Адаптивная сетка */
     #gridContainer {
-        /* Делаем ячейки чуть меньше, чтобы кроссворд влезал по ширине */
-        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)) !important;
-        gap: 2px;
-        margin-bottom: 250px; /* Оставляем место для клавиатуры внизу */
+        display: grid !important;
+        /* Ячейки будут уменьшаться, чтобы влезть в экран */
+        grid-template-columns: repeat(auto-fit, minmax(35px, 1fr)) !important;
+        gap: 1px;
+        margin-bottom: 200px; /* Место под клавиатуру */
     }
 
     .cell {
-        height: 45px !important; /* Квадратные ячейки на мобилках */
+        width: 100% !important;
+        height: 11vw !important; /* Квадратные ячейки от ширины экрана */
+        max-height: 45px;
     }
 
-    .cell-input {
+    .cell input {
         font-size: 18px;
     }
 
     .cell-number {
-        font-size: 10px;
-        top: 2px;
-        left: 2px;
+        font-size: 9px;
     }
 
     /* Увеличиваем кнопки управления (выбор уровня, сброс) */
@@ -1025,14 +1036,41 @@ body.dark .k-key {
         padding: 12px 20px; /* Удобнее попадать пальцем */
         font-size: 16px;
     }
-    
-    /* Стили для нашей клавиатуры, чтобы она была крупнее */
+/* КОМПАКТНАЯ КЛАВИАТУРА */
+    #virtual-keyboard {
+        height: 35vh !important; /* Ограничиваем высоту */
+        min-height: auto;
+        padding: 5px;
+        background: #d1d4d9;
+        gap: 3px;
+    }
+
+    .k-row {
+        gap: 2px;
+    }
+
     .k-key {
-        height: 50px;
+        height: 35px; /* Компактные кнопки */
+        font-size: 14px;
+        border-radius: 4px;
+        max-width: none; /* Кнопки растягиваются равномерно */
+    }
+
+    .k-backspace {
+        background: #adb5bd;
+        flex: 1.2;
         font-size: 18px;
     }
+
+    /* Скрываем секцию подсказок на мобильных, если она мешает (опционально) */
+    .clues-section {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
+
+/* Убираем синее выделение при нажатии */
 .k-key {
-    -webkit-tap-highlight-color: transparent; /* Убирает синюю рамку в Safari/Chrome */
-    touch-action: manipulation; /* Убирает задержку клика в 300мс */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
