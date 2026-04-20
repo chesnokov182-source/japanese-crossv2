@@ -68,14 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-
-export function updateScoreUI() {
-    const scoreSpan = document.getElementById("scoreValue");
-    const wordsSpan = document.getElementById("wordsCompleted");
-    if (scoreSpan) scoreSpan.innerText = gameStats.score;
-    if (wordsSpan) wordsSpan.innerText = gameStats.wordsCompleted;
-}
-
 export function addPoints(points) {
     gameStats.score += points;
     saveGameStats();
