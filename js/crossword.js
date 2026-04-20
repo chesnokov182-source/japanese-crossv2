@@ -485,38 +485,26 @@ function handleKeydown(e, row, col) {
 
 function onCellInput(row, col) {
     const input = cellElements[row][col];
-    const val = input.value.toUpperCase(); // Берем то, что в инпуте
+    const val = input.value.toUpperCase();
     const key = `${row},${col}`;
 
-    // 1. Проверяем, является ли введенный символ японским (хирагана/катакана)
-    // Диапазон Unicode для японских символов
-    const isJapanese = /[\u3040-\u30ff]/.test(val);
-
-    if (isJapanese) {
-        // Если это японский (с вирт. клавиатуры), очищаем буфер ромадзи
-        // и сохраняем символ напрямую
+    // Если введена сразу японская буква (с системной клавиатуры телефона)
+    if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
+        gridData[row][col] = val;
         romajiBuffers.delete(key);
-        gridData[row][col] = val; 
-        
-        // Визуальное обновление
         updateCellUI(row, col);
-        checkWinCondition(); // Проверяем, не решен ли кроссворд
-        
-        // Автопереход к следующей ячейке
+        checkWinCondition();
         moveToNextCell(row, col);
-    } 
-    else if (val === "") {
-        // Если ячейку стерли
-        romajiBuffers.delete(key);
-        gridData[row][col] = null;
-        updateCellUI(row, col);
+        return;
     }
-    else {
-        // Если это латиница (ввод с ПК) — оставляем вашу старую логику ромадзи
-        // (Здесь должен быть вызов функции, которая копит буквы в буфер)
-        handleRomajiInput(row, col, val); 
+
+    // Если введена латиница (ПК или английская раскладка телефона)
+    if (/^[A-Z]$/.test(val)) {
+        // Твоя существующая логика преобразования Ромадзи -> Катакана
+        handleRomajiLogic(row, col, val); 
     }
 }
+
 function syncWordFromGrid() { for (let w of wordsList) { for (let i = 0; i < w.cells.length; i++) w.current[i] = gridData[w.cells[i].row][w.cells[i].col] || ""; } }
 
 function checkCompletion() {
