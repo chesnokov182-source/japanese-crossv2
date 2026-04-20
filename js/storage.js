@@ -68,12 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-export function addPoints(points) {
-    gameStats.score += points;
-    saveGameStats();
-    updateScoreUI();
-    showToast(`+${points} очков!`, "success");
-}
 
 export function subtractPoints(points) {
     if (gameStats.score >= points) {
@@ -88,18 +82,3 @@ export function subtractPoints(points) {
     }
 }
 
-export function incrementWordsCompleted() {
-    gameStats.wordsCompleted++;
-    saveGameStats();
-    updateScoreUI();
-}
-
-export function checkDailyBonus() {
-    const today = new Date().toDateString();
-    if (gameStats.lastBonusDate !== today) {
-        addPoints(50);
-        gameStats.lastBonusDate = today;
-        saveGameStats();
-        showToast("🎁 Ежедневный бонус: +50 очков!", "success");
-    }
-}
