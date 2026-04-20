@@ -19,6 +19,11 @@ import { romajiToKatakana } from './constants.js';
 import { showToast, showConfirmDialog, playPop, playCorrectInput, playErrorInput } from './utils.js';
 import { playClick } from './audio.js';
 
+function setActiveWordId(id) {
+    // Присваиваем напрямую импортированной переменной
+    activeWordId = id;
+}
+
 // Экспорт для view
 export function setActiveWord(wordId) {
     activeWordId = wordId;
