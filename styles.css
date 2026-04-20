@@ -1032,3 +1032,7 @@ body.dark .k-key {
         font-size: 18px;
     }
 }
+.k-key {
+    -webkit-tap-highlight-color: transparent; /* Убирает синюю рамку в Safari/Chrome */
+    touch-action: manipulation; /* Убирает задержку клика в 300мс */
+}
