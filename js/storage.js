@@ -69,16 +69,3 @@ export function checkDailyBonus() {
 }
 
 
-export function subtractPoints(points) {
-    if (gameStats.score >= points) {
-        gameStats.score -= points;
-        saveGameStats();
-        updateScoreUI();
-        showToast(`-${points} очков`, "info");
-        return true;
-    } else {
-        showToast(`Недостаточно очков! Нужно ${points}.`, "error");
-        return false;
-    }
-}
-
