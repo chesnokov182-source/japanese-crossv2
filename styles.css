@@ -1,123 +1,63 @@
 :root {
-
     --bg-body-light: #f5f3ef;
-
     --bg-container-light: white;
-
     --bg-clues-light: #faf8f4;
-
     --text-light: #333;
-
     --border-light: #ccc;
-
     --cell-bg-light: white;
-
     --cell-blocked-light: #d0d0d0;
-
     --highlight-light: #ffe6b3;
-
     --active-word-light: #c9e3ff;
-
     --wrong-light: #ffb3b3;
-
     --btn-bg-light: #4a6fa5;
-
     --btn-hover-light: #3a5a8c;
-
     --shadow-light: rgba(0,0,0,0.1);
 
-
-
     --bg-body-dark: #1a1a2e;
-
     --bg-container-dark: #23233a;
-
     --bg-clues-dark: #1e1e30;
-
     --text-dark: #eaeef2;
-
     --border-dark: #4a4a6a;
-
     --cell-bg-dark: #2d2d44;
-
     --cell-blocked-dark: #393956;
-
     --highlight-dark: #6b4e2e;
-
     --active-word-dark: #3a7ca5;
-
     --wrong-dark: #c94f4f;
-
     --btn-bg-dark: #6c8fb5;
-
     --btn-hover-dark: #5a7a9e;
-
     --shadow-dark: rgba(0,0,0,0.5);
 
-
-
     --bg-body-sakura: #fff0f5; 
-
     --bg-container-sakura: #ffffff;
-
     --bg-clues-sakura: #fff5f8;
-
     --text-sakura: #5d4037;
-
     --border-sakura: #f8bbd0;
-
     --cell-bg-sakura: #fff;
-
     --cell-blocked-sakura: #f8bbd0;
-
     --highlight-sakura: #ffecf2;
-
     --active-word-sakura: #ffc1e3; 
-
     --wrong-sakura: #ef9a9a;
-
     --btn-bg-sakura: #ec407a; 
-
     --btn-hover-sakura: #d81b60;
-
     --shadow-sakura: rgba(183, 28, 68, 0.15); 
-
 }
-
-
 
 * {
-
     user-select: none;
-
     box-sizing: border-box;
-
 }
 
-
-
 body {
-
     font-family: 'Segoe UI', sans-serif;
-
     background: var(--bg-body-light);
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;    
-
     min-height: 100vh;
-
     margin: 0;
-
     padding: 20px;
-
     transition: background 0.3s, color 0.3s;
-
     font-size: 18px;
-
 }
 
 
