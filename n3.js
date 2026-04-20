@@ -174,7 +174,7 @@ window.crosswordsData.n3 = {
                 { word: "コムギ", row: 2, col: 2, dir: "down", clue: "パン、ビスケット、うどんなどは、これからできているよ", number: 8 },
                 { word: "キリ", row: 3, col: 0, dir: "down", clue: "小さなあなをあける道具", number: 9 },
                 { word: "ナカマワレ", row: 0, col: 0, dir: "across", clue: "たいへんだ！なかま同士が、けんかしちゃったぞ", number: 1.1 },
-                { word: "ラク", row: 1, col: 0, dir: "across", clue: "人生は楽しいこともあれば、苦しいこともある。「楽あれば苦あり」だね", number: 5 },
+                { word: "ラク", row: 1, col: 0, dir: "across", clue: "人生は楽しいこともあれば、苦しいこともある。「？？あれば苦あり」だね", number: 5 },
                 { word: "ラン", row: 1, col: 3, dir: "across", clue: "「走る」の英語。「走る人」は、？？ナー", number: 6 },
                 { word: "ネコジタ", row: 2, col: 1, dir: "across", clue: "ぼくは、熱い食べ物が苦手なんだ", number: 7 },
                 { word: "キンム", row: 3, col: 0, dir: "across", clue: "会社でお仕事", number: 9.1 },
