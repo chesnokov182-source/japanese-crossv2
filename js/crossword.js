@@ -220,7 +220,11 @@ export function updateAllBlockedSkins() {
 function renderGrid() {
     const container = document.getElementById("gridContainer");
     container.innerHTML = "";
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, minmax(70px, 1fr))`;
+    
+    // Определяем устройство один раз
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    container.style.gridTemplateColumns = `repeat(${gridWidth}, minmax(35px, 1fr))`;
     cellElements = [];
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     
@@ -239,41 +243,47 @@ function renderGrid() {
                 cellDiv.appendChild(spanNum);
             }
             
-            const skinSpan = document.createElement("span");
-            skinSpan.className = "cell-skin"; 
-            skinSpan.style.display = "none";
-            cellDiv.appendChild(skinSpan);
-            
             const input = document.createElement("input");
             input.type = "text"; 
             input.maxLength = 1;
             input.value = getDisplayValue(i, j);
-            
             input.disabled = isBlocked || isLocked;
 
-            // --- БЛОК ВИРТУАЛЬНОЙ КЛАВИАТУРЫ ---
-            if (!isBlocked && !isLocked) {
-                input.setAttribute('inputmode', 'none'); 
-                input.readOnly = true; 
+            if(!isBlocked && !isLocked) {
+                if (isMobile) {
+                    // Мобильный режим
+                    input.setAttribute('inputmode', 'none'); 
+                    input.readOnly = true; // Запрет системной клавы
 
-                input.addEventListener('focus', () => {
-                    onCellFocus(i, j); 
-                    keyboard.show(input); 
-                });
-                
-            input.addEventListener('blur', (e) => {
-                onCellBlur(i, j);
-                setTimeout(() => {
-                if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
-                    keyboard.hide();
-                        }
-                    }, 200); 
+                    const openKeyboard = (e) => {
+                        e.preventDefault();
+                        onCellFocus(i, j);
+                        keyboard.show(input);
+                    };
+                    input.addEventListener('focus', openKeyboard);
+                    input.addEventListener('click', openKeyboard);
+                } else {
+                    // ПК режим
+                    input.removeAttribute('inputmode');
+                    input.readOnly = false;
+                    input.addEventListener("focus", () => onCellFocus(i,j));
+                }
+
+                input.addEventListener('blur', () => {
+                    onCellBlur(i, j);
+                    if (isMobile) {
+                        // Небольшая задержка, чтобы успеть нажать кнопку на вирт. клаве
+                        setTimeout(() => {
+                            if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
+                                keyboard.hide();
+                            }
+                        }, 200);
+                    }
                 });
 
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", () => onCellInput(i, j));
             }
-            // ------------------------------------
             
             cellDiv.appendChild(input);
             container.appendChild(cellDiv);
@@ -282,7 +292,7 @@ function renderGrid() {
     }
     applyHighlight();
     updateWrongHighlights();
-    updateAllBlockedSkins();
+    if (typeof updateAllBlockedSkins === 'function') updateAllBlockedSkins();
 }
 
 function getWordNumberAt(row, col) {
