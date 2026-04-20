@@ -1,16 +1,19 @@
-const CACHE_NAME = 'jlpt-crosswords-v5'; 
+const CACHE_NAME = 'jlpt-crosswords-v6'; 
 
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js',
-    '/n5.js', 
-    '/n4.js',
-    '/n3.js',
-    '/n2.js',
-    '/n1.js',
-    '/manifest.json'
+  './',
+  './index.html',
+  './styles.css',
+  './js/main.js',
+  './js/storage.js',
+  './js/utils.js',
+  './js/shop.js',
+  './js/crossword.js',
+  './n5.js',
+  './n4.js',
+  './n3.js',
+  './n2.js',
+  './n1.js'
 ];
 
 // 1. Установка: кэшируем статические ресурсы
