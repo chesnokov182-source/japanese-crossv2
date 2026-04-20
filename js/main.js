@@ -5,7 +5,6 @@ import {
     currentLevel, currentPuzzleIndex, setCurrentLevelAndPuzzle, loadCrossword, 
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
-import { keyboard } from './keyboard.js';
 
 keyboard.init();
 
