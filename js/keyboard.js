@@ -54,20 +54,22 @@ export const keyboard = {
         });
     },
 
-    handleKeyPress(key) {
-        if (!this.targetInput) return;
+handleKeyPress(key) {
+    if (!this.targetInput) return;
 
-        if (navigator.vibrate) navigator.vibrate(10);
+    if (navigator.vibrate) navigator.vibrate(10);
 
-        if (key === 'BACKSPACE') {
-            this.targetInput.value = '';
-        } else {
-            this.targetInput.value = key;
-        }
+    if (key === 'BACKSPACE') {
+        this.targetInput.value = '';
+    } else {
+        this.targetInput.value = key;
+    }
 
-        // Важно: вызываем событие input, чтобы кроссворд проверил букву
-        this.targetInput.dispatchEvent(new Event('input', { bubbles: true }));
-    },
+    const inputEvent = new Event('input', { bubbles: true });
+    this.targetInput.dispatchEvent(inputEvent);
+
+    this.targetInput.focus();
+},
 
     show(input) {
         this.targetInput = input;
