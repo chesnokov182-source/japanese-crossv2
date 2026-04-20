@@ -261,9 +261,13 @@ function renderGrid() {
                     keyboard.show(input); 
                 });
                 
-                input.addEventListener('blur', () => {
-                    onCellBlur(i, j); 
-                    setTimeout(() => keyboard.hide(), 100);
+            input.addEventListener('blur', (e) => {
+                onCellBlur(i, j);
+                setTimeout(() => {
+                if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
+                    keyboard.hide();
+                        }
+                    }, 200); 
                 });
 
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
