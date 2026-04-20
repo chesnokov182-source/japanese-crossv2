@@ -13,6 +13,11 @@ import {
 import { updatePuzzleSelect, updateLevelProgress } from './crosswordView.js';
 import { showConfirmDialog, showToast, showConfetti } from './utils.js';
 import { STORAGE_KEYS } from './constants.js';
+import {
+    loadGameStats, checkDailyBonus, loadSkinsData,
+    isPuzzleUnlocked, unlockPuzzle, getCompletedCrosswords,
+    gameStats, saveGameStats, updateScoreUI   // <-- добавлено
+} from './storage.js';
 
 // Инициализация UI
 function initUI() {
