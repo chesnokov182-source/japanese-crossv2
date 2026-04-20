@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from './constants.js';
+import { STORAGE_KEYS, availableSkins } from './constants.js';
 import { showToast } from './utils.js';
 
 // Игровая статистика (очки, завершённые слова, лимит подсказок)
