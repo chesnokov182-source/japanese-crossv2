@@ -221,14 +221,10 @@ function renderGrid() {
     const container = document.getElementById("gridContainer");
     container.innerHTML = "";
     
-    // 1. Определяем тип устройства для адаптивного поведения
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-    
-    // 2. Настройка сетки: используем minmax для гибкости на мобильных экранах
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, minmax(35px, 1fr))`;
+    // Ставим фиксированную сетку (как на ПК)
+    container.style.gridTemplateColumns = `repeat(${gridWidth}, 60px)`; 
     cellElements = [];
-    const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
-    
+
     for (let i = 0; i < gridHeight; i++) {
         cellElements[i] = [];
         for (let j = 0; j < gridWidth; j++) {
@@ -236,82 +232,27 @@ function renderGrid() {
             const cellDiv = document.createElement("div");
             cellDiv.className = "cell" + (isBlocked ? " blocked" : "");
             
-            // Номер слова в углу ячейки
-            const wordNumber = getWordNumberAt(i, j);
-            if (wordNumber && !isBlocked) {
-                const spanNum = document.createElement("span");
-                spanNum.className = "cell-number"; 
-                spanNum.innerText = Math.floor(wordNumber);
-                cellDiv.appendChild(spanNum);
-            }
-            
-            // Поле ввода
             const input = document.createElement("input");
-            input.type = "text"; 
+            input.type = "text";
             input.maxLength = 1;
             input.value = getDisplayValue(i, j);
-            input.disabled = isBlocked || isLocked;
+            input.disabled = isBlocked;
 
-            // Слой для скина (эмодзи на заблокированных ячейках)
-            const skinSpan = document.createElement("span");
-            skinSpan.className = "cell-skin";
-            skinSpan.style.display = "none"; // Включается функцией updateAllBlockedSkins
+            // ВАЖНО: Убираем readOnly и inputmode, чтобы вылезла системная клава
+            input.readOnly = false;
+            input.removeAttribute('inputmode');
 
-            if (!isBlocked && !isLocked) {
-                if (isMobile) {
-                    // НАСТРОЙКИ ДЛЯ ТЕЛЕФОНОВ
-                    input.setAttribute('inputmode', 'none'); // Скрываем системную клавиатуру
-                    input.readOnly = true; // Запрещаем ввод через системную клаву на iOS
-
-                    const openKeyboard = (e) => {
-                        e.preventDefault();
-                        onCellFocus(i, j); // Подсветка активного слова
-                        if (typeof keyboard !== 'undefined') {
-                            keyboard.show(input); // Показываем нашу вирт. клавиатуру
-                        }
-                    };
-                    input.addEventListener('focus', openKeyboard);
-                    input.addEventListener('click', openKeyboard);
-                } else {
-                    // НАСТРОЙКИ ДЛЯ ПК
-                    input.removeAttribute('inputmode');
-                    input.readOnly = false;
-                    input.addEventListener("focus", () => onCellFocus(i, j));
-                }
-
-                // Общие события для обоих типов устройств
-                input.addEventListener('blur', () => {
-                    onCellBlur(i, j);
-                    if (isMobile) {
-                        // Задержка закрытия клавиатуры, чтобы успеть кликнуть по кнопке
-                        setTimeout(() => {
-                            if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
-                                if (typeof keyboard !== 'undefined') keyboard.hide();
-                            }
-                        }, 200);
-                    }
-                });
-
+            if (!isBlocked) {
+                input.addEventListener("focus", () => onCellFocus(i, j));
+                input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", () => onCellInput(i, j));
             }
             
-            // ПОРЯДОК ДОБАВЛЕНИЯ ВАЖЕН: input под номером, skinSpan над всеми (для видимости)
             cellDiv.appendChild(input);
-            cellDiv.appendChild(skinSpan); 
             container.appendChild(cellDiv);
-            
             cellElements[i][j] = input;
         }
-    }
-    
-    // После отрисовки обновляем визуальные состояния
-    applyHighlight();
-    updateWrongHighlights();
-    
-    // Вызываем отрисовку скинов (проверьте наличие этой функции в коде)
-    if (typeof updateAllBlockedSkins === 'function') {
-        updateAllBlockedSkins();
     }
 }
 
