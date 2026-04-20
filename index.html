@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Кроссворд по японскому языку (JLPT)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a6fa5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="JLPT Crosswords">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+<div class="crossword-container">
+    <div class="grid-section">
+        <div class="controls-container">
+            <div class="level-selector">
+                <span>Уровень JLPT:</span>
+                <select id="levelSelect">
+                    <option value="n5">N5 (начальный)</option>
+                    <option value="n4">N4 (базовый)</option>
+                    <option value="n3">N3 (средний)</option>
+                    <option value="n2">N2 (выше среднего)</option>
+                    <option value="n1">N1 (продвинутый)</option>
+                </select>
+                <span>Кроссворд:</span>
+                <select id="puzzleSelect"></select>
+                <button id="buyPuzzleBtn">💰 Купить</button>
+                <button id="shopBtn">🛒 Магазин</button>
+                <button id="resetBtn">Сбросить</button>
+                <button id="hintBtn">Подсказка</button>
+                <button id="themeToggle">🌓 Тема</button>
+                <button id="resetProgressBtn">🗑️ Сбросить всё</button>
+                <button id="helpBtn">❓ Помощь</button>
+            </div>
+        </div>
+        <div id="gridContainer" class="crossword-grid"></div>
+        <div class="status" id="statusMsg"></div>
+    </div>
+    <div class="clues-section">
+        <div class="score-container">
+            <div>🎯 Очки: <span id="scoreValue">0</span></div>
+            <div>🏆 Слов решено: <span id="wordsCompleted">0</span></div>
+        </div>
+        <div class="level-progress">
+            <div>Прогресс уровня: <span id="levelProgressText">0/0</span></div>
+            <div class="progress-bar"><div id="levelProgressFill" class="progress-fill"></div></div>
+        </div>
+        <div id="cluesContainer"></div>
+    </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<!-- Модальное окно подтверждения -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <p id="confirmMessage" class="modal-message"></p>
+        <div class="modal-buttons">
+            <button id="confirmYes" class="modal-btn modal-yes">Да</button>
+            <button id="confirmNo" class="modal-btn modal-no">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно покупки -->
+<div id="buyModal" class="modal">
+    <div class="modal-content">
+        <p id="buyModalMessage" class="modal-message"></p>
+        <div class="modal-buttons">
+            <button id="buyModalConfirm" class="modal-btn modal-yes">Купить</button>
+            <button id="buyModalCancel" class="modal-btn modal-no">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно магазина скинов -->
+<div id="shopModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <h3 style="margin-top:0;">Магазин скинов</h3>
+        <div id="skinsList" style="max-height: 400px; overflow-y: auto;"></div>
+        <div class="modal-buttons" style="margin-top: 20px;">
+            <button id="closeShopBtn" class="modal-btn modal-no">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно туториала -->
+<div id="tutorialModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <p class="modal-message" id="tutorialMessage"></p>
+        <div class="modal-buttons">
+            <button id="tutorialNext" class="modal-btn modal-yes">Далее</button>
+            <button id="tutorialClose" class="modal-btn modal-no">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Подключаем данные кроссвордов по уровням -->
+<script src="n5.js"></script>
+<script src="n4.js"></script>
+<script src="n3.js"></script>
+<script src="n2.js"></script>
+<script src="n1.js"></script>
+<!-- Основной скрипт приложения -->
+<script src="script.js"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW registered', reg))
+            .catch(err => console.log('SW registration failed', err));
+    }
+</script>
+</body>
+</html>
