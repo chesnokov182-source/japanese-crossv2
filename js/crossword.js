@@ -245,6 +245,16 @@ function renderGrid() {
             input.type = "text"; input.maxLength = 1;
             input.value = getDisplayValue(i, j);
             input.disabled = isBlocked || isLocked;
+
+            input.setAttribute('inputmode', 'none'); 
+
+            input.addEventListener('focus', () => {
+                keyboard.show(input);
+            });
+            
+            input.addEventListener('blur', () => {
+                setTimeout(() => keyboard.hide(), 100);
+            });
             
             if(!isBlocked && !isLocked){
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
