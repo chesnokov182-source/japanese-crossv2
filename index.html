@@ -97,14 +97,14 @@
     </div>
 </div>
 
-<!-- Подключаем данные кроссвордов по уровням -->
 <script src="n5.js"></script>
 <script src="n4.js"></script>
 <script src="n3.js"></script>
 <script src="n2.js"></script>
 <script src="n1.js"></script>
-<!-- Основной скрипт приложения -->
-<script src="script.js"></script>
+
+<script type="module" src="js/main.js"></script>
+
 <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
