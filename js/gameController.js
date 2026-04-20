@@ -1,6 +1,6 @@
 import {
     currentLevel, currentPuzzleIndex, gridData, wordsList, cluesAcross, cluesDown,
-    activeWordId, setActiveWordId, hintUsed, hintCount, correctCharMap,
+    activeWordId, hintUsed, hintCount, correctCharMap,
     loadCrosswordData, syncWordFromGrid, buildCorrectCharMap, generateNumbering,
     isWordComplete, areAllWordsComplete
 } from './crosswordModel.js';
