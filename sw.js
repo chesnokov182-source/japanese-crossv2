@@ -13,7 +13,7 @@ const urlsToCache = [
   './n4.js',
   './n3.js',
   './n2.js',
-  './n1.js'
+  './n1.js',
   './manifest.webmanifest'
 ];
 
