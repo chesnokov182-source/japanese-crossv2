@@ -1,4 +1,3 @@
-import { keyboard } from './keyboard.js';
 import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } from './utils.js';
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
@@ -221,10 +220,11 @@ function renderGrid() {
     const container = document.getElementById("gridContainer");
     container.innerHTML = "";
     
-    // Ставим фиксированную сетку (как на ПК)
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, 60px)`; 
+    // Фиксированная ширина ячеек (60px)
+    container.style.gridTemplateColumns = `repeat(${gridWidth}, 60px)`;
     cellElements = [];
-
+    const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
+    
     for (let i = 0; i < gridHeight; i++) {
         cellElements[i] = [];
         for (let j = 0; j < gridWidth; j++) {
@@ -232,17 +232,29 @@ function renderGrid() {
             const cellDiv = document.createElement("div");
             cellDiv.className = "cell" + (isBlocked ? " blocked" : "");
             
+            const wordNumber = getWordNumberAt(i, j);
+            if (wordNumber && !isBlocked) {
+                const spanNum = document.createElement("span");
+                spanNum.className = "cell-number"; 
+                spanNum.innerText = Math.floor(wordNumber);
+                cellDiv.appendChild(spanNum);
+            }
+            
             const input = document.createElement("input");
-            input.type = "text";
+            input.type = "text"; 
             input.maxLength = 1;
             input.value = getDisplayValue(i, j);
-            input.disabled = isBlocked;
-
-            // ВАЖНО: Убираем readOnly и inputmode, чтобы вылезла системная клава
+            input.disabled = isBlocked || isLocked;
+            
+            // Включаем стандартный ввод для всех
             input.readOnly = false;
             input.removeAttribute('inputmode');
 
-            if (!isBlocked) {
+            const skinSpan = document.createElement("span");
+            skinSpan.className = "cell-skin";
+            skinSpan.style.display = "none";
+
+            if (!isBlocked && !isLocked) {
                 input.addEventListener("focus", () => onCellFocus(i, j));
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
@@ -250,10 +262,15 @@ function renderGrid() {
             }
             
             cellDiv.appendChild(input);
+            cellDiv.appendChild(skinSpan);
             container.appendChild(cellDiv);
             cellElements[i][j] = input;
         }
     }
+    
+    applyHighlight();
+    updateWrongHighlights();
+    if (typeof updateAllBlockedSkins === 'function') updateAllBlockedSkins();
 }
 
 function getWordNumberAt(row, col) {
