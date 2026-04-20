@@ -4,7 +4,6 @@ export const keyboard = {
     container: null,
     targetInput: null,
     
-    // Раскладка (можно расширить)
     layout: [
         ['A', 'I', 'U', 'E', 'O'],
         ['KA', 'KI', 'KU', 'KE', 'KO'],
@@ -19,11 +18,14 @@ export const keyboard = {
     ],
 
     init() {
-        this.container = document.createElement('div');
-        this.container.id = 'virtual-keyboard';
-        this.container.classList.add('v-keyboard', 'hidden');
-        document.body.appendChild(this.container);
-        this.render();
+        // Создаем контейнер, если его еще нет
+        if (!document.getElementById('virtual-keyboard')) {
+            this.container = document.createElement('div');
+            this.container.id = 'virtual-keyboard';
+            this.container.classList.add('v-keyboard', 'hidden');
+            document.body.appendChild(this.container);
+            this.render();
+        }
     },
 
     render() {
@@ -42,7 +44,7 @@ export const keyboard = {
                     btn.textContent = key;
                 }
                 
-                // Предотвращаем потерю фокуса с инпута при клике на кнопку
+                // Запрещаем кнопке забирать фокус у инпута
                 btn.addEventListener('mousedown', (e) => e.preventDefault());
                 btn.addEventListener('click', () => this.handleKeyPress(key));
                 
@@ -55,35 +57,32 @@ export const keyboard = {
     handleKeyPress(key) {
         if (!this.targetInput) return;
 
-        // Легкая вибрация при нажатии (на смартфонах)
         if (navigator.vibrate) navigator.vibrate(10);
 
         if (key === 'BACKSPACE') {
             this.targetInput.value = '';
-            // Генерируем событие ввода, чтобы сработала логика кроссворда
-            this.targetInput.dispatchEvent(new Event('input'));
         } else {
             this.targetInput.value = key;
-            this.targetInput.dispatchEvent(new Event('input'));
         }
+
+        // Важно: вызываем событие input, чтобы кроссворд проверил букву
+        this.targetInput.dispatchEvent(new Event('input', { bubbles: true }));
     },
 
     show(input) {
-       console.log("Попытка показать клавиатуру для:", input); // Для отладки
-    this.targetInput = input;
-    
-    // Принудительно ставим стиль, если класс не срабатывает
-    this.container.style.display = 'flex'; 
-    this.container.classList.remove('hidden');
-    
-    // Поднимаем z-index на максимум
-    this.container.style.zIndex = "10000";
-    
-    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        this.targetInput = input;
+        if (this.container) {
+            this.container.classList.remove('hidden');
+            this.container.style.display = 'flex'; 
+            this.container.style.zIndex = "10000";
+        }
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    },
 
     hide() {
-        this.container.classList.add('hidden');
+        if (this.container) {
+            this.container.classList.add('hidden');
+        }
         this.targetInput = null;
-    }
     }
 };
