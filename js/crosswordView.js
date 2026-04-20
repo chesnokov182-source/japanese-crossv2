@@ -2,8 +2,10 @@ import {
     currentLevel, currentPuzzleIndex, gridData, wordsList, cluesAcross, cluesDown,
     gridWidth, gridHeight, activeWordId, getWordNumberAt, correctCharMap
 } from './crosswordModel.js';
-import { isPuzzleUnlocked, getSelectedSkinEmoji } from './storage.js';
 import { setActiveWord } from './gameController.js';
+import {
+    isPuzzleUnlocked, getSelectedSkinEmoji, isCrosswordCompleted, getCompletedCrosswords
+} from './storage.js';
 
 export let cellElements = [];
 export let romajiBuffers = new Map();
@@ -260,6 +262,3 @@ export function updateLevelProgress() {
     document.getElementById("levelProgressFill").style.width = `${percent}%`;
 }
 
-import {
-    isPuzzleUnlocked, getSelectedSkinEmoji, isCrosswordCompleted, getCompletedCrosswords
-} from './storage.js';
