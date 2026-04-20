@@ -85,4 +85,5 @@ export const keyboard = {
         this.container.classList.add('hidden');
         this.targetInput = null;
     }
+    }
 };
