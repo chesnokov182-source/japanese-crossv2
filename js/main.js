@@ -12,6 +12,7 @@ keyboard.init();
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация тем
     const initTheme = () => {
+        keyboard.init();
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.classList.remove('dark', 'sakura');
         if (savedTheme !== 'light') document.body.classList.add(savedTheme);
