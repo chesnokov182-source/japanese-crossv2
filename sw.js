@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jlpt-crosswords-v10'; 
+const CACHE_NAME = 'jlpt-crosswords-v11'; 
 
 const urlsToCache = [
   './',
@@ -14,6 +14,7 @@ const urlsToCache = [
   './n3.js',
   './n2.js',
   './n1.js'
+  './manifest.webmanifest'
 ];
 
 // 1. Установка: кэшируем статические ресурсы
