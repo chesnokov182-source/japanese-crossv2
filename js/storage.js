@@ -68,8 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-export let gameStats = { score: 0, wordsCompleted: 0, lastBonusDate: null, maxHints: 2 };
-
 export function loadGameStats() {
     const saved = localStorage.getItem(KEYS.GAME);
     if (saved) {
