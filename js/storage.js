@@ -68,14 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-export const KEYS = {
-    GAME: "gameStats",
-    PROGRESS: "crosswordProgress",
-    COMPLETED: "completedCrosswords",
-    UNLOCKED: "unlockedCrosswords",
-    EARNED: "earnedPoints"
-};
-
 export let gameStats = { score: 0, wordsCompleted: 0, lastBonusDate: null, maxHints: 2 };
 
 export function loadGameStats() {
