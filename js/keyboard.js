@@ -69,11 +69,17 @@ export const keyboard = {
     },
 
     show(input) {
-        this.targetInput = input;
-        this.container.classList.remove('hidden');
-        // Скроллим к инпуту, чтобы клавиатура его не перекрыла
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    },
+       console.log("Попытка показать клавиатуру для:", input); // Для отладки
+    this.targetInput = input;
+    
+    // Принудительно ставим стиль, если класс не срабатывает
+    this.container.style.display = 'flex'; 
+    this.container.classList.remove('hidden');
+    
+    // Поднимаем z-index на максимум
+    this.container.style.zIndex = "10000";
+    
+    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     hide() {
         this.container.classList.add('hidden');
