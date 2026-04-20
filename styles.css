@@ -987,3 +987,48 @@ body.dark .k-key {
     background: #393956;
     color: white;
 }
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+    }
+
+    #gridContainer {
+        /* Делаем ячейки чуть меньше, чтобы кроссворд влезал по ширине */
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)) !important;
+        gap: 2px;
+        margin-bottom: 250px; /* Оставляем место для клавиатуры внизу */
+    }
+
+    .cell {
+        height: 45px !important; /* Квадратные ячейки на мобилках */
+    }
+
+    .cell-input {
+        font-size: 18px;
+    }
+
+    .cell-number {
+        font-size: 10px;
+        top: 2px;
+        left: 2px;
+    }
+
+    /* Увеличиваем кнопки управления (выбор уровня, сброс) */
+    .controls-row, .level-selector {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    button {
+        padding: 12px 20px; /* Удобнее попадать пальцем */
+        font-size: 16px;
+    }
+    
+    /* Стили для нашей клавиатуры, чтобы она была крупнее */
+    .k-key {
+        height: 50px;
+        font-size: 18px;
+    }
+}
