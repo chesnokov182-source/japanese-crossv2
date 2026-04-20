@@ -223,9 +223,9 @@ function renderGrid() {
     cellElements = [];
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     
-    for(let i=0;i<gridHeight;i++){
+    for(let i=0; i<gridHeight; i++){
         cellElements[i]=[];
-        for(let j=0;j<gridWidth;j++){
+        for(let j=0; j<gridWidth; j++){
             const isBlocked = (gridData[i][j] === null);
             const cellDiv = document.createElement("div");
             cellDiv.className = "cell" + (isBlocked ? " blocked" : "");
@@ -233,35 +233,43 @@ function renderGrid() {
             const wordNumber = getWordNumberAt(i,j);
             if(wordNumber && !isBlocked){
                 const spanNum = document.createElement("span");
-                spanNum.className = "cell-number"; spanNum.innerText = Math.floor(wordNumber);
+                spanNum.className = "cell-number"; 
+                spanNum.innerText = Math.floor(wordNumber);
                 cellDiv.appendChild(spanNum);
             }
             
             const skinSpan = document.createElement("span");
-            skinSpan.className = "cell-skin"; skinSpan.style.display = "none";
+            skinSpan.className = "cell-skin"; 
+            skinSpan.style.display = "none";
             cellDiv.appendChild(skinSpan);
             
             const input = document.createElement("input");
-            input.type = "text"; input.maxLength = 1;
+            input.type = "text"; 
+            input.maxLength = 1;
             input.value = getDisplayValue(i, j);
+            
             input.disabled = isBlocked || isLocked;
 
-            input.setAttribute('inputmode', 'none'); 
+            // --- БЛОК ВИРТУАЛЬНОЙ КЛАВИАТУРЫ ---
+            if (!isBlocked && !isLocked) {
+                input.setAttribute('inputmode', 'none'); 
+                input.readOnly = true; 
 
-            input.addEventListener('focus', () => {
-                keyboard.show(input);
-            });
-            
-            input.addEventListener('blur', () => {
-                setTimeout(() => keyboard.hide(), 100);
-            });
-            
-            if(!isBlocked && !isLocked){
+                input.addEventListener('focus', () => {
+                    onCellFocus(i, j); 
+                    keyboard.show(input); 
+                });
+                
+                input.addEventListener('blur', () => {
+                    onCellBlur(i, j); 
+                    setTimeout(() => keyboard.hide(), 100);
+                });
+
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
-                input.addEventListener("focus", () => onCellFocus(i,j));
-                input.addEventListener("blur", () => onCellBlur(i,j));
-                input.addEventListener("input", () => onCellInput(i,j));
+                input.addEventListener("input", () => onCellInput(i, j));
             }
+            // ------------------------------------
+            
             cellDiv.appendChild(input);
             container.appendChild(cellDiv);
             cellElements[i][j] = input;
