@@ -68,9 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-export function saveGameStats() {
-    localStorage.setItem(KEYS.GAME, JSON.stringify(gameStats));
-}
 
 export function updateScoreUI() {
     const scoreSpan = document.getElementById("scoreValue");
