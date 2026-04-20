@@ -511,7 +511,41 @@ function handleKeydown(e, row, col) {
         if (processBuffer(row, col, buffer)) { romajiBuffers.set(key, ""); updateCellUI(row, col); }
     }
 }
-function onCellInput(row, col) { const key = `${row},${col}`; if (romajiBuffers.has(key)) { romajiBuffers.delete(key); updateCellUI(row, col); } }
+
+function onCellInput(row, col) {
+    const input = cellElements[row][col];
+    const val = input.value.toUpperCase(); // Берем то, что в инпуте
+    const key = `${row},${col}`;
+
+    // 1. Проверяем, является ли введенный символ японским (хирагана/катакана)
+    // Диапазон Unicode для японских символов
+    const isJapanese = /[\u3040-\u30ff]/.test(val);
+
+    if (isJapanese) {
+        // Если это японский (с вирт. клавиатуры), очищаем буфер ромадзи
+        // и сохраняем символ напрямую
+        romajiBuffers.delete(key);
+        gridData[row][col] = val; 
+        
+        // Визуальное обновление
+        updateCellUI(row, col);
+        checkWinCondition(); // Проверяем, не решен ли кроссворд
+        
+        // Автопереход к следующей ячейке
+        moveToNextCell(row, col);
+    } 
+    else if (val === "") {
+        // Если ячейку стерли
+        romajiBuffers.delete(key);
+        gridData[row][col] = null;
+        updateCellUI(row, col);
+    }
+    else {
+        // Если это латиница (ввод с ПК) — оставляем вашу старую логику ромадзи
+        // (Здесь должен быть вызов функции, которая копит буквы в буфер)
+        handleRomajiInput(row, col, val); 
+    }
+}
 function syncWordFromGrid() { for (let w of wordsList) { for (let i = 0; i < w.cells.length; i++) w.current[i] = gridData[w.cells[i].row][w.cells[i].col] || ""; } }
 
 function checkCompletion() {
