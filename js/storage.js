@@ -68,17 +68,6 @@ export function checkDailyBonus() {
     }
 }
 
-export function loadGameStats() {
-    const saved = localStorage.getItem(KEYS.GAME);
-    if (saved) {
-        gameStats = JSON.parse(saved);
-        if (gameStats.maxHints === undefined) gameStats.maxHints = 2;
-    } else {
-        saveGameStats();
-    }
-    updateScoreUI();
-}
-
 export function saveGameStats() {
     localStorage.setItem(KEYS.GAME, JSON.stringify(gameStats));
 }
