@@ -53,7 +53,7 @@
 </div>
 <div id="toast" class="toast"></div>
 
-<!-- Модальное окно подтверждения -->
+<!-- Модальные окна (остаются как в исходном HTML) -->
 <div id="confirmModal" class="modal">
     <div class="modal-content">
         <p id="confirmMessage" class="modal-message"></p>
@@ -64,7 +64,6 @@
     </div>
 </div>
 
-<!-- Модальное окно покупки -->
 <div id="buyModal" class="modal">
     <div class="modal-content">
         <p id="buyModalMessage" class="modal-message"></p>
@@ -75,18 +74,12 @@
     </div>
 </div>
 
-<!-- Модальное окно магазина скинов -->
 <div id="shopModal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
-        <h3 style="margin-top:0;">Магазин скинов</h3>
-        <div id="skinsList" style="max-height: 400px; overflow-y: auto;"></div>
-        <div class="modal-buttons" style="margin-top: 20px;">
-            <button id="closeShopBtn" class="modal-btn modal-no">Закрыть</button>
-        </div>
+        <!-- Содержимое генерируется динамически -->
     </div>
 </div>
 
-<!-- Модальное окно туториала -->
 <div id="tutorialModal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
         <p class="modal-message" id="tutorialMessage"></p>
@@ -97,14 +90,17 @@
     </div>
 </div>
 
-<!-- Подключаем данные кроссвордов по уровням -->
+<!-- Данные кроссвордов -->
 <script src="n5.js"></script>
 <script src="n4.js"></script>
 <script src="n3.js"></script>
 <script src="n2.js"></script>
 <script src="n1.js"></script>
-<!-- Основной скрипт приложения -->
-<script src="script.js"></script>
+
+<!-- Основной модуль приложения -->
+<script type="module" src="js/main.js"></script>
+
+<!-- Service Worker -->
 <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
