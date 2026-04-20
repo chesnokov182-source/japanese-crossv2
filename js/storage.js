@@ -66,7 +66,7 @@ export function checkDailyBonus() {
         saveGameStats();
         showToast("🎁 Ежедневный бонус: +50 очков!", "success");
     }
-}import { showToast } from './utils.js';
+}
 
 export const KEYS = {
     GAME: "gameStats",
