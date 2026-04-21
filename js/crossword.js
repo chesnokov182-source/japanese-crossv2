@@ -223,7 +223,7 @@ function renderGrid() {
     container.innerHTML = "";
     
     // Фиксированная ширина ячеек (60px)
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, 60px)`;
+    container.style.gridTemplateColumns = `repeat(${gridWidth}, 70px)`;
     cellElements = [];
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     
