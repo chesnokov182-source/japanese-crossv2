@@ -2,6 +2,9 @@ import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } f
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
 
+let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
+// Для модального ввода на мобильных
+let currentMobileRow = null, currentMobileCol = null;
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 export let currentLevel = "n5";
@@ -257,10 +260,19 @@ function renderGrid() {
             skinSpan.style.display = "none";
 
             if (!isBlocked && !isLocked) {
-                input.addEventListener("focus", () => onCellFocus(i, j));
-                input.addEventListener("blur", () => onCellBlur(i, j));
-                input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
-                input.addEventListener("input", () => onCellInput(i, j));
+                if (isMobile) {
+                    input.readOnly = true;  // запрещаем прямой ввод на мобильных
+                    input.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        openMobileInput(i, j);
+                    });
+                } else {
+                    // для ПК оставляем старые обработчики
+                    input.addEventListener("focus", () => onCellFocus(i, j));
+                    input.addEventListener("blur", () => onCellBlur(i, j));
+                    input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
+                    input.addEventListener("input", (e) => onCellInput(i, j));
+                }
             }
             
             cellDiv.appendChild(input);
@@ -648,6 +660,86 @@ function renderClues() {
     updateClueCompletion();
 }
 
+function openMobileInput(row, col) {
+    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
+    currentMobileRow = row;
+    currentMobileCol = col;
+    const modal = document.getElementById("mobileInputModal");
+    const inputField = document.getElementById("mobileInputField");
+    if (!modal || !inputField) return;
+    inputField.value = "";
+    modal.style.display = "flex";
+    inputField.focus();
+}
+
+function closeMobileInput() {
+    const modal = document.getElementById("mobileInputModal");
+    if (modal) modal.style.display = "none";
+    currentMobileRow = null;
+    currentMobileCol = null;
+}
+
+function submitMobileInput() {
+    if (currentMobileRow === null || currentMobileCol === null) return;
+    const inputField = document.getElementById("mobileInputField");
+    let romaji = inputField.value.trim().toLowerCase();
+    if (!romaji) {
+        closeMobileInput();
+        return;
+    }
+    
+    const word = wordsList.find(w => w.cells.some(c => c.row === currentMobileRow && c.col === currentMobileCol));
+    if (!word) {
+        closeMobileInput();
+        return;
+    }
+    
+    let startIdx = word.cells.findIndex(c => c.row === currentMobileRow && c.col === currentMobileCol);
+    if (startIdx === -1) {
+        closeMobileInput();
+        return;
+    }
+    
+    let remaining = romaji;
+    let pos = startIdx;
+    let error = false;
+    
+    while (remaining.length > 0 && pos < word.cells.length) {
+        let matched = false;
+        for (let len = Math.min(remaining.length, 4); len >= 1; len--) {
+            const prefix = remaining.slice(0, len);
+            if (romajiToKatakana[prefix]) {
+                const katakanaArray = romajiToKatakana[prefix];
+                for (let k = 0; k < katakanaArray.length && pos + k < word.cells.length; k++) {
+                    const cell = word.cells[pos + k];
+                    gridData[cell.row][cell.col] = katakanaArray[k];
+                    updateCellUI(cell.row, cell.col);
+                }
+                pos += katakanaArray.length;
+                remaining = remaining.slice(len);
+                matched = true;
+                break;
+            }
+        }
+        if (!matched) {
+            error = true;
+            break;
+        }
+    }
+    
+    if (error || remaining.length > 0) {
+        showToast("Не удалось преобразовать часть введённого текста. Проверьте раскладку.", "error");
+    } else {
+        syncWordFromGrid();
+        checkCompletion();
+        updateClueCompletion();
+        updateWrongHighlights();
+        saveCurrentProgress();
+        showToast("Готово!", "success");
+    }
+    closeMobileInput();
+}
+
 export async function resetCrossword() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Кроссворд заблокирован.", "error");
     if (!await showConfirmDialog("Сбросить кроссворд? Очки за слова и подсказки будут возвращены.")) return;
@@ -738,3 +830,7 @@ export function giveHint() {
     updateCellUI(row, col); syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights();
     hintCount++; saveCurrentProgress(); updateButtonStates();
 }
+
+window.openMobileInput = openMobileInput;
+window.closeMobileInput = closeMobileInput;
+window.submitMobileInput = submitMobileInput;
