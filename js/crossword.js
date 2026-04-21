@@ -221,8 +221,10 @@ function renderGrid() {
                 cellDiv.appendChild(spanNum);
             }
             const input = document.createElement("input");
-            input.type = "text"; 
-            input.maxLength = 1;
+            input.type = "text";
+            if (!isMobile) {
+                input.maxLength = 1;
+            }
             input.value = getDisplayValue(i, j);
             input.disabled = isBlocked || isLocked;
             input.readOnly = false;
@@ -518,24 +520,22 @@ function onCellInput(row, col) {
         return;
     }
     
-    // Латиница
-    if (/^[a-zA-Z]$/.test(val)) {
-        if (!isMobile) {
-            input.value = getDisplayValue(row, col);
+        // Латиница
+        if (/^[a-zA-Z]+$/.test(val)) {
+            if (!isMobile) {
+                input.value = getDisplayValue(row, col);
+                return;
+            }
+            // Мобильные: берём всю строку из поля
+            let buffer = input.value.toLowerCase();
+            romajiBuffers.set(key, buffer);
+            const converted = processBuffer(row, col, buffer);
+            if (converted) {
+                romajiBuffers.delete(key);
+                input.value = getDisplayValue(row, col);
+            }
             return;
         }
-        // Мобильные: накапливаем буфер, показываем в поле
-        let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
-        romajiBuffers.set(key, buffer);
-        input.value = buffer;
-        
-        const converted = processBuffer(row, col, buffer);
-        if (converted) {
-            romajiBuffers.delete(key);
-            input.value = getDisplayValue(row, col);
-        }
-        return;
-    }
     
     input.value = getDisplayValue(row, col);
 }
