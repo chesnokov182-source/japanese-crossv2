@@ -455,8 +455,10 @@ function advanceFocusAndBuffer(row, col, remainingChar) {
 function handleKeydown(e, row, col) {
     if (gridData[row][col] === null) return;
     const allowedChars = /^[a-zA-Z-]$/;
-    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) { e.preventDefault(); return; }
-    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
+    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) {
+        e.preventDefault();
+        return;
+    }
     
     if (e.key === "Backspace") {
         const key = `${row},${col}`;
@@ -488,7 +490,7 @@ function handleKeydown(e, row, col) {
         return;
     }
 
-    if (e.key.length === 1 && allowedChars.test(e.key)) {
+    /*if (e.key.length === 1 && allowedChars.test(e.key)) {
         const key = `${row},${col}`;
         let buffer = (romajiBuffers.get(key) || "") + e.key.toLowerCase();
         romajiBuffers.set(key, buffer); updateCellUI(row, col);
@@ -497,7 +499,7 @@ function handleKeydown(e, row, col) {
             syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
         }
         if (processBuffer(row, col, buffer)) { romajiBuffers.set(key, ""); updateCellUI(row, col); }
-    }
+    }*/
 }
 
 function onCellInput(row, col) {
@@ -514,10 +516,31 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     }
+    } else if (/^[A-Za-z]$/.test(val)) {
+    // Латиница – обрабатываем как ромадзи
+    const key = `${row},${col}`;
+    let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
+    romajiBuffers.set(key, buffer);
+    updateCellUI(row, col);
+    
+    if (gridData[row][col] !== "") {
+        gridData[row][col] = "";
+        syncWordFromGrid();
+        checkCompletion();
+        updateClueCompletion();
+        updateWrongHighlights();
+        saveCurrentProgress();
+    }
+    
+    if (processBuffer(row, col, buffer)) {
+        romajiBuffers.set(key, "");
+        updateCellUI(row, col);
+    }
+    input.value = getDisplayValue(row, col);
+}
 
-    // Если введена латиница (ПК или английская раскладка телефона)
+
     if (/^[A-Z]$/.test(val)) {
-        // Твоя существующая логика преобразования Ромадзи -> Катакана
         handleRomajiLogic(row, col, val); 
     }
 }
