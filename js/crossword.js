@@ -4,18 +4,6 @@ import { getSelectedSkinEmoji } from './shop.js';
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// Построим множество всех возможных префиксов ключей romajiToKatakana для умного ожидания
-const romajiKeys = Object.keys(romajiToKatakana);
-const prefixSet = new Set();
-for (let key of romajiKeys) {
-    for (let i = 1; i <= key.length; i++) {
-        prefixSet.add(key.slice(0, i));
-    }
-}
-function isPrefix(str) {
-    return prefixSet.has(str);
-}
-
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
 export let gridData = [], wordsList = [], cellElements = [];
@@ -242,7 +230,6 @@ function renderGrid() {
             skinSpan.className = "cell-skin";
             skinSpan.style.display = "none";
             if (!isBlocked && !isLocked) {
-                // Для всех устройств добавляем одни и те же обработчики, но на мобильных keydown не блокирует ввод
                 input.addEventListener("focus", () => onCellFocus(i, j));
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
@@ -437,7 +424,6 @@ function handleKeydown(e, row, col) {
     if (gridData[row][col] === null) return;
     const allowedChars = /^[a-zA-Z-]$/;
     if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) { e.preventDefault(); return; }
-    // На мобильных не блокируем ввод латиницы, чтобы символы попадали в input
     if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
@@ -468,7 +454,6 @@ function handleKeydown(e, row, col) {
         }
         return;
     }
-    // Обработка латиницы для ПК (с предотвращением стандартного ввода)
     if (!isMobile && e.key.length === 1 && allowedChars.test(e.key)) {
         e.preventDefault();
         const key = `${row},${col}`;
@@ -492,7 +477,6 @@ function onCellInput(row, col) {
     let val = input.value;
     if (!val) return;
     const key = `${row},${col}`;
-    // Японские символы
     if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
         const firstChar = val[0];
         if (gridData[row][col] !== firstChar) {
@@ -531,14 +515,11 @@ function onCellInput(row, col) {
         input.value = getDisplayValue(row, col);
         return;
     }
-    // Латиница
     if (/^[a-zA-Z]$/.test(val)) {
-        // Для ПК уже обработано в keydown, игнорируем здесь
         if (!isMobile) {
             input.value = getDisplayValue(row, col);
             return;
         }
-        // Мобильные: накапливаем буфер
         let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
         romajiBuffers.set(key, buffer);
         updateCellUI(row, col);
@@ -550,39 +531,14 @@ function onCellInput(row, col) {
             updateWrongHighlights();
             saveCurrentProgress();
         }
-        // Проверяем, является ли буфер префиксом какого-либо ключа в словаре
-        if (isPrefix(buffer)) {
-            // Если да, ждём дальнейшего ввода (ничего не вставляем)
-            input.value = getDisplayValue(row, col);
-            return;
-        }
-        // Иначе пытаемся найти самое длинное совпадение
-        let matched = false;
-        for (let len = Math.min(buffer.length, 4); len >= 1; len--) {
-            const prefix = buffer.slice(0, len);
-            if (romajiToKatakana[prefix]) {
-                insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
-                const remaining = buffer.slice(len);
-                if (remaining) {
-                    romajiBuffers.set(key, remaining);
-                    updateCellUI(row, col);
-                } else {
-                    romajiBuffers.delete(key);
-                }
-                matched = true;
-                break;
-            }
-        }
-        if (!matched && buffer.length > 3) {
-            // Если ничего не подошло и буфер длинный, очищаем (ошибка)
+        const converted = processBuffer(row, col, buffer);
+        if (converted) {
             romajiBuffers.delete(key);
             updateCellUI(row, col);
-            showToast("Не удалось преобразовать ввод", "error");
         }
         input.value = getDisplayValue(row, col);
         return;
     }
-    // Любые другие символы – сбрасываем
     input.value = getDisplayValue(row, col);
 }
 
