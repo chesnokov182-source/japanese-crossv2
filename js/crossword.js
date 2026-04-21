@@ -11,7 +11,6 @@ export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
 export let gridData = [], wordsList = [], cellElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
-let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
