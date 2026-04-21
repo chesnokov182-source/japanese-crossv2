@@ -536,7 +536,7 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     }
-} else if (/^[A-Za-z]$/.test(val)) {
+    else if (/^[A-Za-z]$/.test(val)) {
     // На ПК не обрабатываем (уже сделано в keydown)
     if (!isMobile) {
         input.value = getDisplayValue(row, col);
