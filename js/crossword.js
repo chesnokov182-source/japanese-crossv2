@@ -2,7 +2,7 @@ import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } f
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
 
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
@@ -458,7 +458,7 @@ function handleKeydown(e, row, col) {
     if (gridData[row][col] === null) return;
     const allowedChars = /^[a-zA-Z-]$/;
     if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) { e.preventDefault(); return; }
-    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
+    if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
         const key = `${row},${col}`;
@@ -516,47 +516,39 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     }
-    else if (/^[A-Za-z]$/.test(val)) {
-    // На ПК не обрабатываем в input, т.к. уже сделано в keydown
+    } else if (/^[A-Za-z]$/.test(val)) {
+    // Для ПК ничего не делаем (уже обработано в keydown)
     if (!isMobile) {
         input.value = getDisplayValue(row, col);
         return;
     }
-    // Для мобильных: накапливаем буфер и преобразуем
+    // Для мобильных: накапливаем буфер и сразу пытаемся преобразовать
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
     romajiBuffers.set(key, buffer);
     updateCellUI(row, col);
     
-    if (gridData[row][col] !== "") {
-        gridData[row][col] = "";
-        syncWordFromGrid();
-        checkCompletion();
-        updateClueCompletion();
-        updateWrongHighlights();
-        saveCurrentProgress();
-    }
-    
-    // Пытаемся преобразовать сразу
-    let converted = processBuffer(row, col, buffer);
-    if (converted) {
-        romajiBuffers.set(key, "");
-        updateCellUI(row, col);
-        input.value = getDisplayValue(row, col);
-    } else {
-        // Если не преобразовалось, возможно, нужен второй символ. Ставим таймер на 300 мс.
-        if (window._mobileTimer) clearTimeout(window._mobileTimer);
-        window._mobileTimer = setTimeout(() => {
-            const currentBuffer = romajiBuffers.get(key);
-            if (currentBuffer && currentBuffer.length > 0) {
-                const retry = processBuffer(row, col, currentBuffer);
-                if (retry) {
-                    romajiBuffers.set(key, "");
-                    updateCellUI(row, col);
-                    input.value = getDisplayValue(row, col);
-                }
+    // Пытаемся преобразовать весь накопленный буфер
+    let converted = false;
+    for (let len = buffer.length; len >= 1; len--) {
+        const prefix = buffer.slice(0, len);
+        if (romajiToKatakana[prefix]) {
+            insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
+            const remaining = buffer.slice(len);
+            if (remaining) {
+                romajiBuffers.set(key, remaining);
+                updateCellUI(row, col);
+            } else {
+                romajiBuffers.delete(key);
             }
-        }, 300);
+            converted = true;
+            break;
+        }
+    }
+    if (!converted && buffer.length > 3) {
+        // Если ничего не подошло и буфер длинный – очищаем (пользователь ошибся)
+        romajiBuffers.delete(key);
+        updateCellUI(row, col);
     }
     // Скрываем латиницу из поля
     input.value = getDisplayValue(row, col);
