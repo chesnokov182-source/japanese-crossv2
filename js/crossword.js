@@ -2,8 +2,19 @@ import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } f
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
 
-// Определение мобильного устройства
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Построим множество всех возможных префиксов ключей romajiToKatakana для умного ожидания
+const romajiKeys = Object.keys(romajiToKatakana);
+const prefixSet = new Set();
+for (let key of romajiKeys) {
+    for (let i = 1; i <= key.length; i++) {
+        prefixSet.add(key.slice(0, i));
+    }
+}
+function isPrefix(str) {
+    return prefixSet.has(str);
+}
 
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
@@ -16,7 +27,6 @@ export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentPuzzleIndex = idx;
 }
 
-// Хелперы хранилища для кроссвордов
 function getStoredProgress() { return JSON.parse(localStorage.getItem(KEYS.PROGRESS) || "{}"); }
 function getUnlockedCrosswords() { return JSON.parse(localStorage.getItem(KEYS.UNLOCKED) || "{}"); }
 function getEarnedPointsForCurrent() {
@@ -49,12 +59,10 @@ function saveCurrentProgress() {
     localStorage.setItem(KEYS.PROGRESS, JSON.stringify(progress));
 }
 
-// Логика UI
 export function updateButtonStates() {
     const unlocked = isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     const hintBtn = document.getElementById("hintBtn");
     document.getElementById("resetBtn").disabled = !unlocked;
-    
     if (!unlocked) {
         hintBtn.disabled = true; hintBtn.textContent = "Кроссворд заблокирован";
     } else if (isCrosswordCompleted(currentLevel, currentPuzzleIndex)) {
@@ -71,7 +79,6 @@ export function updatePuzzleSelect() {
     const buyPuzzleBtn = document.getElementById("buyPuzzleBtn");
     const puzzles = window.crosswordsData[currentLevel].puzzles;
     puzzleSelect.innerHTML = "";
-    
     for (let idx = 0; idx < puzzles.length; idx++) {
         const puzzle = puzzles[idx];
         const isUnlocked = isPuzzleUnlocked(currentLevel, idx);
@@ -79,7 +86,6 @@ export function updatePuzzleSelect() {
         const price = puzzle.price || 0;
         let text = (isCompleted ? "✓ " : "") + (puzzle.name || `Кроссворд ${idx + 1}`);
         if (!isUnlocked) text += ` (🔒 ${price} очков)`;
-        
         const option = document.createElement("option");
         option.value = idx; option.textContent = text;
         if (isCompleted) option.style.fontWeight = "bold";
@@ -87,7 +93,6 @@ export function updatePuzzleSelect() {
         puzzleSelect.appendChild(option);
     }
     puzzleSelect.value = currentPuzzleIndex;
-    
     const currentUnlocked = isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     const currentPrice = puzzles[currentPuzzleIndex].price || 0;
     if (!currentUnlocked && currentPrice > 0) {
@@ -103,7 +108,6 @@ export function updateLevelProgress() {
     const completedKeys = getCompletedCrosswords();
     let completedCount = 0;
     for (let i = 0; i < total; i++) { if (completedKeys.includes(`${currentLevel}_${i}`)) completedCount++; }
-    
     const textSpan = document.getElementById("levelProgressText");
     const fillDiv = document.getElementById("levelProgressFill");
     if (textSpan) textSpan.innerText = `${completedCount}/${total}`;
@@ -114,13 +118,10 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
     const levelData = window.crosswordsData[levelId];
     if (!levelData || puzzleIdx < 0 || puzzleIdx >= levelData.puzzles.length) return;
     const puzzle = levelData.puzzles[puzzleIdx];
-    
     localStorage.setItem('lastPlayedLevel', levelId);
     localStorage.setItem('lastPlayedPuzzle', puzzleIdx);
-    
     gridWidth = puzzle.width; gridHeight = puzzle.height;
     wordsList = puzzle.words.map((w, idx) => ({ ...w, id: idx, current: Array(w.word.length).fill(""), wordOrig: w.word }));
-    
     let emptyGrid = Array(gridHeight).fill().map(() => Array(gridWidth).fill(null));
     for(let w of wordsList) {
         let cells = [];
@@ -134,12 +135,10 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
         }
         w.cells = cells;
     }
-    
     let savedData = null;
     if (preserveSaved && isPuzzleUnlocked(levelId, puzzleIdx)) {
         savedData = getStoredProgress()[`${levelId}_${puzzleIdx}`];
     }
-    
     if (savedData) {
         gridData = savedData.gridData.map(row => [...row]);
         hintUsed = savedData.hintUsed;
@@ -148,7 +147,6 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
         gridData = emptyGrid.map(row => row.map(cell => (cell === null ? null : "")));
         hintUsed = false; hintCount = 0;
     }
-    
     generateNumbering();
     syncWordFromGrid();
     buildCorrectCharMap();
@@ -159,14 +157,12 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
     updateClueCompletion();
     updateWrongHighlights();
     romajiBuffers.clear();
-    
     const unlocked = isPuzzleUnlocked(levelId, puzzleIdx);
     const statusDiv = document.getElementById("statusMsg");
     if (!unlocked) {
         statusDiv.innerHTML = `🔒 Кроссворд заблокирован. Цена: ${puzzle.price || 0} очков. Нажмите «Купить».`;
         statusDiv.style.color = "#c94f4f";
     }
-    
     updateButtonStates();
     updateLevelProgress();
     updatePuzzleSelect();
@@ -175,7 +171,6 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
 function generateNumbering() {
     let allWords = wordsList.map((w, idx) => ({ ...w, id: idx }));
     let hasManualNumbers = allWords.some(w => w.number !== undefined && w.number !== null);
-    
     if (!hasManualNumbers) {
         let numberMap = new Map(); let counter = 1;
         let sorted = [...allWords].sort((a,b) => {
@@ -190,7 +185,6 @@ function generateNumbering() {
         }
         allWords.forEach(w => { wordsList[w.id].number = w.number; });
     }
-    
     cluesAcross = []; cluesDown = [];
     for(let w of wordsList) {
         let clueItem = { num: w.number, wordId: w.id, clue: w.clue, cells: w.cells };
@@ -225,14 +219,12 @@ function renderGrid() {
     container.style.gridTemplateColumns = `repeat(${gridWidth}, 70px)`;
     cellElements = [];
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
-    
     for (let i = 0; i < gridHeight; i++) {
         cellElements[i] = [];
         for (let j = 0; j < gridWidth; j++) {
             const isBlocked = (gridData[i][j] === null);
             const cellDiv = document.createElement("div");
             cellDiv.className = "cell" + (isBlocked ? " blocked" : "");
-            
             const wordNumber = getWordNumberAt(i, j);
             if (wordNumber && !isBlocked) {
                 const spanNum = document.createElement("span");
@@ -240,35 +232,31 @@ function renderGrid() {
                 spanNum.innerText = Math.floor(wordNumber);
                 cellDiv.appendChild(spanNum);
             }
-            
             const input = document.createElement("input");
             input.type = "text"; 
             input.maxLength = 1;
             input.value = getDisplayValue(i, j);
             input.disabled = isBlocked || isLocked;
-            input.inputMode = "text";
-            
+            input.readOnly = false;
             const skinSpan = document.createElement("span");
             skinSpan.className = "cell-skin";
             skinSpan.style.display = "none";
-
             if (!isBlocked && !isLocked) {
+                // Для всех устройств добавляем одни и те же обработчики, но на мобильных keydown не блокирует ввод
                 input.addEventListener("focus", () => onCellFocus(i, j));
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", (e) => onCellInput(i, j));
             }
-            
             cellDiv.appendChild(input);
             cellDiv.appendChild(skinSpan);
             container.appendChild(cellDiv);
             cellElements[i][j] = input;
         }
     }
-    
     applyHighlight();
     updateWrongHighlights();
-    updateAllBlockedSkins();
+    if (typeof updateAllBlockedSkins === 'function') updateAllBlockedSkins();
 }
 
 function getWordNumberAt(row, col) {
@@ -352,11 +340,9 @@ function getNextEmptyCellInWord(word, currentRow, currentCol) {
 function insertKatakanaArray(row, col, katakanaArray, startIndex) {
     if (startIndex >= katakanaArray.length) return;
     const char = katakanaArray[startIndex];
-    
     gridData[row][col] = char;
     updateCellUI(row, col);
     syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
-    
     const correctChar = correctCharMap.get(`${row},${col}`);
     if (char === correctChar) {
         audio.correct();
@@ -366,8 +352,7 @@ function insertKatakanaArray(row, col, katakanaArray, startIndex) {
             setTimeout(() => cellDiv.classList.remove('correct-animation'), 300);
         }
     } else { audio.error(); }
-
-    if (katakanaArray.length > 1 && (startIndex === 0 || startIndex + 1 < katakanaArray.length)) {
+    if (katakanaArray.length > 1 && startIndex === 0 || startIndex + 1 < katakanaArray.length) {
         const activeWord = activeWordId !== null ? wordsList.find(w => w.id === activeWordId) : null;
         if (activeWord) {
             let idx = activeWord.cells.findIndex(c => c.row === row && c.col === col);
@@ -424,12 +409,10 @@ function advanceFocusAndBuffer(row, col, remainingChar) {
     if (activeWordId === null) return;
     const activeWord = wordsList.find(w => w.id === activeWordId);
     if (!activeWord) return;
-    
     let targetCell = null;
     let idx = activeWord.cells.findIndex(c => c.row === row && c.col === col);
     if (idx !== -1 && idx + 1 < activeWord.cells.length) targetCell = activeWord.cells[idx + 1];
     else targetCell = getNextEmptyCellInWord(activeWord, row, col);
-
     if (targetCell) {
         romajiBuffers.set(`${targetCell.row},${targetCell.col}`, remainingChar);
         updateCellUI(targetCell.row, targetCell.col);
@@ -453,18 +436,11 @@ function advanceFocusAndBuffer(row, col, remainingChar) {
 function handleKeydown(e, row, col) {
     if (gridData[row][col] === null) return;
     const allowedChars = /^[a-zA-Z-]$/;
-    // Блокируем только недопустимые символы (цифры, спецсимволы)
-    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) {
-        e.preventDefault();
-        return;
-    }
-    // На ПК предотвращаем ввод латиницы (чтобы она не появлялась в поле), на мобильных — нет
-    if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && allowedChars.test(e.key)) {
-        e.preventDefault();
-    }
+    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) { e.preventDefault(); return; }
+    // На мобильных не блокируем ввод латиницы, чтобы символы попадали в input
+    if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
-        e.preventDefault();
         const key = `${row},${col}`;
         let buffer = romajiBuffers.get(key) || "";
         if (buffer.length > 0) {
@@ -483,9 +459,7 @@ function handleKeydown(e, row, col) {
         }
         return;
     }
-
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
-        e.preventDefault();
         let newRow = row, newCol = col;
         if (e.key === "ArrowLeft") newCol--; if (e.key === "ArrowRight") newCol++;
         if (e.key === "ArrowUp") newRow--; if (e.key === "ArrowDown") newRow++;
@@ -494,9 +468,9 @@ function handleKeydown(e, row, col) {
         }
         return;
     }
-
-    // Обработка латиницы для ПК (на мобильных она не обрабатывается здесь, уходит в input)
+    // Обработка латиницы для ПК (с предотвращением стандартного ввода)
     if (!isMobile && e.key.length === 1 && allowedChars.test(e.key)) {
+        e.preventDefault();
         const key = `${row},${col}`;
         let buffer = (romajiBuffers.get(key) || "") + e.key.toLowerCase();
         romajiBuffers.set(key, buffer);
@@ -517,10 +491,8 @@ function onCellInput(row, col) {
     const input = cellElements[row][col];
     let val = input.value;
     if (!val) return;
-    
     const key = `${row},${col}`;
-    
-    // Японские символы (катакана/хирагана)
+    // Японские символы
     if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
         const firstChar = val[0];
         if (gridData[row][col] !== firstChar) {
@@ -532,7 +504,6 @@ function onCellInput(row, col) {
             updateClueCompletion();
             updateWrongHighlights();
             saveCurrentProgress();
-            
             const correctChar = correctCharMap.get(`${row},${col}`);
             if (firstChar === correctChar) {
                 audio.correct();
@@ -544,8 +515,6 @@ function onCellInput(row, col) {
             } else {
                 audio.error();
             }
-            
-            // Перемещаем фокус на следующую ячейку в слове
             if (activeWordId !== null) {
                 const activeWord = wordsList.find(w => w.id === activeWordId);
                 if (activeWord) {
@@ -562,20 +531,17 @@ function onCellInput(row, col) {
         input.value = getDisplayValue(row, col);
         return;
     }
-    
     // Латиница
-    if (/^[A-Za-z]$/.test(val)) {
-        // Для ПК не обрабатываем (уже сделано в keydown)
+    if (/^[a-zA-Z]$/.test(val)) {
+        // Для ПК уже обработано в keydown, игнорируем здесь
         if (!isMobile) {
             input.value = getDisplayValue(row, col);
             return;
         }
-        
-        // Для мобильных: накапливаем буфер и пытаемся преобразовать
+        // Мобильные: накапливаем буфер
         let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
         romajiBuffers.set(key, buffer);
         updateCellUI(row, col);
-        
         if (gridData[row][col] !== "") {
             gridData[row][col] = "";
             syncWordFromGrid();
@@ -584,16 +550,39 @@ function onCellInput(row, col) {
             updateWrongHighlights();
             saveCurrentProgress();
         }
-        
-        // Пытаемся преобразовать накопленный буфер
-        processBuffer(row, col, buffer);
-        
-        // Скрываем латиницу из поля
+        // Проверяем, является ли буфер префиксом какого-либо ключа в словаре
+        if (isPrefix(buffer)) {
+            // Если да, ждём дальнейшего ввода (ничего не вставляем)
+            input.value = getDisplayValue(row, col);
+            return;
+        }
+        // Иначе пытаемся найти самое длинное совпадение
+        let matched = false;
+        for (let len = Math.min(buffer.length, 4); len >= 1; len--) {
+            const prefix = buffer.slice(0, len);
+            if (romajiToKatakana[prefix]) {
+                insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
+                const remaining = buffer.slice(len);
+                if (remaining) {
+                    romajiBuffers.set(key, remaining);
+                    updateCellUI(row, col);
+                } else {
+                    romajiBuffers.delete(key);
+                }
+                matched = true;
+                break;
+            }
+        }
+        if (!matched && buffer.length > 3) {
+            // Если ничего не подошло и буфер длинный, очищаем (ошибка)
+            romajiBuffers.delete(key);
+            updateCellUI(row, col);
+            showToast("Не удалось преобразовать ввод", "error");
+        }
         input.value = getDisplayValue(row, col);
         return;
     }
-    
-    // Любые другие символы — игнорируем
+    // Любые другие символы – сбрасываем
     input.value = getDisplayValue(row, col);
 }
 
@@ -602,20 +591,16 @@ function syncWordFromGrid() { for (let w of wordsList) { for (let i = 0; i < w.c
 function checkCompletion() {
     let allFilled = true;
     for (let w of wordsList) { if (w.current.join('') !== w.wordOrig) { allFilled = false; break; } }
-    
     const statusDiv = document.getElementById("statusMsg");
     const unlocked = isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
-    
     if (allFilled && unlocked) {
         statusDiv.innerHTML = "🎉 Поздравляем! Кроссворд полностью разгадан! 🎉"; statusDiv.style.color = "#2c6e2c";
         if (!isCrosswordCompleted(currentLevel, currentPuzzleIndex)) {
             const completed = getCompletedCrosswords();
             completed.push(`${currentLevel}_${currentPuzzleIndex}`);
             localStorage.setItem(KEYS.COMPLETED, JSON.stringify(completed));
-            
             const earned = getEarnedPointsForCurrent();
             if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); }
-            
             updatePuzzleSelect(); updateLevelProgress(); updateButtonStates();
             showToast(`Кроссворд решён! +50 очков`, "success");
         }
@@ -687,37 +672,30 @@ function renderClues() {
 export async function resetCrossword() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Кроссворд заблокирован.", "error");
     if (!await showConfirmDialog("Сбросить кроссворд? Очки за слова и подсказки будут возвращены.")) return;
-    
     const progress = getStoredProgress();
     if (progress[`${currentLevel}_${currentPuzzleIndex}`]?.hintCount > 0) {
         const refund = progress[`${currentLevel}_${currentPuzzleIndex}`].hintCount * 20;
         gameStats.score += refund; saveGameStats(); updateScoreUI(); showToast(`Возвращено ${refund} очков за подсказки`, "info");
     }
-    
     const earned = getEarnedPointsForCurrent();
     let pts = 0, words = 0;
     for (let w in earned.words) { if(earned.words[w]) { pts += 10; words++; } }
     if (earned.completed) pts += 50;
-    
     if (pts > 0) {
         gameStats.score = Math.max(0, gameStats.score - pts);
         gameStats.wordsCompleted = Math.max(0, gameStats.wordsCompleted - words);
         saveGameStats(); updateScoreUI();
     }
-    
     const earnedAll = JSON.parse(localStorage.getItem(KEYS.EARNED) || "{}");
     delete earnedAll[`${currentLevel}_${currentPuzzleIndex}`];
     localStorage.setItem(KEYS.EARNED, JSON.stringify(earnedAll));
-
     if (progress[`${currentLevel}_${currentPuzzleIndex}`]) {
         delete progress[`${currentLevel}_${currentPuzzleIndex}`];
         localStorage.setItem(KEYS.PROGRESS, JSON.stringify(progress));
     }
-    
     const completed = getCompletedCrosswords();
     const idx = completed.indexOf(`${currentLevel}_${currentPuzzleIndex}`);
     if (idx !== -1) { completed.splice(idx, 1); localStorage.setItem(KEYS.COMPLETED, JSON.stringify(completed)); }
-    
     loadCrossword(currentLevel, currentPuzzleIndex, false);
     showToast("Кроссворд сброшен.", "success");
 }
@@ -729,10 +707,8 @@ export function buyCurrentPuzzle() {
         const modal = document.getElementById("buyModal");
         document.getElementById("buyModalMessage").innerText = `Купить "${puzzle.name}" за ${price} очков?`;
         modal.style.display = "flex";
-        
         const confirmBtn = document.getElementById("buyModalConfirm");
         const cancelBtn = document.getElementById("buyModalCancel");
-        
         const handleConfirm = () => {
             if (gameStats.score >= price) {
                 const unlocked = getUnlockedCrosswords(); unlocked[`${currentLevel}_${currentPuzzleIndex}`] = true;
@@ -744,7 +720,6 @@ export function buyCurrentPuzzle() {
         };
         const handleCancel = () => closeModal();
         const closeModal = () => { modal.style.display = "none"; confirmBtn.removeEventListener("click", handleConfirm); cancelBtn.removeEventListener("click", handleCancel); };
-        
         confirmBtn.addEventListener("click", handleConfirm); cancelBtn.addEventListener("click", handleCancel);
     } else showToast("Уже разблокирован!", "info");
 }
@@ -753,7 +728,6 @@ export function giveHint() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Заблокировано.", "error");
     if (isCrosswordCompleted(currentLevel, currentPuzzleIndex)) return showToast("Уже решено!", "error");
     if (hintCount >= gameStats.maxHints) return showToast("Лимит подсказок исчерпан.", "error");
-    
     let emptyCells = [];
     for (let i = 0; i < gridHeight; i++) {
         for (let j = 0; j < gridWidth; j++) {
@@ -768,7 +742,6 @@ export function giveHint() {
     }
     if (emptyCells.length === 0) return showToast("Нет пустых ячеек!", "error");
     if (!subtractPoints(20)) return;
-    
     const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
     gridData[row][col] = correctCharMap.get(`${row},${col}`);
     updateCellUI(row, col); syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights();
