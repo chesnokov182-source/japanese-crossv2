@@ -116,4 +116,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     if (mobileCancel) mobileCancel.addEventListener("click", () => {
         if (typeof window.closeMobileInput === 'function') window.closeMobileInput();
+        });
 });
