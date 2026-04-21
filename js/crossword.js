@@ -516,12 +516,12 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     } 
-    else if (/^[A-Za-z]$/.test(val)) {
+    } else if (/^[A-Za-z]$/.test(val)) {
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
     romajiBuffers.set(key, buffer);
     updateCellUI(row, col);
-    
+
     if (gridData[row][col] !== "") {
         gridData[row][col] = "";
         syncWordFromGrid();
@@ -530,11 +530,31 @@ function onCellInput(row, col) {
         updateWrongHighlights();
         saveCurrentProgress();
     }
-    
-    if (processBuffer(row, col, buffer)) {
+
+    // Пытаемся преобразовать накопленный буфер
+    const converted = processBuffer(row, col, buffer);
+    if (converted) {
+        // Успешно преобразовали — очищаем буфер
         romajiBuffers.set(key, "");
         updateCellUI(row, col);
+    } else {
+        // Если не преобразовалось, возможно, пользователь ещё вводит (например, "k" -> ждём "a")
+        // Запускаем таймер, чтобы через 500 мс попробовать снова (для мобильных)
+        if (window._hintTimer) clearTimeout(window._hintTimer);
+        window._hintTimer = setTimeout(() => {
+            const currentBuffer = romajiBuffers.get(key);
+            if (currentBuffer && currentBuffer.length > 0) {
+                // Повторная попытка преобразования
+                const retryConverted = processBuffer(row, col, currentBuffer);
+                if (retryConverted) {
+                    romajiBuffers.set(key, "");
+                    updateCellUI(row, col);
+                }
+            }
+        }, 500);
     }
+
+    // Очищаем поле ввода, чтобы не отображать латиницу
     input.value = getDisplayValue(row, col);
 }
 
