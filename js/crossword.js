@@ -516,7 +516,7 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     }
-    } else if (/^[A-Za-z]$/.test(val)) {
+    else (/^[A-Za-z]$/.test(val)) {
     // Латиница – обрабатываем как ромадзи
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
