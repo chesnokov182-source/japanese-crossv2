@@ -502,14 +502,23 @@ function handleKeydown(e, row, col) {
     }
 
     if (e.key.length === 1 && allowedChars.test(e.key)) {
+        // На мобильных устройствах не обрабатываем здесь, символ уйдёт в input
+        if (isMobile) return;
+        
+        e.preventDefault();
         const key = `${row},${col}`;
         let buffer = (romajiBuffers.get(key) || "") + e.key.toLowerCase();
-        romajiBuffers.set(key, buffer); updateCellUI(row, col);
-        if (buffer.length === 1 && gridData[row][col] !== "") {
-            gridData[row][col] = ""; updateCellUI(row, col);
-            syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
+        romajiBuffers.set(key, buffer);
+        updateCellUI(row, col);
+        if (gridData[row][col] !== "") {
+            gridData[row][col] = "";
+            syncWordFromGrid();
+            checkCompletion();
+            updateClueCompletion();
+            updateWrongHighlights();
+            saveCurrentProgress();
         }
-        if (processBuffer(row, col, buffer)) { romajiBuffers.set(key, ""); updateCellUI(row, col); }
+        processBuffer(row, col, buffer);
     }
 }
 
@@ -527,21 +536,31 @@ function onCellInput(row, col) {
         moveToNextCell(row, col);
         return;
     }
-    else if (/^[A-Za-z]$/.test(val)) {
-    // Для ПК ничего не делаем (уже обработано в keydown)
+} else if (/^[A-Za-z]$/.test(val)) {
+    // На ПК не обрабатываем (уже сделано в keydown)
     if (!isMobile) {
         input.value = getDisplayValue(row, col);
         return;
     }
-    // Для мобильных: накапливаем буфер и сразу пытаемся преобразовать
+    
+    // Для мобильных: накопление буфера и немедленное преобразование
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
     romajiBuffers.set(key, buffer);
     updateCellUI(row, col);
     
-    // Пытаемся преобразовать весь накопленный буфер
-    let converted = false;
-    for (let len = buffer.length; len >= 1; len--) {
+    if (gridData[row][col] !== "") {
+        gridData[row][col] = "";
+        syncWordFromGrid();
+        checkCompletion();
+        updateClueCompletion();
+        updateWrongHighlights();
+        saveCurrentProgress();
+    }
+    
+    // Ищем самое длинное совпадение в словаре
+    let matched = false;
+    for (let len = Math.min(buffer.length, 4); len >= 1; len--) {
         const prefix = buffer.slice(0, len);
         if (romajiToKatakana[prefix]) {
             insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
@@ -552,15 +571,18 @@ function onCellInput(row, col) {
             } else {
                 romajiBuffers.delete(key);
             }
-            converted = true;
+            matched = true;
             break;
         }
     }
-    if (!converted && buffer.length > 3) {
-        // Если ничего не подошло и буфер длинный – очищаем (пользователь ошибся)
+    
+    if (!matched && buffer.length > 3) {
+        // Если буфер слишком длинный и не преобразовался – очищаем (ошибка ввода)
         romajiBuffers.delete(key);
         updateCellUI(row, col);
+        showToast("Не удалось преобразовать ввод", "error");
     }
+    
     // Скрываем латиницу из поля
     input.value = getDisplayValue(row, col);
 }
