@@ -477,6 +477,7 @@ function onCellInput(row, col) {
     let val = input.value;
     if (!val) return;
     const key = `${row},${col}`;
+    
     // Японские символы
     if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
         const firstChar = val[0];
@@ -516,50 +517,26 @@ function onCellInput(row, col) {
         input.value = getDisplayValue(row, col);
         return;
     }
+    
     // Латиница
     if (/^[a-zA-Z]$/.test(val)) {
         if (!isMobile) {
-            // На ПК не обрабатываем здесь (уже в keydown)
             input.value = getDisplayValue(row, col);
             return;
         }
-        // Мобильные: накапливаем буфер с таймером
+        // Мобильные: накапливаем буфер, показываем в поле
         let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
         romajiBuffers.set(key, buffer);
-        updateCellUI(row, col); // отображаем буфер (пользователь видит латиницу)
+        input.value = buffer;
         
-        if (gridData[row][col] !== "") {
-            gridData[row][col] = "";
-            syncWordFromGrid();
-            checkCompletion();
-            updateClueCompletion();
-            updateWrongHighlights();
-            saveCurrentProgress();
+        const converted = processBuffer(row, col, buffer);
+        if (converted) {
+            romajiBuffers.delete(key);
+            input.value = getDisplayValue(row, col);
         }
-        
-        // Сбрасываем предыдущий таймер
-        if (window._mobileTimer) clearTimeout(window._mobileTimer);
-        // Устанавливаем таймер на 500 мс для преобразования накопленного буфера
-        window._mobileTimer = setTimeout(() => {
-            const currentBuffer = romajiBuffers.get(key);
-            if (currentBuffer && currentBuffer.length > 0) {
-                const converted = processBuffer(row, col, currentBuffer);
-                if (converted) {
-                    romajiBuffers.delete(key);
-                    updateCellUI(row, col);
-                } else if (currentBuffer.length > 1) {
-                    // Если не преобразовалось и длина >1, возможно, ошибка
-                    romajiBuffers.delete(key);
-                    updateCellUI(row, col);
-                    showToast("Не удалось преобразовать: " + currentBuffer, "error");
-                }
-            }
-            window._mobileTimer = null;
-        }, 1500);
-        // Не сбрасываем поле ввода, чтобы пользователь видел буфер
         return;
     }
-    // Прочие символы — сбрасываем
+    
     input.value = getDisplayValue(row, col);
 }
 
