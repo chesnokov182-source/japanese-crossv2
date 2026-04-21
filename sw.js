@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jlpt-crosswords-v44'; 
+const CACHE_NAME = 'jlpt-crosswords-v45'; 
 
 const urlsToCache = [
   './',
