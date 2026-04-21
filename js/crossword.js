@@ -2,6 +2,8 @@ import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } f
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
 
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
 export let gridData = [], wordsList = [], cellElements = [];
@@ -221,7 +223,7 @@ function renderGrid() {
     container.innerHTML = "";
     
     // Фиксированная ширина ячеек (60px)
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, 70px)`;
+    container.style.gridTemplateColumns = `repeat(${gridWidth}, 60px)`;
     cellElements = [];
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
     
@@ -455,10 +457,8 @@ function advanceFocusAndBuffer(row, col, remainingChar) {
 function handleKeydown(e, row, col) {
     if (gridData[row][col] === null) return;
     const allowedChars = /^[a-zA-Z-]$/;
-    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) {
-        e.preventDefault();
-        return;
-    }
+    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && !allowedChars.test(e.key)) { e.preventDefault(); return; }
+    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
         const key = `${row},${col}`;
@@ -490,7 +490,7 @@ function handleKeydown(e, row, col) {
         return;
     }
 
-    /*if (e.key.length === 1 && allowedChars.test(e.key)) {
+    if (e.key.length === 1 && allowedChars.test(e.key)) {
         const key = `${row},${col}`;
         let buffer = (romajiBuffers.get(key) || "") + e.key.toLowerCase();
         romajiBuffers.set(key, buffer); updateCellUI(row, col);
@@ -499,7 +499,7 @@ function handleKeydown(e, row, col) {
             syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
         }
         if (processBuffer(row, col, buffer)) { romajiBuffers.set(key, ""); updateCellUI(row, col); }
-    }*/
+    }
 }
 
 function onCellInput(row, col) {
@@ -515,13 +515,19 @@ function onCellInput(row, col) {
         checkWinCondition();
         moveToNextCell(row, col);
         return;
-    } 
+    }
     else if (/^[A-Za-z]$/.test(val)) {
+    // На ПК не обрабатываем в input, т.к. уже сделано в keydown
+    if (!isMobile) {
+        input.value = getDisplayValue(row, col);
+        return;
+    }
+    // Для мобильных: накапливаем буфер и преобразуем
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
     romajiBuffers.set(key, buffer);
     updateCellUI(row, col);
-
+    
     if (gridData[row][col] !== "") {
         gridData[row][col] = "";
         syncWordFromGrid();
@@ -530,35 +536,35 @@ function onCellInput(row, col) {
         updateWrongHighlights();
         saveCurrentProgress();
     }
-
-    // Пытаемся преобразовать накопленный буфер
-    const converted = processBuffer(row, col, buffer);
+    
+    // Пытаемся преобразовать сразу
+    let converted = processBuffer(row, col, buffer);
     if (converted) {
-        // Успешно преобразовали — очищаем буфер
         romajiBuffers.set(key, "");
+        updateCellUI(row, col);
+        input.value = getDisplayValue(row, col);
     } else {
-        // Если не преобразовалось, возможно, пользователь ещё вводит (например, "k" -> ждём "a")
-        // Запускаем таймер, чтобы через 500 мс попробовать снова (для мобильных)
-        if (window._hintTimer) clearTimeout(window._hintTimer);
-        window._hintTimer = setTimeout(() => {
+        // Если не преобразовалось, возможно, нужен второй символ. Ставим таймер на 300 мс.
+        if (window._mobileTimer) clearTimeout(window._mobileTimer);
+        window._mobileTimer = setTimeout(() => {
             const currentBuffer = romajiBuffers.get(key);
             if (currentBuffer && currentBuffer.length > 0) {
-                // Повторная попытка преобразования
-                const retryConverted = processBuffer(row, col, currentBuffer);
-                if (retryConverted) {
+                const retry = processBuffer(row, col, currentBuffer);
+                if (retry) {
                     romajiBuffers.set(key, "");
                     updateCellUI(row, col);
+                    input.value = getDisplayValue(row, col);
                 }
             }
-        }, 800);
+        }, 300);
     }
-
-    // Очищаем поле ввода, чтобы не отображать латиницу
+    // Скрываем латиницу из поля
     input.value = getDisplayValue(row, col);
 }
 
-
+    // Если введена латиница (ПК или английская раскладка телефона)
     if (/^[A-Z]$/.test(val)) {
+        // Твоя существующая логика преобразования Ромадзи -> Катакана
         handleRomajiLogic(row, col, val); 
     }
 }
