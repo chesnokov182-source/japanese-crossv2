@@ -6,13 +6,20 @@ import {
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
 
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.remove('dark', 'sakura');
+    if (savedTheme !== 'light') document.body.classList.add(savedTheme);
+}
+applySavedTheme();
+
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация тем
-    const initTheme = () => {
+    /*const initTheme = () => {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.classList.remove('dark', 'sakura');
         if (savedTheme !== 'light') document.body.classList.add(savedTheme);
-    };
+    };*/
 
     document.getElementById('themeToggle').addEventListener('click', () => {
         audio.click();
