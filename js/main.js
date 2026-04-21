@@ -6,8 +6,6 @@ import {
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
 
-keyboard.init();
-
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация тем
     const initTheme = () => {
