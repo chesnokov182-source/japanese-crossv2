@@ -2,10 +2,8 @@ import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } f
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
 
-let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
-// Для модального ввода на мобильных
-let currentMobileRow = null, currentMobileCol = null;
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
@@ -537,13 +535,13 @@ function onCellInput(row, col) {
         return;
     }
     else if (/^[A-Za-z]$/.test(val)) {
-    // На ПК не обрабатываем (уже сделано в keydown)
+    // Для ПК не обрабатываем здесь (уже сделано в keydown)
     if (!isMobile) {
         input.value = getDisplayValue(row, col);
         return;
     }
     
-    // Для мобильных: накопление буфера и немедленное преобразование
+    // Для мобильных: накапливаем буфер и откладываем преобразование
     const key = `${row},${col}`;
     let buffer = (romajiBuffers.get(key) || "") + val.toLowerCase();
     romajiBuffers.set(key, buffer);
@@ -558,30 +556,37 @@ function onCellInput(row, col) {
         saveCurrentProgress();
     }
     
-    // Ищем самое длинное совпадение в словаре
-    let matched = false;
-    for (let len = Math.min(buffer.length, 4); len >= 1; len--) {
-        const prefix = buffer.slice(0, len);
-        if (romajiToKatakana[prefix]) {
-            insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
-            const remaining = buffer.slice(len);
-            if (remaining) {
-                romajiBuffers.set(key, remaining);
-                updateCellUI(row, col);
-            } else {
-                romajiBuffers.delete(key);
+    // Сбрасываем предыдущий таймер
+    if (window._mobileRomajiTimer) clearTimeout(window._mobileRomajiTimer);
+    // Устанавливаем таймер на 500 мс для попытки преобразования накопленного буфера
+    window._mobileRomajiTimer = setTimeout(() => {
+        const currentBuffer = romajiBuffers.get(key);
+        if (currentBuffer && currentBuffer.length > 0) {
+            // Ищем самое длинное совпадение в словаре
+            let matched = false;
+            for (let len = Math.min(currentBuffer.length, 4); len >= 1; len--) {
+                const prefix = currentBuffer.slice(0, len);
+                if (romajiToKatakana[prefix]) {
+                    insertKatakanaArray(row, col, romajiToKatakana[prefix], 0);
+                    const remaining = currentBuffer.slice(len);
+                    if (remaining) {
+                        romajiBuffers.set(key, remaining);
+                        updateCellUI(row, col);
+                    } else {
+                        romajiBuffers.delete(key);
+                    }
+                    matched = true;
+                    break;
+                }
             }
-            matched = true;
-            break;
+            if (!matched && currentBuffer.length > 0) {
+                // Если ничего не подошло, очищаем буфер (ошибочный ввод)
+                romajiBuffers.delete(key);
+                updateCellUI(row, col);
+            }
         }
-    }
-    
-    if (!matched && buffer.length > 3) {
-        // Если буфер слишком длинный и не преобразовался – очищаем (ошибка ввода)
-        romajiBuffers.delete(key);
-        updateCellUI(row, col);
-        showToast("Не удалось преобразовать ввод", "error");
-    }
+        window._mobileRomajiTimer = null;
+    }, 1100);
     
     // Скрываем латиницу из поля
     input.value = getDisplayValue(row, col);
