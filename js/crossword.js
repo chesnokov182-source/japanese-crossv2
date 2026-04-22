@@ -660,7 +660,7 @@ function updateFloatingCluePosition() {
     const rect = inputEl.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-    let top = rect.top + scrollTop - 20;
+    let top = rect.top + scrollTop - 35;
     let left = rect.left + scrollLeft;
     if (top < scrollTop + 10) {
         top = rect.bottom + scrollTop + 5;
