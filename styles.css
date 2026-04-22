@@ -914,16 +914,15 @@ body.dark .cell.correct-animation {
         min-width: 28px;
     }
 }
-
 /* Плавающая подсказка для мобильных */
 #floatingClue {
     background: var(--bg-container-light);
     color: var(--text-light);
     border-left: 4px solid var(--btn-bg-light);
-    font-size: 24px;
+    font-size: 28px;
     padding: 8px 12px;
-    max-width: 450px;
-    pointer-events: none;
+    max-width: 600px;
+    pointer-events: auto; /* чтобы кнопка была кликабельна */
 }
 body.dark #floatingClue {
     background: #2d2d44;
@@ -934,6 +933,25 @@ body.sakura #floatingClue {
     background: var(--bg-container-sakura);
     color: var(--text-sakura);
     border-left-color: var(--btn-bg-sakura);
+}
+#switchWordBtn {
+    background: var(--btn-bg-light);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 18px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+#switchWordBtn:active {
+    transform: scale(0.95);
+}
+body.dark #switchWordBtn {
+    background: var(--btn-bg-dark);
+}
+body.sakura #switchWordBtn {
+    background: var(--btn-bg-sakura);
 }
 .cell input {
     -webkit-touch-callout: none; /* отключает меню копирования/вставки */
