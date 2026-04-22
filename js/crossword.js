@@ -523,22 +523,22 @@ function onCellInput(row, col) {
         return;
     }
     
-        // Латиница и дефис
-        if (/^[a-zA-Z-]$/.test(val)) {
-            if (!isMobile) {
-                input.value = getDisplayValue(row, col);
+            // Латиница и дефис (любое количество символов)
+            if (/^[a-zA-Z-]+$/.test(val)) {
+                if (!isMobile) {
+                    input.value = getDisplayValue(row, col);
+                    return;
+                }
+                // Мобильные: берём всю строку из поля
+                let buffer = input.value.toLowerCase();
+                romajiBuffers.set(key, buffer);
+                const converted = processBuffer(row, col, buffer);
+                if (converted) {
+                    romajiBuffers.delete(key);
+                    input.value = getDisplayValue(row, col);
+                }
                 return;
             }
-            // Мобильные: берём всю строку из поля
-            let buffer = input.value.toLowerCase();
-            romajiBuffers.set(key, buffer);
-            const converted = processBuffer(row, col, buffer);
-            if (converted) {
-                romajiBuffers.delete(key);
-                input.value = getDisplayValue(row, col);
-            }
-            return;
-        }
     
     input.value = getDisplayValue(row, col);
 }
