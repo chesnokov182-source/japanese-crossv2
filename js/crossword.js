@@ -239,7 +239,17 @@ function renderGrid() {
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", (e) => onCellInput(i, j));
-            }
+                // Добавлено для переключения слова
+                input.addEventListener('dblclick', (e) => {
+                    e.stopPropagation();
+                    switchWordAtCell(i, j);
+                });
+    input.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        switchWordAtCell(i, j);
+        return false;
+    });
+}
             cellDiv.appendChild(input);
             cellDiv.appendChild(skinSpan);
             container.appendChild(cellDiv);
