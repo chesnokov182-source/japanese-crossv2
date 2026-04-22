@@ -943,7 +943,7 @@ body.dark .cell.correct-animation {
     #floatingClue {
         font-size: 40px;      /* увеличьте шрифт */
         padding: 12px 16px;   /* увеличьте внутренние отступы */
-        max-width: 1000px;     /* шире */
+        max-width: 1800px;     /* шире */
     }
 }
 
