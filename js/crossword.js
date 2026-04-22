@@ -520,8 +520,8 @@ function onCellInput(row, col) {
         return;
     }
     
-        // Латиница
-        if (/^[a-zA-Z]+$/.test(val)) {
+        // Латиница и дефис
+        if (/^[a-zA-Z-]$/.test(val)) {
             if (!isMobile) {
                 input.value = getDisplayValue(row, col);
                 return;
