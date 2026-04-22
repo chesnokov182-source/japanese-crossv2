@@ -262,22 +262,17 @@ function onCellFocus(row, col) {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
     let containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
     if (containingWords.length === 0) return;
-    
-    // Если текущее активное слово уже содержит эту ячейку, переключаем на другое слово из списка
-    if (activeWordId !== null && containingWords.some(w => w.id === activeWordId)) {
-        let currentIndex = containingWords.findIndex(w => w.id === activeWordId);
-        let nextIndex = (currentIndex + 1) % containingWords.length;
-        setActiveWord(containingWords[nextIndex].id);
-    } else {
-        // Если нет активного слова или ячейка не входит в активное слово, выбираем первое подходящее
-        let newWord = null;
-        if (activeWordId !== null) {
-            let activeWord = wordsList.find(w => w.id === activeWordId);
-            if (activeWord) newWord = containingWords.find(w => w.dir === activeWord.dir);
-        }
-        if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
-        setActiveWord(newWord.id);
+    if (activeWordId !== null) {
+        let activeWord = wordsList.find(w => w.id === activeWordId);
+        if (activeWord && activeWord.cells.some(c => c.row === row && c.col === col)) return;
     }
+    let newWord = null;
+    if (activeWordId !== null) {
+        let activeWord = wordsList.find(w => w.id === activeWordId);
+        if (activeWord) newWord = containingWords.find(w => w.dir === activeWord.dir);
+    }
+    if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
+    setActiveWord(newWord.id);
 }
 
 function onCellBlur(row, col) {
