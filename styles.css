@@ -965,14 +965,18 @@ body.dark .cell.correct-animation {
 
 /* Плавающая подсказка для мобильных */
 #floatingClue {
+    font-size: 16px;     
+    padding: 8px 12px;    
+    max-width: 200px;     
     background: var(--bg-container-light);
     color: var(--text-light);
     border-left-color: var(--btn-bg-light);
 }
 body.dark #floatingClue {
-    background: var(--bg-container-dark);
-    color: var(--text-dark);
-    border-left-color: var(--btn-bg-dark);
+    background: #2d2d44;   
+    color: #f0f0f0;          
+    border-left-color: #6c8fb5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 body.sakura #floatingClue {
     background: var(--bg-container-sakura);
