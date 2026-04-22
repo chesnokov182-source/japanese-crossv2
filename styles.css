@@ -915,66 +915,19 @@ body.dark .cell.correct-animation {
     }
 }
 
-/* Мобильные: скрываем боковую панель с подсказками */
-@media (max-width: 800px) {
-    .clues-section {
-        display: none;
-    }
-    .grid-section {
-        min-width: auto;
-        width: 100%;
-    }
-    /* Панель текущей подсказки */
-    .mobile-clue-bar {
-        display: flex !important;
-        flex-direction: column;
-        background: var(--bg-container-light);
-        border-radius: 12px;
-        padding: 12px;
-        margin-top: 16px;
-        box-shadow: 0 2px 8px var(--shadow-light);
-        gap: 8px;
-    }
-    body.dark .mobile-clue-bar {
-        background: var(--bg-container-dark);
-    }
-    .mobile-clue-label {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--text-light);
-    }
-    .mobile-clue-text {
-        font-size: 16px;
-        word-break: break-word;
-        color: var(--text-light);
-    }
-    .mobile-clue-btn {
-        background: var(--btn-bg-light);
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 8px 12px;
-        font-size: 14px;
-        cursor: pointer;
-        align-self: flex-start;
-    }
-    body.dark .mobile-clue-btn {
-        background: var(--btn-bg-dark);
-    }
-}
-
 /* Плавающая подсказка для мобильных */
 #floatingClue {
-    font-size: 22px;     
-    padding: 8px 12px;    
-    max-width: 350px;     
     background: var(--bg-container-light);
     color: var(--text-light);
-    border-left-color: var(--btn-bg-light);
+    border-left: 4px solid var(--btn-bg-light);
+    font-size: 24px;
+    padding: 8px 12px;
+    max-width: 450px;
+    pointer-events: none;
 }
 body.dark #floatingClue {
-    background: #2d2d44; 
-    color: #f0f0f0;       
+    background: #2d2d44;
+    color: #ffffff;
     border-left-color: #6c8fb5;
 }
 body.sakura #floatingClue {
@@ -982,7 +935,6 @@ body.sakura #floatingClue {
     color: var(--text-sakura);
     border-left-color: var(--btn-bg-sakura);
 }
-
 .cell input {
     -webkit-touch-callout: none; /* отключает меню копирования/вставки */
 }
