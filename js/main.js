@@ -144,12 +144,4 @@ window.addEventListener('click', (e) => {
     document.getElementById("helpBtn").addEventListener("click", () => { audio.click(); showTutorial(); });
     if (!localStorage.getItem("tutorialShown")) setTimeout(showTutorial, 500);
 
-    const mobileConfirm = document.getElementById("mobileInputConfirm");
-    const mobileCancel = document.getElementById("mobileInputCancel");
-    if (mobileConfirm) mobileConfirm.addEventListener("click", () => {
-        if (typeof window.submitMobileInput === 'function') window.submitMobileInput();
-    });
-    if (mobileCancel) mobileCancel.addEventListener("click", () => {
-        if (typeof window.closeMobileInput === 'function') window.closeMobileInput();
-        });
 });
