@@ -244,12 +244,7 @@ function renderGrid() {
                     e.stopPropagation();
                     switchWordAtCell(i, j);
                 });
-    input.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        switchWordAtCell(i, j);
-        return false;
-    });
-}
+            }
             cellDiv.appendChild(input);
             cellDiv.appendChild(skinSpan);
             container.appendChild(cellDiv);
