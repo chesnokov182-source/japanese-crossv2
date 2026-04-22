@@ -979,3 +979,7 @@ body.sakura #floatingClue {
     color: var(--text-sakura);
     border-left-color: var(--btn-bg-sakura);
 }
+
+.cell input {
+    -webkit-touch-callout: none; /* отключает меню копирования/вставки */
+}
