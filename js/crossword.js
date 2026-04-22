@@ -239,11 +239,6 @@ function renderGrid() {
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", (e) => onCellInput(i, j));
-                // Добавлено для переключения слова
-                input.addEventListener('dblclick', (e) => {
-                    e.stopPropagation();
-                    switchWordAtCell(i, j);
-                });
             }
             cellDiv.appendChild(input);
             cellDiv.appendChild(skinSpan);
@@ -267,17 +262,22 @@ function onCellFocus(row, col) {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
     let containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
     if (containingWords.length === 0) return;
-    if (activeWordId !== null) {
-        let activeWord = wordsList.find(w => w.id === activeWordId);
-        if (activeWord && activeWord.cells.some(c => c.row === row && c.col === col)) return;
+    
+    // Если текущее активное слово уже содержит эту ячейку, переключаем на другое слово из списка
+    if (activeWordId !== null && containingWords.some(w => w.id === activeWordId)) {
+        let currentIndex = containingWords.findIndex(w => w.id === activeWordId);
+        let nextIndex = (currentIndex + 1) % containingWords.length;
+        setActiveWord(containingWords[nextIndex].id);
+    } else {
+        // Если нет активного слова или ячейка не входит в активное слово, выбираем первое подходящее
+        let newWord = null;
+        if (activeWordId !== null) {
+            let activeWord = wordsList.find(w => w.id === activeWordId);
+            if (activeWord) newWord = containingWords.find(w => w.dir === activeWord.dir);
+        }
+        if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
+        setActiveWord(newWord.id);
     }
-    let newWord = null;
-    if (activeWordId !== null) {
-        let activeWord = wordsList.find(w => w.id === activeWordId);
-        if (activeWord) newWord = containingWords.find(w => w.dir === activeWord.dir);
-    }
-    if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
-    setActiveWord(newWord.id);
 }
 
 function onCellBlur(row, col) {
