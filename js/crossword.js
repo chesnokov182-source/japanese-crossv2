@@ -700,17 +700,6 @@ function updateFloatingCluePosition() {
     const clueTextSpan = document.getElementById('floatingClueText');
     if (clueTextSpan) clueTextSpan.innerText = clueText;
 }
-function switchWordAtCell(row, col) {
-    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
-    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
-    if (containingWords.length <= 1) return;
-    if (activeWordId === null) {
-        setActiveWord(containingWords[0].id);
-        return;
-    }
-    const otherWord = containingWords.find(w => w.id !== activeWordId);
-    if (otherWord) setActiveWord(otherWord.id);
-}
 // --- конец плавающей подсказки ---
 
 export async function resetCrossword() {
