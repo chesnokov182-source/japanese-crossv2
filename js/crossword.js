@@ -330,6 +330,20 @@ function applyHighlight(){
 }
 function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); }
 
+function switchWordAtCell(row, col) {
+    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
+    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
+    if (containingWords.length <= 1) return;
+    if (activeWordId === null) {
+        setActiveWord(containingWords[0].id);
+        return;
+    }
+    const otherWord = containingWords.find(w => w.id !== activeWordId);
+    if (otherWord) {
+        setActiveWord(otherWord.id);
+    }
+}
+
 function getNextEmptyCellInWord(word, currentRow, currentCol) {
     let currentIndex = word.cells.findIndex(cell => cell.row === currentRow && cell.col === currentCol);
     if (currentIndex === -1) return null;
