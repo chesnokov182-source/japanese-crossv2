@@ -923,18 +923,36 @@ body.dark .cell.correct-animation {
 }
 /* Плавающая подсказка для мобильных */
 #floatingClue {
+    position: absolute;
     background: var(--bg-container-light);
     color: var(--text-light);
     border-left: 4px solid var(--btn-bg-light);
-    font-size: 40px;
+    border-radius: 12px;
     padding: 8px 12px;
-    max-width: 2200px;
+    font-size: 14px;
+    max-width: 220px;
+    z-index: 1000;
+    pointer-events: none;
+    word-break: break-word;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
 }
+
+/* Увеличенный размер на телефонах (можно менять значения) */
+@media (max-width: 800px) {
+    #floatingClue {
+        font-size: 40px;      /* увеличьте шрифт */
+        padding: 12px 16px;   /* увеличьте внутренние отступы */
+        max-width: 1000px;     /* шире */
+    }
+}
+
 body.dark #floatingClue {
     background: #2d2d44;
     color: #ffffff;
     border-left-color: #6c8fb5;
 }
+
 body.sakura #floatingClue {
     background: var(--bg-container-sakura);
     color: var(--text-sakura);
