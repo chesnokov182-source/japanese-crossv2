@@ -21,6 +21,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedTheme !== 'light') document.body.classList.add(savedTheme);
     };*/
 
+    // Мобильная панель: показать все подсказки
+const mobileShowAllBtn = document.getElementById('mobileShowAllCluesBtn');
+if (mobileShowAllBtn) {
+    mobileShowAllBtn.addEventListener('click', () => {
+        const modal = document.getElementById('allCluesModal');
+        const content = document.getElementById('allCluesModalContent');
+        if (modal && content) {
+            // Клонируем содержимое оригинальной панели подсказок
+            const cluesClone = document.getElementById('cluesContainer').cloneNode(true);
+            content.innerHTML = '';
+            content.appendChild(cluesClone);
+            modal.style.display = 'flex';
+        }
+    });
+}
+// Закрытие модального окна со всеми подсказками
+const closeAllCluesBtn = document.getElementById('closeAllCluesBtn');
+if (closeAllCluesBtn) {
+    closeAllCluesBtn.addEventListener('click', () => {
+        document.getElementById('allCluesModal').style.display = 'none';
+    });
+}
+// Также закрытие по клику на фон (опционально)
+window.addEventListener('click', (e) => {
+    const modal = document.getElementById('allCluesModal');
+    if (e.target === modal) modal.style.display = 'none';
+});
+    
     document.getElementById('themeToggle').addEventListener('click', () => {
         audio.click();
         const current = localStorage.getItem('theme') || 'light';
