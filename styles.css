@@ -908,6 +908,7 @@ body.dark .cell.correct-animation {
 }
 
 /* Плавающая подсказка – базовые стили (для всех, но на ПК не используется) */
+/* Плавающая подсказка – базовые стили (для всех, но на ПК не используется) */
 #floatingClue {
     position: absolute;
     background: var(--bg-container-light);
@@ -932,4 +933,22 @@ body.sakura #floatingClue {
     background: var(--bg-container-sakura);
     color: var(--text-sakura);
     border-left-color: var(--btn-bg-sakura);
+}
+
+/* На телефонах увеличиваем шрифт и ширину, разрешаем перенос */
+@media (max-width: 800px) {
+    #floatingClue {
+        font-size: 18px;
+        padding: 10px 14px;
+        max-width: 90vw;  /* 90% ширины экрана */
+        white-space: normal; /* разрешаем перенос, чтобы текст не вылезал */
+    }
+}
+
+@media (max-width: 500px) {
+    #floatingClue {
+        font-size: 16px;
+        padding: 8px 12px;
+        max-width: 90vw;
+    }
 }
