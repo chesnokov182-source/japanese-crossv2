@@ -10,7 +10,6 @@ export let gridData = [], wordsList = [], cellElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 let floatingClueElement = null;
-let currentSwitchRow = null, currentSwitchCol = null;
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
@@ -240,6 +239,16 @@ function renderGrid() {
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", (e) => onCellInput(i, j));
+                // Переключение слова: двойной клик (ПК) и долгое нажатие (телефон)
+                input.addEventListener('dblclick', (e) => {
+                    e.stopPropagation();
+                    switchWordAtCell(i, j);
+                });
+                input.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    switchWordAtCell(i, j);
+                    return false;
+                });
             }
             cellDiv.appendChild(input);
             cellDiv.appendChild(skinSpan);
@@ -319,21 +328,7 @@ function applyHighlight(){
         if(target) target.classList.add("active-clue");
     }
 }
-function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); currentSwitchRow = null; currentSwitchCol = null; }
-
-function switchWordAtCell(row, col) {
-    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
-    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
-    if (containingWords.length <= 1) return;
-    if (activeWordId === null) {
-        setActiveWord(containingWords[0].id);
-        return;
-    }
-    const otherWord = containingWords.find(w => w.id !== activeWordId);
-    if (otherWord) {
-        setActiveWord(otherWord.id);
-    }
-}
+function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); }
 
 function getNextEmptyCellInWord(word, currentRow, currentCol) {
     let currentIndex = word.cells.findIndex(cell => cell.row === currentRow && cell.col === currentCol);
@@ -499,7 +494,6 @@ function onCellInput(row, col) {
     if (!val) return;
     const key = `${row},${col}`;
     
-    // Японские символы
     if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
         const firstChar = val[0];
         if (gridData[row][col] !== firstChar) {
@@ -539,13 +533,11 @@ function onCellInput(row, col) {
         return;
     }
     
-    // Латиница и дефис (любое количество символов)
     if (/^[a-zA-Z-]+$/.test(val)) {
         if (!isMobile) {
             input.value = getDisplayValue(row, col);
             return;
         }
-        // Мобильные: берём всю строку из поля
         let buffer = input.value.toLowerCase();
         romajiBuffers.set(key, buffer);
         const converted = processBuffer(row, col, buffer);
@@ -642,21 +634,10 @@ function renderClues() {
     updateClueCompletion();
 }
 
-// --- Плавающая подсказка для мобильных ---
 function initFloatingClue() {
     if (!isMobile) return;
     floatingClueElement = document.getElementById('floatingClue');
     if (!floatingClueElement) return;
-    const switchBtn = document.getElementById('switchWordBtn');
-    if (switchBtn) {
-        switchBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (currentSwitchRow !== null && currentSwitchCol !== null) {
-                switchWordAtCell(currentSwitchRow, currentSwitchCol);
-                updateFloatingCluePosition(); // обновить после переключения
-            }
-        });
-    }
     window.addEventListener('scroll', () => updateFloatingCluePosition());
     window.addEventListener('resize', () => updateFloatingCluePosition());
 }
@@ -676,15 +657,6 @@ function updateFloatingCluePosition() {
     const inputEl = cellElements[firstCell.row]?.[firstCell.col];
     if (!inputEl) return;
     
-    // Сохраняем координаты для кнопки
-    currentSwitchRow = firstCell.row;
-    currentSwitchCol = firstCell.col;
-    
-    // Проверяем, есть ли два слова на этой ячейке
-    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === firstCell.row && c.col === firstCell.col));
-    const switchBtn = document.getElementById('switchWordBtn');
-    if (switchBtn) switchBtn.style.display = containingWords.length > 1 ? 'inline-block' : 'none';
-    
     const rect = inputEl.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
@@ -696,11 +668,20 @@ function updateFloatingCluePosition() {
     floatingClueElement.style.left = left + 'px';
     floatingClueElement.style.top = top + 'px';
     floatingClueElement.style.display = 'block';
-    const clueText = `${Math.floor(word.number)}. ${word.clue}`;
-    const clueTextSpan = document.getElementById('floatingClueText');
-    if (clueTextSpan) clueTextSpan.innerText = clueText;
+    floatingClueElement.innerText = `${Math.floor(word.number)}. ${word.clue}`;
 }
-// --- конец плавающей подсказки ---
+
+function switchWordAtCell(row, col) {
+    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
+    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
+    if (containingWords.length <= 1) return;
+    if (activeWordId === null) {
+        setActiveWord(containingWords[0].id);
+        return;
+    }
+    const otherWord = containingWords.find(w => w.id !== activeWordId);
+    if (otherWord) setActiveWord(otherWord.id);
+}
 
 export async function resetCrossword() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Кроссворд заблокирован.", "error");
