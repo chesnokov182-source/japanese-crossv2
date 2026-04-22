@@ -903,7 +903,7 @@ body.dark .cell.correct-animation {
     #floatingClue {
         font-size: 16px;
         padding: 8px 12px;
-        min-width: 1000px;
+        min-width: 600px;
     }
 }
 
@@ -916,7 +916,7 @@ body.dark .cell.correct-animation {
     border-radius: 12px;
     padding: 8px 12px;
     font-size: 14px;
-    min-width: 1000px;
+    min-width: 600px;
     z-index: 1000;
     pointer-events: none;
     word-break: break-word;
@@ -939,7 +939,7 @@ body.sakura #floatingClue {
     #floatingClue {
         font-size: 18px;
         padding: 10px 14px;
-        min-width: 1000px;
+        min-width: 600px;
         white-space: normal; /* разрешаем перенос, чтобы текст не вылезал */
     }
 }
