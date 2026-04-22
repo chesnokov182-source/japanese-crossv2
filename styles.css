@@ -962,3 +962,20 @@ body.dark .cell.correct-animation {
         background: var(--btn-bg-dark);
     }
 }
+
+/* Плавающая подсказка для мобильных */
+#floatingClue {
+    background: var(--bg-container-light);
+    color: var(--text-light);
+    border-left-color: var(--btn-bg-light);
+}
+body.dark #floatingClue {
+    background: var(--bg-container-dark);
+    color: var(--text-dark);
+    border-left-color: var(--btn-bg-dark);
+}
+body.sakura #floatingClue {
+    background: var(--bg-container-sakura);
+    color: var(--text-sakura);
+    border-left-color: var(--btn-bg-sakura);
+}
