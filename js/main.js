@@ -14,41 +14,6 @@ function applySavedTheme() {
 applySavedTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация тем
-    /*const initTheme = () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.classList.remove('dark', 'sakura');
-        if (savedTheme !== 'light') document.body.classList.add(savedTheme);
-    };*/
-
-    // Мобильная панель: показать все подсказки
-const mobileShowAllBtn = document.getElementById('mobileShowAllCluesBtn');
-if (mobileShowAllBtn) {
-    mobileShowAllBtn.addEventListener('click', () => {
-        const modal = document.getElementById('allCluesModal');
-        const content = document.getElementById('allCluesModalContent');
-        if (modal && content) {
-            // Клонируем содержимое оригинальной панели подсказок
-            const cluesClone = document.getElementById('cluesContainer').cloneNode(true);
-            content.innerHTML = '';
-            content.appendChild(cluesClone);
-            modal.style.display = 'flex';
-        }
-    });
-}
-// Закрытие модального окна со всеми подсказками
-const closeAllCluesBtn = document.getElementById('closeAllCluesBtn');
-if (closeAllCluesBtn) {
-    closeAllCluesBtn.addEventListener('click', () => {
-        document.getElementById('allCluesModal').style.display = 'none';
-    });
-}
-// Также закрытие по клику на фон (опционально)
-window.addEventListener('click', (e) => {
-    const modal = document.getElementById('allCluesModal');
-    if (e.target === modal) modal.style.display = 'none';
-});
-    
     document.getElementById('themeToggle').addEventListener('click', () => {
         audio.click();
         const current = localStorage.getItem('theme') || 'light';
@@ -58,12 +23,10 @@ window.addEventListener('click', (e) => {
         localStorage.setItem('theme', next);
     });
 
-    // Загрузка данных
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
 
-    // Загрузка последнего уровня
     let startLvl = localStorage.getItem('lastPlayedLevel') || "n5";
     let startIdx = parseInt(localStorage.getItem('lastPlayedPuzzle')) || 0;
 
@@ -80,7 +43,6 @@ window.addEventListener('click', (e) => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
-    // События UI
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
@@ -119,7 +81,6 @@ window.addEventListener('click', (e) => {
         }
     });
 
-    // Туториал
     const showTutorial = () => {
         const modal = document.getElementById("tutorialModal");
         const msg = document.getElementById("tutorialMessage");
@@ -135,7 +96,6 @@ window.addEventListener('click', (e) => {
         let step = 0;
         const update = () => { msg.innerText = steps[step]; nextBtn.innerText = step === steps.length - 1 ? "Завершить" : "Далее"; };
         const close = () => { modal.style.display = "none"; localStorage.setItem("tutorialShown", "true"); };
-        
         nextBtn.onclick = () => { step++; if (step < steps.length) update(); else close(); };
         document.getElementById("tutorialClose").onclick = close;
         update(); modal.style.display = "flex";
@@ -143,5 +103,4 @@ window.addEventListener('click', (e) => {
 
     document.getElementById("helpBtn").addEventListener("click", () => { audio.click(); showTutorial(); });
     if (!localStorage.getItem("tutorialShown")) setTimeout(showTutorial, 500);
-
 });
