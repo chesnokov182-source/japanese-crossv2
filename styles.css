@@ -900,15 +900,12 @@ body.dark .cell.correct-animation {
     .clue-num {
         min-width: 28px;
     }
-    #floatingClue {
-        font-size: 16px;
-        padding: 8px 12px;
-        min-width: 600px;
-    }
 }
 
 /* Плавающая подсказка – базовые стили (для всех, но на ПК не используется) */
+/* Плавающая подсказка – по умолчанию скрыта на ПК */
 #floatingClue {
+    display: none;
     position: absolute;
     background: var(--bg-container-light);
     color: var(--text-light);
@@ -916,10 +913,9 @@ body.dark .cell.correct-animation {
     border-radius: 12px;
     padding: 8px 12px;
     font-size: 14px;
-    min-width: 600px;
     z-index: 1000;
     pointer-events: none;
-    word-break: break-word;
+    white-space: nowrap;       /* одна строка */
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     transition: all 0.1s ease;
 }
@@ -934,20 +930,20 @@ body.sakura #floatingClue {
     border-left-color: var(--btn-bg-sakura);
 }
 
-/* На телефонах увеличиваем шрифт и ширину, разрешаем перенос */
+/* На телефонах показываем, ширина под текст, но с ограничением */
 @media (max-width: 800px) {
     #floatingClue {
+        display: block;
+        white-space: nowrap;       /* не переносим */
+        max-width: 90vw;           /* но не шире 90% экрана */
+        overflow-x: auto;          /* если текст длиннее – прокрутка */
         font-size: 18px;
         padding: 10px 14px;
-        min-width: 600px;
-        white-space: normal; /* разрешаем перенос, чтобы текст не вылезал */
     }
 }
-
 @media (max-width: 500px) {
     #floatingClue {
         font-size: 16px;
         padding: 8px 12px;
-        max-width: 90vw;
     }
 }
