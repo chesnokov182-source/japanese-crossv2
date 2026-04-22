@@ -9,6 +9,7 @@ export let currentPuzzleIndex = 0;
 export let gridData = [], wordsList = [], cellElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
+let floatingClueElement = null;
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
@@ -140,7 +141,8 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
     buildCorrectCharMap();
     renderGrid();
     renderClues();
-    updateMobileClue();
+    initFloatingClue();
+    updateFloatingCluePosition();
     clearHighlight();
     checkCompletion();
     updateClueCompletion();
@@ -271,7 +273,6 @@ function onCellFocus(row, col) {
     }
     if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
     setActiveWord(newWord.id);
-    updateMobileClue();
 }
 
 function onCellBlur(row, col) {
@@ -286,7 +287,7 @@ function onCellBlur(row, col) {
 
 function setActiveWord(wordId){
     activeWordId = wordId; applyHighlight();
-    updateMobileClue();
+    updateFloatingCluePosition();
     const word = wordsList.find(w => w.id === activeWordId);
     if (word && word.cells.length) {
         const firstEmpty = word.cells.find(cell => gridData[cell.row][cell.col] === "");
@@ -317,7 +318,7 @@ function applyHighlight(){
         if(target) target.classList.add("active-clue");
     }
 }
-function clearHighlight() { activeWordId = null; applyHighlight(); updateMobileClue(); }
+function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); }
 
 function getNextEmptyCellInWord(word, currentRow, currentCol) {
     let currentIndex = word.cells.findIndex(cell => cell.row === currentRow && cell.col === currentCol);
@@ -523,22 +524,22 @@ function onCellInput(row, col) {
         return;
     }
     
-            // Латиница и дефис (любое количество символов)
-            if (/^[a-zA-Z-]+$/.test(val)) {
-                if (!isMobile) {
-                    input.value = getDisplayValue(row, col);
-                    return;
-                }
-                // Мобильные: берём всю строку из поля
-                let buffer = input.value.toLowerCase();
-                romajiBuffers.set(key, buffer);
-                const converted = processBuffer(row, col, buffer);
-                if (converted) {
-                    romajiBuffers.delete(key);
-                    input.value = getDisplayValue(row, col);
-                }
-                return;
-            }
+    // Латиница и дефис (любое количество символов)
+    if (/^[a-zA-Z-]+$/.test(val)) {
+        if (!isMobile) {
+            input.value = getDisplayValue(row, col);
+            return;
+        }
+        // Мобильные: берём всю строку из поля
+        let buffer = input.value.toLowerCase();
+        romajiBuffers.set(key, buffer);
+        const converted = processBuffer(row, col, buffer);
+        if (converted) {
+            romajiBuffers.delete(key);
+            input.value = getDisplayValue(row, col);
+        }
+        return;
+    }
     
     input.value = getDisplayValue(row, col);
 }
@@ -626,21 +627,44 @@ function renderClues() {
     updateClueCompletion();
 }
 
-function updateMobileClue() {
+// --- Плавающая подсказка для мобильных ---
+function initFloatingClue() {
     if (!isMobile) return;
-    const clueTextDiv = document.getElementById('mobileClueText');
-    if (!clueTextDiv) return;
-    if (activeWordId !== null) {
-        const word = wordsList.find(w => w.id === activeWordId);
-        if (word && word.clue) {
-            clueTextDiv.innerText = `${Math.floor(word.number)}. ${word.clue}`;
-        } else {
-            clueTextDiv.innerText = 'Выберите слово';
-        }
-    } else {
-        clueTextDiv.innerText = 'Нажмите на ячейку, чтобы увидеть подсказку';
-    }
+    floatingClueElement = document.getElementById('floatingClue');
+    if (!floatingClueElement) return;
+    window.addEventListener('scroll', () => updateFloatingCluePosition());
+    window.addEventListener('resize', () => updateFloatingCluePosition());
 }
+
+function updateFloatingCluePosition() {
+    if (!isMobile || !floatingClueElement) return;
+    if (activeWordId === null) {
+        floatingClueElement.style.display = 'none';
+        return;
+    }
+    const word = wordsList.find(w => w.id === activeWordId);
+    if (!word || !word.cells.length) {
+        floatingClueElement.style.display = 'none';
+        return;
+    }
+    const firstCell = word.cells[0];
+    const inputEl = cellElements[firstCell.row]?.[firstCell.col];
+    if (!inputEl) return;
+    const rect = inputEl.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+    let top = rect.top + scrollTop - 50;
+    let left = rect.left + scrollLeft;
+    if (top < (window.scrollY || document.documentElement.scrollTop) + 10) {
+        top = rect.bottom + scrollTop + 5;
+    }
+    floatingClueElement.style.left = left + 'px';
+    floatingClueElement.style.top = top + 'px';
+    floatingClueElement.style.display = 'block';
+    const clueText = `${Math.floor(word.number)}. ${word.clue}`;
+    floatingClueElement.innerText = clueText;
+}
+// --- конец плавающей подсказки ---
 
 export async function resetCrossword() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Кроссворд заблокирован.", "error");
