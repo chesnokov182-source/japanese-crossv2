@@ -961,3 +961,23 @@ body.sakura #floatingClue {
 .cell input {
     -webkit-touch-callout: none; /* отключает меню копирования/вставки */
 }
+.grid-section {
+    flex: 2;
+    min-width: 500px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* центрируем содержимое по горизонтали */
+}
+
+.status {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 12px;
+    color: #2c6e2c;
+    width: 100%; /* чтобы занимал всю ширину, но текст внутри центрирован */
+    box-sizing: border-box;
+}
