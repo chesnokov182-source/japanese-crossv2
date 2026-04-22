@@ -140,6 +140,7 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
     buildCorrectCharMap();
     renderGrid();
     renderClues();
+    updateMobileClue();
     clearHighlight();
     checkCompletion();
     updateClueCompletion();
@@ -270,6 +271,7 @@ function onCellFocus(row, col) {
     }
     if (!newWord) newWord = containingWords.find(w => w.dir === "across") || containingWords[0];
     setActiveWord(newWord.id);
+    updateMobileClue();
 }
 
 function onCellBlur(row, col) {
@@ -284,6 +286,7 @@ function onCellBlur(row, col) {
 
 function setActiveWord(wordId){
     activeWordId = wordId; applyHighlight();
+    updateMobileClue();
     const word = wordsList.find(w => w.id === activeWordId);
     if (word && word.cells.length) {
         const firstEmpty = word.cells.find(cell => gridData[cell.row][cell.col] === "");
@@ -314,7 +317,7 @@ function applyHighlight(){
         if(target) target.classList.add("active-clue");
     }
 }
-function clearHighlight() { activeWordId = null; applyHighlight(); }
+function clearHighlight() { activeWordId = null; applyHighlight(); updateMobileClue(); }
 
 function getNextEmptyCellInWord(word, currentRow, currentCol) {
     let currentIndex = word.cells.findIndex(cell => cell.row === currentRow && cell.col === currentCol);
