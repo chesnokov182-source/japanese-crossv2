@@ -623,6 +623,22 @@ function renderClues() {
     updateClueCompletion();
 }
 
+function updateMobileClue() {
+    if (!isMobile) return;
+    const clueTextDiv = document.getElementById('mobileClueText');
+    if (!clueTextDiv) return;
+    if (activeWordId !== null) {
+        const word = wordsList.find(w => w.id === activeWordId);
+        if (word && word.clue) {
+            clueTextDiv.innerText = `${Math.floor(word.number)}. ${word.clue}`;
+        } else {
+            clueTextDiv.innerText = 'Выберите слово';
+        }
+    } else {
+        clueTextDiv.innerText = 'Нажмите на ячейку, чтобы увидеть подсказку';
+    }
+}
+
 export async function resetCrossword() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Кроссворд заблокирован.", "error");
     if (!await showConfirmDialog("Сбросить кроссворд? Очки за слова и подсказки будут возвращены.")) return;
