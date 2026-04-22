@@ -965,9 +965,9 @@ body.dark .cell.correct-animation {
 
 /* Плавающая подсказка для мобильных */
 #floatingClue {
-    font-size: 16px;     
+    font-size: 22px;     
     padding: 8px 12px;    
-    max-width: 200px;     
+    max-width: 350px;     
     background: var(--bg-container-light);
     color: var(--text-light);
     border-left-color: var(--btn-bg-light);
