@@ -928,7 +928,7 @@ body.dark .cell.correct-animation {
     border-left: 4px solid var(--btn-bg-light);
     font-size: 40px;
     padding: 8px 12px;
-    max-width: 1500px;
+    max-width: 2200px;
 }
 body.dark #floatingClue {
     background: #2d2d44;
