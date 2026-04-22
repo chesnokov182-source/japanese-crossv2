@@ -38,13 +38,8 @@
         </div>
         <div id="gridContainer" class="crossword-grid"></div>
         <div class="status" id="statusMsg"></div>
-        
-        <!-- Мобильная панель подсказки (видна только на телефонах) -->
-        <div class="mobile-clue-bar" id="mobileClueBar">
-            <div class="mobile-clue-label">📖 Текущее слово:</div>
-            <div class="mobile-clue-text" id="mobileClueText"></div>
-            <button id="mobileShowAllCluesBtn" class="mobile-clue-btn">📋 Все подсказки</button>
-        </div>
+        <!-- Плавающая подсказка для мобильных -->
+        <div id="floatingClue" style="display: none; position: absolute; background: var(--bg-container-light); border-radius: 12px; padding: 8px 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 14px; max-width: 220px; z-index: 1000; pointer-events: none; border-left: 4px solid #4a6fa5; word-break: break-word;"></div>
     </div>
     <div class="clues-section">
         <div class="score-container">
@@ -120,17 +115,5 @@
             .catch(err => console.log('SW registration failed', err));
     }
 </script>
-
-    <!-- Модальное окно со всеми подсказками (для мобильных) -->
-<div id="allCluesModal" class="modal">
-    <div class="modal-content" style="max-width: 500px; max-height: 80vh; overflow-y: auto;">
-        <h3 style="margin-top:0;">Все подсказки</h3>
-        <div id="allCluesModalContent"></div>
-        <div class="modal-buttons">
-            <button id="closeAllCluesBtn" class="modal-btn modal-no">Закрыть</button>
-        </div>
-    </div>
-</div>
-    
 </body>
 </html>
