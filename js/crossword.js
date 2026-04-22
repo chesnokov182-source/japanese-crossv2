@@ -10,6 +10,7 @@ export let gridData = [], wordsList = [], cellElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 let floatingClueElement = null;
+let currentSwitchRow = null, currentSwitchCol = null;
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
@@ -318,7 +319,7 @@ function applyHighlight(){
         if(target) target.classList.add("active-clue");
     }
 }
-function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); }
+function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); currentSwitchRow = null; currentSwitchCol = null; }
 
 function switchWordAtCell(row, col) {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
@@ -646,6 +647,16 @@ function initFloatingClue() {
     if (!isMobile) return;
     floatingClueElement = document.getElementById('floatingClue');
     if (!floatingClueElement) return;
+    const switchBtn = document.getElementById('switchWordBtn');
+    if (switchBtn) {
+        switchBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentSwitchRow !== null && currentSwitchCol !== null) {
+                switchWordAtCell(currentSwitchRow, currentSwitchCol);
+                updateFloatingCluePosition(); // обновить после переключения
+            }
+        });
+    }
     window.addEventListener('scroll', () => updateFloatingCluePosition());
     window.addEventListener('resize', () => updateFloatingCluePosition());
 }
@@ -664,19 +675,41 @@ function updateFloatingCluePosition() {
     const firstCell = word.cells[0];
     const inputEl = cellElements[firstCell.row]?.[firstCell.col];
     if (!inputEl) return;
+    
+    // Сохраняем координаты для кнопки
+    currentSwitchRow = firstCell.row;
+    currentSwitchCol = firstCell.col;
+    
+    // Проверяем, есть ли два слова на этой ячейке
+    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === firstCell.row && c.col === firstCell.col));
+    const switchBtn = document.getElementById('switchWordBtn');
+    if (switchBtn) switchBtn.style.display = containingWords.length > 1 ? 'inline-block' : 'none';
+    
     const rect = inputEl.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
     let top = rect.top + scrollTop - 80;
     let left = rect.left + scrollLeft;
-    if (top < (window.scrollY || document.documentElement.scrollTop) + 10) {
+    if (top < scrollTop + 10) {
         top = rect.bottom + scrollTop + 5;
     }
     floatingClueElement.style.left = left + 'px';
     floatingClueElement.style.top = top + 'px';
     floatingClueElement.style.display = 'block';
     const clueText = `${Math.floor(word.number)}. ${word.clue}`;
-    floatingClueElement.innerText = clueText;
+    const clueTextSpan = document.getElementById('floatingClueText');
+    if (clueTextSpan) clueTextSpan.innerText = clueText;
+}
+function switchWordAtCell(row, col) {
+    if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
+    const containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
+    if (containingWords.length <= 1) return;
+    if (activeWordId === null) {
+        setActiveWord(containingWords[0].id);
+        return;
+    }
+    const otherWord = containingWords.find(w => w.id !== activeWordId);
+    if (otherWord) setActiveWord(otherWord.id);
 }
 // --- конец плавающей подсказки ---
 
