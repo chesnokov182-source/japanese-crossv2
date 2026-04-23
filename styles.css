@@ -973,6 +973,8 @@ body.sakura #floatingClue {
     border-radius: 16px;
     padding: 15px;
     margin-top: 20px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 .daily-task {
     display: flex;
@@ -981,7 +983,11 @@ body.sakura #floatingClue {
     gap: 10px;
     margin: 10px 0;
 }
-.task-name { flex: 1; font-size: 14px; }
+.task-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-light);
+}
 .task-progress {
     width: 100px;
     background: #ddd;
@@ -989,5 +995,37 @@ body.sakura #floatingClue {
     overflow: hidden;
     height: 10px;
 }
-.task-progress div { background: #4caf50; height: 100%; }
-.task-reward { font-weight: bold; color: #ff9800; }
+.task-progress div {
+    background: #4caf50;
+    height: 100%;
+}
+.task-reward {
+    font-weight: bold;
+    color: #ff9800;
+}
+
+/* Тёмная тема */
+body.dark .daily-tasks {
+    background: var(--bg-container-dark);
+    border-color: var(--border-dark);
+    box-shadow: 0 2px 5px var(--shadow-dark);
+}
+body.dark .task-name {
+    color: var(--text-dark);
+}
+body.dark .task-progress {
+    background: #4a4a5a;
+}
+
+/* Сакура-тема */
+body.sakura .daily-tasks {
+    background: var(--bg-container-sakura);
+    border-color: var(--border-sakura);
+    box-shadow: 0 2px 5px var(--shadow-sakura);
+}
+body.sakura .task-name {
+    color: var(--text-sakura);
+}
+body.sakura .task-progress {
+    background: #f8bbd0;
+}
