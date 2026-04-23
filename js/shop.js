@@ -46,6 +46,7 @@ function purchaseSkin(skinId, price) {
         saveSkinsData();
         showConfetti();
         showToast(`Скин куплен!`, "success");
+        updateTaskProgress('buy_skin', 1)
         return true;
     }
     return false;
