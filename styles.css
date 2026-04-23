@@ -965,3 +965,26 @@ body.sakura #floatingClue {
         width: auto !important;
     }
 }
+.daily-tasks {
+    background: var(--bg-container-light);
+    border-radius: 16px;
+    padding: 15px;
+    margin-top: 20px;
+}
+.daily-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.task-name { flex: 1; font-size: 14px; }
+.task-progress {
+    width: 100px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 10px;
+}
+.task-progress div { background: #4caf50; height: 100%; }
+.task-reward { font-weight: bold; color: #ff9800; }
