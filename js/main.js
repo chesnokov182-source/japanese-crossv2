@@ -5,7 +5,9 @@ import {
     currentLevel, currentPuzzleIndex, setCurrentLevelAndPuzzle, loadCrossword, 
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
+import { loadDailyTasks, renderDailyTasksPanel, getCurrentTasks, updateTaskProgress } from './dailyTasks.js';
 
+// Применение сохранённой темы
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.remove('dark', 'sakura');
@@ -14,19 +16,14 @@ function applySavedTheme() {
 applySavedTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('themeToggle').addEventListener('click', () => {
-        audio.click();
-        const current = localStorage.getItem('theme') || 'light';
-        const next = current === 'light' ? 'dark' : (current === 'dark' ? 'sakura' : 'light');
-        document.body.classList.remove('dark', 'sakura');
-        if (next !== 'light') document.body.classList.add(next);
-        localStorage.setItem('theme', next);
-    });
-
+    // ---- Инициализация ----
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
+    loadDailyTasks();          // загружаем задания на сегодня
+    renderDailyTasksPanel();   // отображаем панель заданий
 
+    // ---- Загрузка последнего кроссворда ----
     let startLvl = localStorage.getItem('lastPlayedLevel') || "n5";
     let startIdx = parseInt(localStorage.getItem('lastPlayedPuzzle')) || 0;
 
@@ -43,6 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
+    // ---- Переключение темы ----
+    document.getElementById("themeToggle").addEventListener("click", () => {
+        audio.click();
+        const current = localStorage.getItem('theme') || 'light';
+        const next = current === 'light' ? 'dark' : (current === 'dark' ? 'sakura' : 'light');
+        document.body.classList.remove('dark', 'sakura');
+        if (next !== 'light') document.body.classList.add(next);
+        localStorage.setItem('theme', next);
+    });
+
+    // ---- Основные кнопки ----
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
@@ -51,13 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isPuzzleUnlocked(newLvl, i)) { firstUnlocked = i; break; }
         }
         setCurrentLevelAndPuzzle(newLvl, firstUnlocked);
-        updatePuzzleSelect(); loadCrossword(newLvl, firstUnlocked);
+        updatePuzzleSelect();
+        loadCrossword(newLvl, firstUnlocked);
     });
 
     document.getElementById("puzzleSelect").addEventListener("change", (e) => {
         audio.click();
         setCurrentLevelAndPuzzle(currentLevel, parseInt(e.target.value, 10));
-        updatePuzzleSelect(); loadCrossword(currentLevel, currentPuzzleIndex);
+        updatePuzzleSelect();
+        loadCrossword(currentLevel, currentPuzzleIndex);
     });
 
     document.getElementById("resetBtn").addEventListener("click", () => { audio.click(); resetCrossword(); });
@@ -81,17 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ---- Туториал ----
     const showTutorial = () => {
         const modal = document.getElementById("tutorialModal");
         const msg = document.getElementById("tutorialMessage");
         const nextBtn = document.getElementById("tutorialNext");
         const steps = [
             "Добро пожаловать в японские кроссворды JLPT! 🎌",
-            "📝 Ввод слов:\nНабирайте английскими буквами\nПример: 'su' → ス, 'shu' → シ+ユ, '-' → ー\nМаленьких ya,yu,yo,tsu нет, они выглядят как обычные",
-            "🎯 Очки:\n+10 за каждое угаданное слово\n+50 за полностью решённый кроссворд\nЗа подсказку –20 очков, за покупку кроссворда – его цена",
-            "💰 Магазин:\nТратьте очки на скины, увеличение лимита подсказок и рулетку",
-            "🎁 Ежедневный бонус:\nЗаходите каждый день – получайте +50 очков!",
-            "🌓 Приятной игры!"
+            "📝 **Ввод слов:**\nНабирайте ромадзи английскими буквами (a-z).\nПример: 'su' → ス, 'shu' → シ+ユ, '-' → ー.\nНа телефоне просто печатайте – латиница сама превратится в катакану.",
+            "🔄 **Переключение слов на пересечении:**\nЕсли ячейка принадлежит двум словам:\n• На компьютере: **двойной клик**\n• На телефоне: **долгое нажатие** (удержание)\nАктивное слово подсвечивается, подсказка появляется рядом.",
+            "🔍 **Подсказка по букве:**\nКликните на пустую ячейку и нажмите «Подсказка» – откроется правильная буква (20 очков).",
+            "📋 **Ежедневные задания:**\nВыполняйте их, чтобы получать дополнительные очки. Задания обновляются каждый день.",
+            "🎡 **Бесплатная рулетка:**\nОдин раз в день можно крутить рулетку бесплатно!",
+            "🌓 **Приятной игры!**"
         ];
         let step = 0;
         const update = () => { msg.innerText = steps[step]; nextBtn.innerText = step === steps.length - 1 ? "Завершить" : "Далее"; };
