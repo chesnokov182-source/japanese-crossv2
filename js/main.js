@@ -5,9 +5,8 @@ import {
     currentLevel, currentPuzzleIndex, setCurrentLevelAndPuzzle, loadCrossword, 
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
-import { loadDailyTasks, renderDailyTasksPanel, getCurrentTasks, updateTaskProgress } from './dailyTasks.js';
+import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
 
-// Применение сохранённой темы
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.remove('dark', 'sakura');
@@ -16,14 +15,12 @@ function applySavedTheme() {
 applySavedTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- Инициализация ----
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
-    loadDailyTasks();          // загружаем задания на сегодня
-    renderDailyTasksPanel();   // отображаем панель заданий
+    loadDailyTasks();
+    renderDailyTasksPanel();
 
-    // ---- Загрузка последнего кроссворда ----
     let startLvl = localStorage.getItem('lastPlayedLevel') || "n5";
     let startIdx = parseInt(localStorage.getItem('lastPlayedPuzzle')) || 0;
 
@@ -40,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
-    // ---- Переключение темы ----
     document.getElementById("themeToggle").addEventListener("click", () => {
         audio.click();
         const current = localStorage.getItem('theme') || 'light';
@@ -50,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', next);
     });
 
-    // ---- Основные кнопки ----
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
@@ -91,19 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ---- Туториал ----
     const showTutorial = () => {
         const modal = document.getElementById("tutorialModal");
         const msg = document.getElementById("tutorialMessage");
         const nextBtn = document.getElementById("tutorialNext");
         const steps = [
             "Добро пожаловать в японские кроссворды JLPT! 🎌",
-            "📝 **Ввод слов:**\nНабирайте ромадзи английскими буквами (a-z).\nПример: 'su' → ス, 'shu' → シ+ユ, '-' → ー.\nНа телефоне просто печатайте – латиница сама превратится в катакану.",
-            "🔄 **Переключение слов на пересечении:**\nЕсли ячейка принадлежит двум словам:\n• На компьютере: **двойной клик**\n• На телефоне: **долгое нажатие** (удержание)\nАктивное слово подсвечивается, подсказка появляется рядом.",
-            "🔍 **Подсказка по букве:**\nКликните на пустую ячейку и нажмите «Подсказка» – откроется правильная буква (20 очков).",
-            "📋 **Ежедневные задания:**\nВыполняйте их, чтобы получать дополнительные очки. Задания обновляются каждый день.",
-            "🎡 **Бесплатная рулетка:**\nОдин раз в день можно крутить рулетку бесплатно!",
-            "🌓 **Приятной игры!**"
+            "📝 Вводите ромадзи английскими буквами (a-z). Пример: su → ス, shu → シ+ユ, - → ー.",
+            "🔄 На пересечении слов: двойной клик (ПК) или долгое нажатие (телефон) для выбора другого слова.",
+            "🔍 Подсказка: нажмите на пустую ячейку и нажмите «Подсказка» – откроется правильная буква (20 очков).",
+            "📋 Ежедневные задания – выполняйте и получайте бонусы!",
+            "🎡 Бесплатная рулетка – один раз в день!",
+            "🌓 Приятной игры!"
         ];
         let step = 0;
         const update = () => { msg.innerText = steps[step]; nextBtn.innerText = step === steps.length - 1 ? "Завершить" : "Далее"; };
