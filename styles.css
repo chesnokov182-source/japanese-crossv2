@@ -973,8 +973,7 @@ body.sakura #floatingClue {
     border-radius: 16px;
     padding: 15px;
     margin-top: 20px;
-    border: 1px solid var(--border-light);
-    box-shadow: 0 2px 5px var(--shadow-light);
+    /* границ нет, сливается с фоном */
 }
 .daily-task {
     display: flex;
@@ -1007,8 +1006,6 @@ body.sakura #floatingClue {
 /* Тёмная тема */
 body.dark .daily-tasks {
     background: var(--bg-container-dark);
-    border-color: var(--border-dark);
-    box-shadow: 0 2px 5px var(--shadow-dark);
 }
 body.dark .task-name {
     color: var(--text-dark);
@@ -1020,8 +1017,6 @@ body.dark .task-progress {
 /* Сакура-тема */
 body.sakura .daily-tasks {
     background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-    box-shadow: 0 2px 5px var(--shadow-sakura);
 }
 body.sakura .task-name {
     color: var(--text-sakura);
