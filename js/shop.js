@@ -98,7 +98,7 @@ function spinRoulette(isFree = false) {
     }
 
     const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [25, 20, 20, 15, 10, 10];
+    const probs = [35, 25, 20, 11, 6, 3];
     const rand = Math.random() * 100;
     let cumulative = 0, selectedPrize = 0;
     for (let i = 0; i < prizes.length; i++) {
@@ -211,7 +211,7 @@ export function openShopModal() {
             <button id="rouletteSpinBtn" class="roulette-spin-btn">Крутить (20 очков)</button>
             <button id="rouletteFreeBtn" class="roulette-spin-btn" style="margin-top: 10px;">🎲 Бесплатное вращение (раз в день)</button>
             <div id="rouletteResult" class="roulette-result"></div>
-            <div class="roulette-info">Шансы выигрыша:<br>0 очк. – 25% | 10 очк. – 20% | 20 очк. – 20% | 50 очк. – 15% | 100 очк. – 10% | 200 очк. – 10%</div>
+            <div class="roulette-info">Шансы выигрыша:<br>0 очк. – 35% | 10 очк. – 25% | 20 очк. – 20% | 50 очк. – 11% | 100 очк. – 6% | 200 очк. – 3%</div>
         </div>
     `;
 
