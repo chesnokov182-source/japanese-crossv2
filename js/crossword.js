@@ -742,22 +742,55 @@ export function giveHint() {
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return showToast("Заблокировано.", "error");
     if (isCrosswordCompleted(currentLevel, currentPuzzleIndex)) return showToast("Уже решено!", "error");
     if (hintCount >= gameStats.maxHints) return showToast("Лимит подсказок исчерпан.", "error");
-    let emptyCells = [];
+
+    // Находим активную ячейку (где стоит фокус)
+    let activeRow = null, activeCol = null;
     for (let i = 0; i < gridHeight; i++) {
         for (let j = 0; j < gridWidth; j++) {
-            if (gridData[i][j] === "") {
-                let belongsToIncomplete = false;
-                for (let w of wordsList) {
-                    if (w.cells.some(c => c.row === i && c.col === j) && w.current.join('') !== w.wordOrig) { belongsToIncomplete = true; break; }
-                }
-                if (belongsToIncomplete) emptyCells.push({row: i, col: j});
+            const el = cellElements[i]?.[j];
+            if (el && document.activeElement === el) {
+                activeRow = i;
+                activeCol = j;
+                break;
             }
         }
+        if (activeRow !== null) break;
     }
-    if (emptyCells.length === 0) return showToast("Нет пустых ячеек!", "error");
+
+    if (activeRow === null) {
+        showToast("Сначала нажмите на ячейку, которую хотите открыть.", "info");
+        return;
+    }
+    if (gridData[activeRow][activeCol] !== "") {
+        showToast("Эта ячейка уже заполнена.", "info");
+        return;
+    }
+
+    // Проверяем, что ячейка принадлежит незавершённому слову
+    let belongsToIncomplete = false;
+    for (let w of wordsList) {
+        if (w.cells.some(c => c.row === activeRow && c.col === activeCol) && w.current.join('') !== w.wordOrig) {
+            belongsToIncomplete = true;
+            break;
+        }
+    }
+    if (!belongsToIncomplete) {
+        showToast("Вокруг этой ячейки нет незавершённого слова.", "info");
+        return;
+    }
+
     if (!subtractPoints(20)) return;
-    const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-    gridData[row][col] = correctCharMap.get(`${row},${col}`);
-    updateCellUI(row, col); syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights();
-    hintCount++; saveCurrentProgress(); updateButtonStates();
+
+    const correctChar = correctCharMap.get(`${activeRow},${activeCol}`);
+    gridData[activeRow][activeCol] = correctChar;
+    updateCellUI(activeRow, activeCol);
+    syncWordFromGrid();
+    checkCompletion();
+    updateClueCompletion();
+    updateWrongHighlights();
+
+    hintCount++;
+    saveCurrentProgress();
+    updateButtonStates();
+    showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
 }
