@@ -792,8 +792,8 @@ export function giveHint() {
     updateWrongHighlights();
 
     hintCount++;
+    updateTaskProgress('use_hint', 1);
     saveCurrentProgress();
     updateButtonStates();
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
-    updateTaskProgress('use_hint', 1)
 }
