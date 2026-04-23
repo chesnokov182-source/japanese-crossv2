@@ -1,4 +1,5 @@
 import { showToast } from './utils.js';
+import { updateTaskProgress } from './dailyTasks.js';
 
 export const KEYS = {
     GAME: "gameStats",
