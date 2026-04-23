@@ -36,6 +36,7 @@ export function addPoints(points) {
     gameStats.score += points;
     saveGameStats();
     updateScoreUI();
+    updateTaskProgress('earn_100_points', points)
     showToast(`+${points} очков!`, "success");
 }
 
