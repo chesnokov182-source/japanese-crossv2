@@ -110,7 +110,7 @@ body.dark .clues-section {
 .level-selector {
     margin-bottom: 24px;
     display: flex;
-    gap: 15px;
+    gap: 8px;
     align-items: baseline;
     flex-wrap: wrap;
 }
@@ -124,6 +124,7 @@ select, button {
     cursor: pointer;
     font-weight: 500;
     transition: background 0.2s;
+    margin: 0;
 }
 
 body.dark select, body.dark button {
@@ -398,19 +399,19 @@ body.dark .progress-fill {
 
 .toast {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
     background: var(--bg-container-light);
     color: var(--text-light);
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-size: 16px;
-    z-index: 1000;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    font-size: 18px;
+    z-index: 10000;
+    pointer-events: none;
+    max-width: 400px;
     transition: opacity 0.3s;
     opacity: 0;
-    pointer-events: none;
-    max-width: 350px;
 }
 
 body.dark .toast {
@@ -860,9 +861,34 @@ body.dark .cell.correct-animation {
     .crossword-grid {
         gap: 1px;
     }
-    .level-selector select, .level-selector button {
-        padding: 8px 12px;
+    .level-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+    .level-selector > * {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+    select, button {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 12px;
         font-size: 14px;
+    }
+    .selector-group {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+        align-items: baseline;
+    }
+    .selector-group span {
+        flex-shrink: 0;
+    }
+    .selector-group select {
+        flex: 1;
+        width: auto !important;
     }
     .clues-section {
         display: none;
@@ -871,22 +897,6 @@ body.dark .cell.correct-animation {
         min-width: auto;
         width: 100%;
     }
-
-    /* Вертикальное расположение элементов в level-selector */
-    .level-selector {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-    .level-selector > * {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    select, button {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
     /* Плавающая подсказка */
     #floatingClue {
         display: block;
@@ -895,6 +905,13 @@ body.dark .cell.correct-animation {
         max-width: 90vw;
         font-size: 18px;
         padding: 10px 14px;
+    }
+    .toast {
+        font-size: 16px;
+        padding: 14px 20px;
+        max-width: 90vw;
+        bottom: 20px;
+        right: 20px;
     }
 }
 
@@ -950,21 +967,7 @@ body.sakura #floatingClue {
     color: var(--text-sakura);
     border-left-color: var(--btn-bg-sakura);
 }
-@media (max-width: 800px) {
-    .selector-group {
-        display: flex;
-        width: 100%;
-        gap: 10px;
-        align-items: baseline;
-    }
-    .selector-group span {
-        flex-shrink: 0;
-    }
-    .selector-group select {
-        flex: 1;
-        width: auto !important;
-    }
-}
+
 .daily-tasks {
     background: var(--bg-container-light);
     border-radius: 16px;
@@ -988,39 +991,3 @@ body.sakura #floatingClue {
 }
 .task-progress div { background: #4caf50; height: 100%; }
 .task-reward { font-weight: bold; color: #ff9800; }
-
-/* тост – больше и выше z-index */
-.toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: var(--bg-container-light);
-    color: var(--text-light);
-    padding: 16px 24px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-    font-size: 18px;
-    z-index: 10000;  /* выше модальных окон */
-    pointer-events: none;
-    max-width: 400px;
-    transition: opacity 0.3s;
-    opacity: 0;
-}
-/* на телефонах – ещё крупнее */
-@media (max-width: 800px) {
-    .toast {
-        font-size: 16px;
-        padding: 14px 20px;
-        max-width: 90vw;
-        bottom: 20px;
-        right: 20px;
-    }
-}
-/* убираем лишние отступы между кнопками на ПК */
-.level-selector {
-    gap: 8px;  /* уменьшаем промежуток */
-}
-/* если есть пустые пространства из-за flex-wrap, можно задать */
-.level-selector > * {
-    margin: 0;
-}
