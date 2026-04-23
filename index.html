@@ -14,37 +14,36 @@
 </head>
 <body>
 <div class="crossword-container">
-    <div class="grid-section">
-        <div class="controls-container">
-            <div class="level-selector">
-                <div class="selector-group">
-                    <span>Уровень JLPT:</span>
-                    <select id="levelSelect">
-                        <option value="n5">N5 (начальный)</option>
-                        <option value="n4">N4 (базовый)</option>
-                        <option value="n3">N3 (средний)</option>
-                        <option value="n2">N2 (выше среднего)</option>
-                        <option value="n1">N1 (продвинутый)</option>
-                    </select>
-                </div>
-                <div class="selector-group">
-                    <span>Кроссворд:</span>
-                    <select id="puzzleSelect"></select>
-                </div>
-                <button id="buyPuzzleBtn">💰 Купить</button>
-                <button id="shopBtn">🛒 Магазин</button>
-                <button id="resetBtn">Сбросить</button>
-                <button id="hintBtn">Подсказка</button>
-                <button id="themeToggle">🌓 Тема</button>
-                <button id="resetProgressBtn">🗑️ Сбросить всё</button>
-                <button id="helpBtn">❓ Помощь</button>
-                <div id="dailyTasksContainer" class="daily-tasks"></div>
+ <div class="grid-section">
+    <div class="controls-container">
+        <div class="level-selector">
+            <div class="selector-group">
+                <span>Уровень JLPT:</span>
+                <select id="levelSelect">
+                    <option value="n5">N5 (начальный)</option>
+                    <option value="n4">N4 (базовый)</option>
+                    <option value="n3">N3 (средний)</option>
+                    <option value="n2">N2 (выше среднего)</option>
+                    <option value="n1">N1 (продвинутый)</option>
+                </select>
             </div>
+            <div class="selector-group">
+                <span>Кроссворд:</span>
+                <select id="puzzleSelect"></select>
+            </div>
+            <button id="buyPuzzleBtn">💰 Купить</button>
+            <button id="shopBtn">🛒 Магазин</button>
+            <button id="resetBtn">Сбросить</button>
+            <button id="hintBtn">Подсказка</button>
+            <button id="themeToggle">🌓 Тема</button>
+            <button id="resetProgressBtn">🗑️ Сбросить всё</button>
+            <button id="helpBtn">❓ Помощь</button>
         </div>
-        <div id="gridContainer" class="crossword-grid"></div>
-        <div class="status" id="statusMsg"></div>
-        <!-- Плавающая подсказка для мобильных -->
-        <div id="floatingClue"></div>
+    </div>
+    <div id="dailyTasksContainer" class="daily-tasks"></div>
+    <div id="gridContainer" class="crossword-grid"></div>
+    <div class="status" id="statusMsg"></div>
+    <div id="floatingClue"></div>
 </div>
     <div class="clues-section">
         <div class="score-container">
