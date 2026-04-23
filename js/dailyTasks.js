@@ -1,4 +1,4 @@
-import { gameStats, addPoints, saveGameStats, updateScoreUI } from './storage.js';
+import { addPoints } from './storage.js';
 import { showToast, audio } from './utils.js';
 
 const TASKS_KEY = 'dailyTasks';
@@ -8,7 +8,7 @@ const TASKS_LIST = [
     { id: 'use_hint', name: 'Использовать подсказку', target: 1, progress: 0, reward: 30 },
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 40 },
     { id: 'win_roulette', name: 'Выиграть в рулетке 50+ очков', target: 50, progress: 0, reward: 60 },
-    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 30 }
+    { id: 'complete_any_word', name: 'Угадать слово', target: 1, progress: 0, reward: 30 }
 ];
 
 let currentTasks = [];
