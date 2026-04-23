@@ -87,14 +87,18 @@ function markSpinUsed() {
 
 function spinRoulette(isFree = false) {
     if (rouletteAnimating) return;
-    if (!isFree && !subtractPoints(20)) return;
-    if (isFree && !canSpinFree()) {
-        showToast("Сегодня вы уже крутили бесплатно!", "info");
-        return;
+    
+    if (!isFree) {
+        if (!subtractPoints(20)) return;
+    } else {
+        if (!canSpinFree()) {
+            showToast("Сегодня вы уже крутили бесплатно!", "info");
+            return;
+        }
     }
 
     const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [25, 20, 20, 15, 10, 10];  // измените вероятности здесь
+    const probs = [25, 20, 20, 15, 10, 10];
     const rand = Math.random() * 100;
     let cumulative = 0, selectedPrize = 0;
     for (let i = 0; i < prizes.length; i++) {
@@ -167,7 +171,6 @@ export function openShopModal() {
         modalContent.append(skinsSection, upgradesSection, rouletteSection);
     }
     
-    // Skins
     skinsSection.innerHTML = '';
     for (let skin of availableSkins) {
         const purchased = purchasedSkins.includes(skin.id);
@@ -191,7 +194,6 @@ export function openShopModal() {
         skinsSection.appendChild(skinDiv);
     }
     
-    // Upgrades
     upgradesSection.innerHTML = `
         <div class="upgrade-item">
             <div class="upgrade-info"><div class="upgrade-name">📈 Лимит подсказок: 3</div><div class="upgrade-price">500 очков</div></div>
@@ -203,7 +205,6 @@ export function openShopModal() {
         </div>
     `;
 
-    // Roulette
     rouletteSection.innerHTML = `
         <div class="roulette-container">
             <div class="roulette-spin-area"><span id="rouletteDisplay">🎰</span></div>
@@ -215,11 +216,17 @@ export function openShopModal() {
     `;
 
     const spinBtn = document.getElementById('rouletteSpinBtn');
-    if (spinBtn) spinBtn.addEventListener('click', () => spinRoulette(false));
+    if (spinBtn) {
+        spinBtn.replaceWith(spinBtn.cloneNode(true));
+        const newSpinBtn = document.getElementById('rouletteSpinBtn');
+        newSpinBtn.addEventListener('click', () => spinRoulette(false));
+    }
     const freeSpinBtn = document.getElementById('rouletteFreeBtn');
     if (freeSpinBtn) {
-        if (!canSpinFree()) freeSpinBtn.disabled = true;
-        freeSpinBtn.addEventListener('click', () => spinRoulette(true));
+        freeSpinBtn.replaceWith(freeSpinBtn.cloneNode(true));
+        const newFreeBtn = document.getElementById('rouletteFreeBtn');
+        if (!canSpinFree()) newFreeBtn.disabled = true;
+        newFreeBtn.addEventListener('click', () => spinRoulette(true));
     }
 
     skinsSection.querySelectorAll('.skin-btn.buy').forEach(btn => btn.addEventListener('click', () => { if(purchaseSkin(btn.dataset.id, parseInt(btn.dataset.price))) openShopModal(); }));
