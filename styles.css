@@ -947,3 +947,19 @@ body.sakura #floatingClue {
         padding: 8px 12px;
     }
 }
+@media (max-width: 800px) {
+    .level-selector {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .level-selector > * {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    select, button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
