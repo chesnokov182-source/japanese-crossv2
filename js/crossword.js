@@ -300,14 +300,18 @@ function onCellBlur(row, col) {
 }
 
 function setActiveWord(wordId){
-    activeWordId = wordId; applyHighlight();
-    updateFloatingCluePosition();
+    activeWordId = wordId;
     const word = wordsList.find(w => w.id === activeWordId);
     if (word && word.cells.length) {
+        const firstCell = word.cells[0];
+        lastActiveRow = firstCell.row;
+        lastActiveCol = firstCell.col;
         const firstEmpty = word.cells.find(cell => gridData[cell.row][cell.col] === "");
         if (firstEmpty) cellElements[firstEmpty.row][firstEmpty.col]?.focus();
         else cellElements[word.cells[0].row][word.cells[0].col]?.focus();
     }
+    applyHighlight();
+    updateFloatingCluePosition();
 }
 
 function applyHighlight(){
@@ -749,33 +753,18 @@ export function giveHint() {
     if (isCrosswordCompleted(currentLevel, currentPuzzleIndex)) return showToast("Уже решено!", "error");
     if (hintCount >= gameStats.maxHints) return showToast("Лимит подсказок исчерпан.", "error");
 
-    // Находим активную ячейку (где стоит фокус)
-    let activeRow = null, activeCol = null;
-    for (let i = 0; i < gridHeight; i++) {
-        for (let j = 0; j < gridWidth; j++) {
-            const el = cellElements[i]?.[j];
-            if (el && document.activeElement === el) {
-                activeRow = i;
-                activeCol = j;
-                break;
-            }
-        }
-        if (activeRow !== null) break;
-    }
-
-    if (activeRow === null) {
+    if (lastActiveRow === null || lastActiveCol === null) {
         showToast("Сначала нажмите на ячейку, которую хотите открыть.", "info");
         return;
     }
-    if (gridData[activeRow][activeCol] !== "") {
+    if (gridData[lastActiveRow][lastActiveCol] !== "") {
         showToast("Эта ячейка уже заполнена.", "info");
         return;
     }
 
-    // Проверяем, что ячейка принадлежит незавершённому слову
     let belongsToIncomplete = false;
     for (let w of wordsList) {
-        if (w.cells.some(c => c.row === activeRow && c.col === activeCol) && w.current.join('') !== w.wordOrig) {
+        if (w.cells.some(c => c.row === lastActiveRow && c.col === lastActiveCol) && w.current.join('') !== w.wordOrig) {
             belongsToIncomplete = true;
             break;
         }
@@ -787,16 +776,15 @@ export function giveHint() {
 
     if (!subtractPoints(20)) return;
 
-    const correctChar = correctCharMap.get(`${activeRow},${activeCol}`);
-    gridData[activeRow][activeCol] = correctChar;
-    updateCellUI(activeRow, activeCol);
+    const correctChar = correctCharMap.get(`${lastActiveRow},${lastActiveCol}`);
+    gridData[lastActiveRow][lastActiveCol] = correctChar;
+    updateCellUI(lastActiveRow, lastActiveCol);
     syncWordFromGrid();
     checkCompletion();
     updateClueCompletion();
     updateWrongHighlights();
 
     hintCount++;
-    updateTaskProgress('use_hint', 1);
     saveCurrentProgress();
     updateButtonStates();
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
