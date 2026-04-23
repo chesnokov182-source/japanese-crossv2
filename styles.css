@@ -988,3 +988,39 @@ body.sakura #floatingClue {
 }
 .task-progress div { background: #4caf50; height: 100%; }
 .task-reward { font-weight: bold; color: #ff9800; }
+
+/* тост – больше и выше z-index */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--bg-container-light);
+    color: var(--text-light);
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    font-size: 18px;
+    z-index: 10000;  /* выше модальных окон */
+    pointer-events: none;
+    max-width: 400px;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+/* на телефонах – ещё крупнее */
+@media (max-width: 800px) {
+    .toast {
+        font-size: 16px;
+        padding: 14px 20px;
+        max-width: 90vw;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+/* убираем лишние отступы между кнопками на ПК */
+.level-selector {
+    gap: 8px;  /* уменьшаем промежуток */
+}
+/* если есть пустые пространства из-за flex-wrap, можно задать */
+.level-selector > * {
+    margin: 0;
+}
