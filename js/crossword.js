@@ -11,6 +11,7 @@ export let gridData = [], wordsList = [], cellElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 let floatingClueElement = null;
+let lastActiveRow = null, lastActiveCol = null;
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
