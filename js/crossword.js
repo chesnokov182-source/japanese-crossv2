@@ -794,4 +794,5 @@ export function giveHint() {
     saveCurrentProgress();
     updateButtonStates();
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
+    updateTaskProgress('use_hint', 1)
 }
