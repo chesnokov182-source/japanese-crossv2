@@ -1,4 +1,4 @@
-import { addPoints } from './storage.js';
+import { gameStats, addPoints, saveGameStats, updateScoreUI } from './storage.js';
 import { showToast, audio } from './utils.js';
 
 const TASKS_KEY = 'dailyTasks';
@@ -8,7 +8,7 @@ const TASKS_LIST = [
     { id: 'use_hint', name: 'Использовать подсказку', target: 1, progress: 0, reward: 30 },
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 40 },
     { id: 'win_roulette', name: 'Выиграть в рулетке 50+ очков', target: 50, progress: 0, reward: 60 },
-    { id: 'complete_any_word', name: 'Угадать слово', target: 1, progress: 0, reward: 30 }
+    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 30 }
 ];
 
 let currentTasks = [];
@@ -20,12 +20,14 @@ export function loadDailyTasks() {
         const data = JSON.parse(stored);
         if (data.date === today) {
             currentTasks = data.tasks;
+            renderDailyTasksPanel();
             return;
         }
     }
     const shuffled = [...TASKS_LIST].sort(() => 0.5 - Math.random());
     currentTasks = shuffled.slice(0, 3).map(t => ({ ...t, progress: 0 }));
     localStorage.setItem(TASKS_KEY, JSON.stringify({ date: today, tasks: currentTasks }));
+    renderDailyTasksPanel();
 }
 
 export function updateTaskProgress(taskId, increment = 1, customValue = null) {
@@ -39,6 +41,7 @@ export function updateTaskProgress(taskId, increment = 1, customValue = null) {
         audio.pop();
     }
     saveDailyTasks();
+    renderDailyTasksPanel();  // обновляем панель сразу
 }
 
 function saveDailyTasks() {
