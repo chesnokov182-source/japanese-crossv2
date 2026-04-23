@@ -566,7 +566,7 @@ function checkCompletion() {
             completed.push(`${currentLevel}_${currentPuzzleIndex}`);
             localStorage.setItem(KEYS.COMPLETED, JSON.stringify(completed));
             const earned = getEarnedPointsForCurrent();
-            if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); }
+            if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); updateTaskProgress('solve_2_crosswords', 1); }
             updatePuzzleSelect(); updateLevelProgress(); updateButtonStates();
             showToast(`Кроссворд решён! +50 очков`, "success");
         }
