@@ -1,6 +1,7 @@
 import { showToast, showConfirmDialog, audio, romajiToKatakana, showConfetti } from './utils.js';
 import { KEYS, gameStats, addPoints, subtractPoints, incrementWordsCompleted, updateScoreUI, saveGameStats } from './storage.js';
 import { getSelectedSkinEmoji } from './shop.js';
+import { updateTaskProgress } from './dailyTasks.js';
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
