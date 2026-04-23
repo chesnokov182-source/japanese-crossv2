@@ -601,7 +601,8 @@ function updateClueCompletion() {
             const earned = getEarnedPointsForCurrent();
             if (!earned.words[w.id]) {
                 earned.words[w.id] = true; saveEarnedPointsForCurrent(earned);
-                addPoints(10); incrementWordsCompleted(); audio.pop();
+                addPoints(10); 
+                updateTaskProgress('complete_any_word', 1); incrementWordsCompleted(); audio.pop();
                 updateTaskProgress('complete_any_word', 1)
             }
         }
