@@ -271,6 +271,8 @@ function getDisplayValue(row, col) { return romajiBuffers.get(`${row},${col}`) |
 function updateCellUI(row, col) { if (cellElements[row]?.[col]) cellElements[row][col].value = getDisplayValue(row, col); }
 
 function onCellFocus(row, col) {
+    lastActiveRow = row;
+    lastActiveCol = col;
     if (!isPuzzleUnlocked(currentLevel, currentPuzzleIndex)) return;
     let containingWords = wordsList.filter(w => w.cells.some(c => c.row === row && c.col === col));
     if (containingWords.length === 0) return;
