@@ -601,6 +601,7 @@ function updateClueCompletion() {
             if (!earned.words[w.id]) {
                 earned.words[w.id] = true; saveEarnedPointsForCurrent(earned);
                 addPoints(10); incrementWordsCompleted(); audio.pop();
+                updateTaskProgress('complete_any_word', 1)
             }
         }
     }
