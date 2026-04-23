@@ -78,7 +78,7 @@ function spinRoulette() {
     if (rouletteAnimating || !subtractPoints(20)) return;
 
     const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [25, 20, 20, 15, 10, 10];
+    const probs = [35, 25, 20, 11, 6, 3];
     const rand = Math.random() * 100;
     let cumulative = 0, selectedPrize = 0;
 
@@ -102,7 +102,8 @@ function spinRoulette() {
             if (selectedPrize > 0) {
                 addPoints(selectedPrize);
                 result.innerHTML = `🎉 Вы выиграли ${selectedPrize} очков! 🎉`;
-                if (selectedPrize >= 100) showConfetti();
+            if (selectedPrize >= 100) showConfetti();
+            if (selectedPrize >= 50) updateTaskProgress('win_roulette', prize); 
                 audio.win(selectedPrize);
             } else {
                 result.innerHTML = `😞 Вам выпало 0 очков. Повезёт в следующий раз!`;
