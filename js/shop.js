@@ -224,3 +224,65 @@ export function openShopModal() {
 
     modal.style.display = "flex";
 }
+
+function canSpinFree() {
+    const last = localStorage.getItem('lastFreeSpin');
+    const today = new Date().toDateString();
+    return last !== today;
+}
+
+function markSpinUsed() {
+    localStorage.setItem('lastFreeSpin', new Date().toDateString());
+}
+
+// В функции openShopModal, внутри секции рулетки, добавить кнопку:
+const freeSpinBtn = document.createElement('button');
+freeSpinBtn.textContent = '🎲 Бесплатное вращение (раз в день)';
+freeSpinBtn.classList.add('roulette-spin-btn');
+freeSpinBtn.style.marginTop = '10px';
+if (!canSpinFree()) freeSpinBtn.disabled = true;
+freeSpinBtn.addEventListener('click', () => {
+    if (!canSpinFree()) return showToast("Сегодня вы уже крутили бесплатно!", "info");
+    spinRouletteFree();
+});
+rouletteSection.appendChild(freeSpinBtn);
+
+function spinRouletteFree() {
+    if (!canSpinFree()) return;
+    // Копируем логику spinRoulette, но без вычитания очков
+    const prizes = [0, 10, 20, 50, 100, 200];
+    const probs = [25, 20, 20, 15, 10, 10];
+    const rand = Math.random() * 100;
+    let cumulative = 0, selectedPrize = 0;
+    for (let i = 0; i < prizes.length; i++) {
+        cumulative += probs[i];
+        if (rand < cumulative) { selectedPrize = prizes[i]; break; }
+    }
+    // анимация и добавление очков
+    rouletteAnimating = true;
+    const display = document.getElementById('rouletteDisplay');
+    const result = document.getElementById('rouletteResult');
+    let spins = 0;
+    const interval = setInterval(() => {
+        display.textContent = prizes[Math.floor(Math.random() * prizes.length)];
+        audio.spin();
+        spins++;
+        if (spins >= 20) {
+            clearInterval(interval);
+            display.textContent = selectedPrize;
+            if (selectedPrize > 0) {
+                addPoints(selectedPrize);
+                result.innerHTML = `🎉 Бесплатно выиграли ${selectedPrize} очков! 🎉`;
+                if (selectedPrize >= 100) showConfetti();
+                audio.win(selectedPrize);
+            } else {
+                result.innerHTML = `😞 Бесплатно выпало 0 очков. Повезёт завтра!`;
+                audio.win(0);
+            }
+            rouletteAnimating = false;
+            markSpinUsed();
+            const btn = document.querySelector('#rouletteFreeBtn');
+            if (btn) btn.disabled = true;
+        }
+    }, 50);
+}
