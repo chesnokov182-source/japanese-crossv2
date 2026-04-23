@@ -1,6 +1,7 @@
 import { gameStats, saveGameStats, subtractPoints, addPoints, updateScoreUI } from './storage.js';
 import { audio, showToast, showConfetti } from './utils.js';
 import { updateAllBlockedSkins, updateButtonStates } from './crossword.js';
+import { updateTaskProgress } from './dailyTasks.js';
 
 export const availableSkins = [
     { id: "default", name: "Без скина", emoji: "", price: 0, default: true },
@@ -16,6 +17,7 @@ export const availableSkins = [
 
 export let purchasedSkins = [];
 export let selectedSkinId = "default";
+let rouletteAnimating = false;
 
 export function loadSkinsData() {
     const saved = localStorage.getItem("skins");
@@ -46,7 +48,7 @@ function purchaseSkin(skinId, price) {
         saveSkinsData();
         showConfetti();
         showToast(`Скин куплен!`, "success");
-        updateTaskProgress('buy_skin', 1)
+        updateTaskProgress('buy_skin', 1);
         return true;
     }
     return false;
@@ -73,15 +75,28 @@ function upgradeMaxHints(newLimit, price) {
     return false;
 }
 
-let rouletteAnimating = false;
-function spinRoulette() {
-    if (rouletteAnimating || !subtractPoints(20)) return;
+function canSpinFree() {
+    const last = localStorage.getItem('lastFreeSpin');
+    const today = new Date().toDateString();
+    return last !== today;
+}
+
+function markSpinUsed() {
+    localStorage.setItem('lastFreeSpin', new Date().toDateString());
+}
+
+function spinRoulette(isFree = false) {
+    if (rouletteAnimating) return;
+    if (!isFree && !subtractPoints(20)) return;
+    if (isFree && !canSpinFree()) {
+        showToast("Сегодня вы уже крутили бесплатно!", "info");
+        return;
+    }
 
     const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [35, 25, 20, 11, 6, 3];
+    const probs = [25, 20, 20, 15, 10, 10];  // измените вероятности здесь
     const rand = Math.random() * 100;
     let cumulative = 0, selectedPrize = 0;
-
     for (let i = 0; i < prizes.length; i++) {
         cumulative += probs[i];
         if (rand < cumulative) { selectedPrize = prizes[i]; break; }
@@ -91,7 +106,6 @@ function spinRoulette() {
     const display = document.getElementById('rouletteDisplay');
     const result = document.getElementById('rouletteResult');
     let spins = 0;
-
     const interval = setInterval(() => {
         display.textContent = prizes[Math.floor(Math.random() * prizes.length)];
         audio.spin();
@@ -101,12 +115,19 @@ function spinRoulette() {
             display.textContent = selectedPrize;
             if (selectedPrize > 0) {
                 addPoints(selectedPrize);
-                result.innerHTML = `🎉 Вы выиграли ${selectedPrize} очков! 🎉`;
-            if (selectedPrize >= 100) showConfetti();
-            if (selectedPrize >= 50) updateTaskProgress('win_roulette', prize); 
+                result.innerHTML = isFree
+                    ? `🎉 Бесплатно выиграли ${selectedPrize} очков! 🎉`
+                    : `🎉 Вы выиграли ${selectedPrize} очков! 🎉`;
+                if (selectedPrize >= 100) showConfetti();
                 audio.win(selectedPrize);
+                if (!isFree && selectedPrize >= 50) {
+                    updateTaskProgress('win_roulette', selectedPrize);
+                }
+                if (isFree) markSpinUsed();
             } else {
-                result.innerHTML = `😞 Вам выпало 0 очков. Повезёт в следующий раз!`;
+                result.innerHTML = isFree
+                    ? `😞 Бесплатно выпало 0 очков. Повезёт завтра!`
+                    : `😞 Вам выпало 0 очков. Повезёт в следующий раз!`;
                 audio.win(0);
             }
             rouletteAnimating = false;
@@ -187,20 +208,24 @@ export function openShopModal() {
         <div class="roulette-container">
             <div class="roulette-spin-area"><span id="rouletteDisplay">🎰</span></div>
             <button id="rouletteSpinBtn" class="roulette-spin-btn">Крутить (20 очков)</button>
+            <button id="rouletteFreeBtn" class="roulette-spin-btn" style="margin-top: 10px;">🎲 Бесплатное вращение (раз в день)</button>
             <div id="rouletteResult" class="roulette-result"></div>
             <div class="roulette-info">Шансы выигрыша:<br>0 очк. – 25% | 10 очк. – 20% | 20 очк. – 20% | 50 очк. – 15% | 100 очк. – 10% | 200 очк. – 10%</div>
         </div>
     `;
 
-    // Event Listeners
     const spinBtn = document.getElementById('rouletteSpinBtn');
-    if (spinBtn) spinBtn.addEventListener('click', spinRoulette);
+    if (spinBtn) spinBtn.addEventListener('click', () => spinRoulette(false));
+    const freeSpinBtn = document.getElementById('rouletteFreeBtn');
+    if (freeSpinBtn) {
+        if (!canSpinFree()) freeSpinBtn.disabled = true;
+        freeSpinBtn.addEventListener('click', () => spinRoulette(true));
+    }
 
     skinsSection.querySelectorAll('.skin-btn.buy').forEach(btn => btn.addEventListener('click', () => { if(purchaseSkin(btn.dataset.id, parseInt(btn.dataset.price))) openShopModal(); }));
     skinsSection.querySelectorAll('.skin-btn.select').forEach(btn => btn.addEventListener('click', () => { if(selectSkin(btn.dataset.id)) openShopModal(); }));
     upgradesSection.querySelectorAll('.upgrade-btn.buy').forEach(btn => btn.addEventListener('click', () => { if(upgradeMaxHints(parseInt(btn.dataset.upgrade), parseInt(btn.dataset.price))) openShopModal(); }));
 
-    // Tabs logic
     const tabs = tabsContainer.querySelectorAll('.shop-tab');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -213,76 +238,11 @@ export function openShopModal() {
             rouletteSection.classList.toggle('active', currentShopTab === 'roulette');
         });
     });
-
-    tabs.forEach(tab => {
-        if (tab.dataset.tab === currentShopTab) tab.classList.add('active');
-        else tab.classList.remove('active');
-    });
+    const activeTab = Array.from(tabs).find(t => t.dataset.tab === currentShopTab);
+    if (activeTab) activeTab.classList.add('active');
     skinsSection.classList.toggle('active', currentShopTab === 'skins');
     upgradesSection.classList.toggle('active', currentShopTab === 'upgrades');
     rouletteSection.classList.toggle('active', currentShopTab === 'roulette');
 
     modal.style.display = "flex";
-}
-
-function canSpinFree() {
-    const last = localStorage.getItem('lastFreeSpin');
-    const today = new Date().toDateString();
-    return last !== today;
-}
-
-function markSpinUsed() {
-    localStorage.setItem('lastFreeSpin', new Date().toDateString());
-}
-
-// В функции openShopModal, внутри секции рулетки, добавить кнопку:
-const freeSpinBtn = document.createElement('button');
-freeSpinBtn.textContent = '🎲 Бесплатное вращение (раз в день)';
-freeSpinBtn.classList.add('roulette-spin-btn');
-freeSpinBtn.style.marginTop = '10px';
-if (!canSpinFree()) freeSpinBtn.disabled = true;
-freeSpinBtn.addEventListener('click', () => {
-    if (!canSpinFree()) return showToast("Сегодня вы уже крутили бесплатно!", "info");
-    spinRouletteFree();
-});
-rouletteSection.appendChild(freeSpinBtn);
-
-function spinRouletteFree() {
-    if (!canSpinFree()) return;
-    // Копируем логику spinRoulette, но без вычитания очков
-    const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [25, 20, 20, 15, 10, 10];
-    const rand = Math.random() * 100;
-    let cumulative = 0, selectedPrize = 0;
-    for (let i = 0; i < prizes.length; i++) {
-        cumulative += probs[i];
-        if (rand < cumulative) { selectedPrize = prizes[i]; break; }
-    }
-    // анимация и добавление очков
-    rouletteAnimating = true;
-    const display = document.getElementById('rouletteDisplay');
-    const result = document.getElementById('rouletteResult');
-    let spins = 0;
-    const interval = setInterval(() => {
-        display.textContent = prizes[Math.floor(Math.random() * prizes.length)];
-        audio.spin();
-        spins++;
-        if (spins >= 20) {
-            clearInterval(interval);
-            display.textContent = selectedPrize;
-            if (selectedPrize > 0) {
-                addPoints(selectedPrize);
-                result.innerHTML = `🎉 Бесплатно выиграли ${selectedPrize} очков! 🎉`;
-                if (selectedPrize >= 100) showConfetti();
-                audio.win(selectedPrize);
-            } else {
-                result.innerHTML = `😞 Бесплатно выпало 0 очков. Повезёт завтра!`;
-                audio.win(0);
-            }
-            rouletteAnimating = false;
-            markSpinUsed();
-            const btn = document.querySelector('#rouletteFreeBtn');
-            if (btn) btn.disabled = true;
-        }
-    }, 50);
 }
