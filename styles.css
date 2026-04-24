@@ -1025,3 +1025,8 @@ body.sakura .task-name {
 body.sakura .task-progress {
     background: #f8bbd0;
 }
+
+.cell-skin {
+    line-height: 1;
+    vertical-align: middle;
+}
