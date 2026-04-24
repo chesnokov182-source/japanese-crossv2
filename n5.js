@@ -163,9 +163,9 @@ window.crosswordsData.n5 = {
                 price: 100,
                 words: [
                     { word: "オキテ", row: 0, col: 3, dir: "across", clue: "朝（起おきます）、歯を磨きます", number: 1},
-                    { word: "オコッテ", row: 0, col: 3, dir: "down", clue: " あの人が悪いです。（怒ります）良ですよ", number: 1.1},
-                    { word: "ウタッテ", row: 3, col: 0, dir: "across", clue: "パーティーでは（歌います）、踊ります", number: 2},
-                    { word: "ウッテ", row: 3, col: 0, dir: "down", clue: "八百屋では、野菜を（売ります）います", number: 2.2},
+                    { word: "オコツテ", row: 0, col: 3, dir: "down", clue: " あの人が悪いです。（怒ります）良ですよ", number: 1.1},
+                    { word: "ウタツテ", row: 3, col: 0, dir: "across", clue: "パーティーでは（歌います）、踊ります", number: 2},
+                    { word: "ウツテ", row: 3, col: 0, dir: "down", clue: "八百屋では、野菜を（売ります）います", number: 2.2},
                 ]
             }
           ]
