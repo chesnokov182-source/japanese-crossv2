@@ -7,21 +7,20 @@ export const availableSkins = [
     { id: "default", name: "Без скина", emoji: "", price: 0, default: true },
     { id: "japan_flag", name: "Флаг Японии", emoji: "🎌", price: 100 },
     { id: "katana", name: "Катана", emoji: "🗡️", price: 150 },
+    { id: "bamboo", name: "Бамбук", emoji: "🎋", price: 150 },
+    { id: "torii", name: "Ворота тории", emoji: "⛩️", price: 180 },
     { id: "sakura", name: "Цветок сакуры", emoji: "🌸", price: 200 },
+    { id: "koi", name: "Карп кои", emoji: "🎏", price: 220 },
     { id: "fan", name: "Веер", emoji: "🎐", price: 250 },
+    { id: "tea", name: "Чайная церемония", emoji: "🍵", price: 280 },
     { id: "sushi", name: "Суши", emoji: "🍣", price: 300 },
     { id: "geisha", name: "Гейша", emoji: "👘", price: 350 },
+    { id: "bonsai", name: "Бонсай", emoji: "🌳", price: 350 },
     { id: "tempura", name: "Тэмпура", emoji: "🍤", price: 400 },
-    { id: "dragon", name: "Дракон", emoji: "🐉", price: 500 },
-    // Новые скины
-    { id: "torii", name: "Ворота тории", emoji: "⛩️", price: 180 },
-    { id: "koi", name: "Карп кои", emoji: "🐟", price: 220 },
-    { id: "bamboo", name: "Бамбук", emoji: "🎋", price: 150 },
-    { id: "tea", name: "Чайная церемония", emoji: "🍵", price: 280 },
-    { id: "fuji", name: "Гора Фудзи", emoji: "🗻", price: 600 },
     { id: "crane", name: "Журавль", emoji: "🕊️", price: 400 },
-    { id: "bonsai", name: "Бонсай", emoji: "🌲", price: 350 },
-    { id: "samurai", name: "Самурай", emoji: "⚔️", price: 500 }
+    { id: "samurai", name: "Самурай", emoji: "⚔️", price: 500 },
+    { id: "dragon", name: "Дракон", emoji: "🐉", price: 500 },
+    { id: "fuji", name: "Гора Фудзи", emoji: "🗻", price: 600 }
 ];
 
 export let purchasedSkins = [];
