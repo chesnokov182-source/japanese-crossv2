@@ -155,6 +155,18 @@ window.crosswordsData.n5 = {
                     { word: "ヨンデ", row: 3, col: 0, dir: "across", clue: "5ページを（読よみます）ください", number: 2},
                     { word: "ネテ", row: 0, col: 5, dir: "down", clue: "もう（寝ねます）も良いいですか", number: 3},
                 ]
+            },
+            {
+                name: "Кроссворд て-форма 2",
+                width: 6,
+                height: 6,
+                price: 100,
+                words: [
+                    { word: "オキテ", row: 0, col: 3, dir: "across", clue: "朝（起おきます）、歯を磨きます", number: 1},
+                    { word: "オコッテ", row: 0, col: 3, dir: "down", clue: " あの人が悪いです。（怒ります）良ですよ", number: 1.1},
+                    { word: "ウタッテ", row: 3, col: 0, dir: "across", clue: "パーティーでは（歌います）、踊ります", number: 2},
+                    { word: "ウッテ", row: 3, col: 0, dir: "down", clue: "八百屋では、野菜を（売ります）います", number: 2.2},
+                ]
             }
           ]
     };
