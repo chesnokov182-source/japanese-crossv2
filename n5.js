@@ -179,6 +179,18 @@ window.crosswordsData.n5 = {
                     { word: "タツテ", row: 4, col: 0, dir: "across", clue: "席を（立ちます）、前に来てください", number: 2},
                     { word: "シメテ", row: 0, col: 4, dir: "down", clue: "出かける時は、鍵を（閉しめます）ください", number: 3},
                 ]
-            }
+            },
+            {
+                name: "Кроссворд て-форма 4",
+                width: 5,
+                height: 6,
+                price: 100,
+                words: [
+                    { word: "ハナシテ", row: 2, col: 1, dir: "across", clue: "ここで（話します）はいけません", number: 1},
+                    { word: "キイテ", row: 5, col: 0, dir: "across", clue: "先生の話を（聞きます）ください", number: 2},
+                    { word: "ナラツテ", row: 2, col: 2, dir: "down", clue: "書道を（習います）います", number: 3},
+                    { word: "タリテ", row: 0, col: 4, dir: "down", clue: "ご飯は（足ります）いますか", number: 4},
+                ]
+            },
           ]
     };
