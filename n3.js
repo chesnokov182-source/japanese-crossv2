@@ -381,6 +381,26 @@ window.crosswordsData.n3 = {
                 { word: "シカ", row: 4, col: 0, dir: "across", clue: "歯医者さんのことを、「？？医師」というね", number: 9 },
                 { word: "ミス", row: 4, col: 3, dir: "across", clue: "失敗", number: 10 }
   ]
+},
+{
+              name: "Кроссворд 19",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "カベ", row: 0, col: 0, dir: "down", clue: "？？に耳あり、しょうじに目あり", number: 1 },
+                { word: "パイロツト", row: 0, col: 2, dir: "down", clue: "飛行機をそうじゅうするよ", number: 2 },
+                { word: "ニモツ", row: 0, col: 3, dir: "down", clue: "重い？？？を、郵便局まで運ぶ", number: 3 },
+                { word: "ブシユ", row: 2, col: 1, dir: "down", clue: "にんべん、うかんむり、くにがまえ、さんずい", number: 5 },
+                { word: "クセン", row: 2, col: 4, dir: "down", clue: "苦しい戦い", number: 6 },
+                { word: "ソシ", row: 3, col: 0, dir: "down", clue: "くい止めること。「敵のしんにゅうを？？する」", number: 7 },
+            
+                { word: "カンパニー", row: 0, col: 0, dir: "across", clue: "「会社」を英語でいうと？", number: 1.1 },
+                { word: "イモ", row: 1, col: 2, dir: "across", clue: "さつま②②、じゃが②②、さと②②", number: 4 },
+                { word: "ブロツク", row: 2, col: 1, dir: "across", clue: "バレーボールで、相手のスパイクを止めること", number: 5.1 },
+                { word: "ソシツ", row: 3, col: 0, dir: "across", clue: "生まれつき持っている性質", number: 7.1 },
+                { word: "シユトケン", row: 4, col: 0, dir: "across", clue: "首都とその周辺地域。日本では、東京都・千葉県・埼玉県・神奈川県・茨城県・栃木県・群馬県・山梨県一帯をさす言葉だよ", number: 8 }
+  ]
 }
     ]
 };
