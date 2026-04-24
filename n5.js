@@ -192,5 +192,17 @@ window.crosswordsData.n5 = {
                     { word: "タリテ", row: 0, col: 4, dir: "down", clue: "ご飯は（足ります）いますか", number: 4},
                 ]
             },
+            {
+                name: "Кроссворд て-форма 5",
+                width: 6,
+                height: 5,
+                price: 100,
+                words: [
+                    { word: "イソイデ", row: 1, col: 0, dir: "across", clue: "雨がふりそうです。（急ぎます）ください", number: 1},
+                    { word: "ケシテ", row: 3, col: 3, dir: "across", clue: "電気を（消けします）", number: 2},
+                    { word: "アソンデ", row: 0, col: 1, dir: "down", clue: "公園でこどもが（遊びます）います", number: 3},
+                    { word: "デカケテ", row: 1, col: 3, dir: "down", clue: "今日は（出かけます）も良いですか", number: 4},
+                ]
+            },
           ]
     };
