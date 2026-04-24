@@ -344,22 +344,42 @@ window.crosswordsData.n3 = {
   ]
 },
 {
-  name: "Кроссворд 17",
-  width: 5,
-  height: 5,
-  price: 60,
-  words: [
-    { word: "ミカン", row: 0, col: 1, dir: "down", clue: "だいだい色の、冬の代表的なくだものといえば？", number: 2 },
-    { word: "センプウキ", row: 0, col: 2, dir: "down", clue: "ぐるぐる回って風をおくるよ", number: 3 },
-    { word: "キヤンバス", row: 0, col: 4, dir: "down", clue: "油絵をかくための布", number: 4 },
-    { word: "シキリ", row: 1, col: 3, dir: "down", clue: "おすもうさんが対決するときのかまえ", number: 6 },
-    { word: "パンク", row: 2, col: 0, dir: "down", clue: "自転車のタイヤから、【ヨコ９のこたえ】がぬけちゃった！", number: 7 },
-
-    { word: "デミセ", row: 0, col: 0, dir: "across", clue: "お祭りでは、道の両わきにこれがたくさんならぶよね", number: 1 },
-    { word: "カンシヤ", row: 1, col: 1, dir: "across", clue: "「ありがとう」の気持ち", number: 5 },
-    { word: "パンプキン", row: 2, col: 0, dir: "across", clue: "「カボチャ」を英語で言うと？", number: 7.1 },
-    { word: "ウリバ", row: 3, col: 2, dir: "across", clue: "商品を売る場所。「家具？？？は4階です」", number: 8 },
-    { word: "クウキ", row: 4, col: 0, dir: "across", clue: "これがないと、人間は生きていけないね", number: 9 }
+              name: "Кроссворд 17",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "ミカン", row: 0, col: 1, dir: "down", clue: "だいだい色の、冬の代表的なくだものといえば？", number: 2 },
+                { word: "センプウキ", row: 0, col: 2, dir: "down", clue: "ぐるぐる回って風をおくるよ", number: 3 },
+                { word: "キヤンバス", row: 0, col: 4, dir: "down", clue: "油絵をかくための布", number: 4 },
+                { word: "シキリ", row: 1, col: 3, dir: "down", clue: "おすもうさんが対決するときのかまえ", number: 6 },
+                { word: "パンク", row: 2, col: 0, dir: "down", clue: "自転車のタイヤから、【ヨコ９のこたえ】がぬけちゃった！", number: 7 },
+            
+                { word: "デミセ", row: 0, col: 0, dir: "across", clue: "お祭りでは、道の両わきにこれがたくさんならぶよね", number: 1 },
+                { word: "カンシヤ", row: 1, col: 1, dir: "across", clue: "「ありがとう」の気持ち", number: 5 },
+                { word: "パンプキン", row: 2, col: 0, dir: "across", clue: "「カボチャ」を英語で言うと？", number: 7.1 },
+                { word: "ウリバ", row: 3, col: 2, dir: "across", clue: "商品を売る場所。「家具？？？は4階です」", number: 8 },
+                { word: "クウキ", row: 4, col: 0, dir: "across", clue: "これがないと、人間は生きていけないね", number: 9 }
+  ]
+},
+{
+              name: "Кроссворд 18",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "トマト", row: 0, col: 0, dir: "down", clue: "上から読んでも、下から読んでも、同じ名前のやさい", number: 1 },
+                { word: "キツツキ", row: 0, col: 2, dir: "down", clue: "上から読んでも、下から読んでも、同じ名前の鳥", number: 2 },
+                { word: "ウラ", row: 0, col: 4, dir: "down", clue: "「表」の反対の言葉は？", number: 3 },
+                { word: "ロウカ", row: 2, col: 1, dir: "down", clue: "あぶないから、走っちゃいけないよ", number: 5 },
+                { word: "コヨミ", row: 2, col: 3, dir: "down", clue: "カレンダー", number: 6 },
+                { word: "エス", row: 3, col: 4, dir: "down", clue: "「Ｒ」の次、「Ｔ」の前", number: 8 },
+            
+                { word: "トツキユウ", row: 0, col: 0, dir: "across", clue: "「特別急行」を、略していうと？", number: 1.2 },
+                { word: "トロツコ", row: 2, col: 0, dir: "across", clue: "工事現場などのレールを走る、小型の手おし車", number: 4 },
+                { word: "ウキヨエ", row: 3, col: 1, dir: "across", clue: "江戸時代に流行した絵。役者や力士などの姿がえがかれたよ", number: 7 },
+                { word: "シカ", row: 4, col: 0, dir: "across", clue: "歯医者さんのことを、「？？医師」というね", number: 9 },
+                { word: "ミズ", row: 4, col: 3, dir: "across", clue: "失敗", number: 10 }
   ]
 }
     ]
