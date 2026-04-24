@@ -264,6 +264,7 @@ body.dark .cell-number {
     pointer-events: none;
     z-index: 1;
     background: transparent;
+    transform: none; 
 }
 
 .clue-block {
