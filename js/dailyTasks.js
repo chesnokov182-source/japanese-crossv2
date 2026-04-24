@@ -4,11 +4,11 @@ import { showToast, audio } from './utils.js';
 const TASKS_KEY = 'dailyTasks';
 const TASKS_LIST = [
     { id: 'solve_2_crosswords', name: 'Решить 2 кроссворда', target: 2, progress: 0, reward: 50 },
-    { id: 'earn_100_points', name: 'Заработать 100 очков', target: 200, progress: 0, reward: 50 },
-    { id: 'use_hint', name: 'Использовать 2 подсказки', target: 2, progress: 0, reward: 30 },
-    { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 50 },
-    { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 80 },
-    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 30 }
+    { id: 'earn_100_points', name: 'Заработать 200 очков', target: 200, progress: 0, reward: 20 },
+    { id: 'use_hint', name: 'Использовать 2 подсказки', target: 2, progress: 0, reward: 20 },
+    { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 20 },
+    { id: 'win_roulette', name: 'Выиграть в рулетке 300 очков', target: 300, progress: 0, reward: 60 },
+    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 }
 ];
 
 let currentTasks = [];
