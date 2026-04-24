@@ -147,7 +147,7 @@ window.crosswordsData.n5 = {
             {
                 name: "Кроссворд て-форма 1",
                 width: 6,
-                height: 8,
+                height: 4,
                 price: 100,
                 words: [
                     { word: "スンデ", row: 1, col: 2, dir: "down", clue: "姉が大阪に（住すみます）います", number: 1},
