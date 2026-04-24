@@ -422,6 +422,27 @@ window.crosswordsData.n3 = {
                 { word: "ルソン", row: 3, col: 2, dir: "across", clue: "？？？島は、フィリピンでもっとも大きな島", number: 8 },
                 { word: "ボクシング", row: 4, col: 0, dir: "across", clue: "得意のアッパーで、相手をノックアウトだ！", number: 10 }
   ]
+},
+{
+              name: "Кроссворд 21",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "ヨウガ", row: 0, col: 0, dir: "down", clue: "外国の映画", number: 1 },
+                { word: "コエ", row: 0, col: 1, dir: "down", clue: "人魚姫は、人間の足を手に入れるために、何を失った？", number: 2 },
+                { word: "アタマ", row: 0, col: 3, dir: "down", clue: "？？？かくして　しりかくさず", number: 3 },
+                { word: "シンデレラ", row: 0, col: 4, dir: "down", clue: "「カボチャの馬車」「ガラスのくつ」といえば？", number: 4 },
+                { word: "スクエア", row: 1, col: 2, dir: "down", clue: "「正方形」を英語でいうと？", number: 6 },
+                { word: "ヌマ", row: 3, col: 1, dir: "down", clue: "「？？にはまる」は、夢中になってぬけ出せないことのたとえ", number: 8 },
+            
+                { word: "ヨコ", row: 0, col: 0, dir: "across", clue: "カニの歩く方向は？", number: 1.1 },
+                { word: "アシ", row: 0, col: 3, dir: "across", clue: "アリは６本、クモは８本", number: 3.1 },
+                { word: "ウエスタン", row: 1, col: 0, dir: "across", clue: "東側＝イースタン、西側＝？？？？？", number: 5 },
+                { word: "クマデ", row: 2, col: 2, dir: "across", clue: "福をかき集める縁起物。宝船や小判のかざりがついているね", number: 7 },
+                { word: "ヌエ", row: 3, col: 1, dir: "across", clue: "顔はサル、体はタヌキ、手足はトラ、尾はヘビ。この妖怪は何？", number: 8.1 },
+                { word: "ゴマアブラ", row: 4, col: 0, dir: "across", clue: "中華料理でよく使われる油だよ。原料はゴマ", number: 9 }
+  ]
 }
     ]
 };
