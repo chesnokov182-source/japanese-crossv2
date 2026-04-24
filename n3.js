@@ -401,6 +401,27 @@ window.crosswordsData.n3 = {
                 { word: "ソシツ", row: 3, col: 0, dir: "across", clue: "生まれつき持っている性質", number: 7.1 },
                 { word: "シユトケン", row: 4, col: 0, dir: "across", clue: "首都とその周辺地域。日本では、東京都・千葉県・埼玉県・神奈川県・茨城県・栃木県・群馬県・山梨県一帯をさす言葉だよ", number: 8 }
   ]
+},
+{
+              name: "Кроссворд 20",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "カクレンボ", row: 0, col: 0, dir: "down", clue: "「もういーかい？」「まーだだよ」", number: 1 },
+                { word: "ニシン", row: 0, col: 1, dir: "down", clue: "「春告魚」と呼ばれている魚だよ。卵は「数の子」", number: 2 },
+                { word: "ゴミ", row: 0, col: 3, dir: "down", clue: "すてるときは、分別をしっかりね", number: 3 },
+                { word: "ヤジルシ", row: 1, col: 2, dir: "down", clue: "←↑→↓", number: 5 },
+                { word: "テング", row: 2, col: 4, dir: "down", clue: "まっかなお顔に、長い鼻", number: 7 },
+                { word: "ソン", row: 3, col: 3, dir: "down", clue: "「得」の反対の言葉", number: 9 },
+            
+                { word: "カニ", row: 0, col: 0, dir: "across", clue: "はさみチョキチョキ、横歩き", number: 1.1 },
+                { word: "ゴゴ", row: 0, col: 3, dir: "across", clue: "1日の後半", number: 3.1 },
+                { word: "クシヤミ", row: 1, col: 0, dir: "across", clue: "はっくしょん！", number: 4 },
+                { word: "レンジ", row: 2, col: 0, dir: "across", clue: "食品の加熱はまかせてね", number: 6 },
+                { word: "ルソン", row: 3, col: 2, dir: "across", clue: "？？？島は、フィリピンでもっとも大きな島", number: 8 },
+                { word: "ボクシング", row: 4, col: 0, dir: "across", clue: "得意のアッパーで、相手をノックアウトだ！", number: 10 }
+  ]
 }
     ]
 };
