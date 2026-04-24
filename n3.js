@@ -379,7 +379,7 @@ window.crosswordsData.n3 = {
                 { word: "トロツコ", row: 2, col: 0, dir: "across", clue: "工事現場などのレールを走る、小型の手おし車", number: 4 },
                 { word: "ウキヨエ", row: 3, col: 1, dir: "across", clue: "江戸時代に流行した絵。役者や力士などの姿がえがかれたよ", number: 7 },
                 { word: "シカ", row: 4, col: 0, dir: "across", clue: "歯医者さんのことを、「？？医師」というね", number: 9 },
-                { word: "ミズ", row: 4, col: 3, dir: "across", clue: "失敗", number: 10 }
+                { word: "ミス", row: 4, col: 3, dir: "across", clue: "失敗", number: 10 }
   ]
 }
     ]
