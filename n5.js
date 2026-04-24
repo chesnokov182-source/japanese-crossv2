@@ -143,6 +143,18 @@ window.crosswordsData.n5 = {
                     { word: "ハンバーガー", row: 2, col: 3, dir: "down", clue: "Блюдо из котлеты между булками", number: 4},
                     { word: "ウドン", row: 0, col: 4, dir: "down", clue: "Длинная продолговатая белая лапша изготовляемая из пшеничной муки", number: 5},
                 ]
+            },
+            {
+                name: "Кроссворд て-форма 1",
+                width: 6,
+                height: 8,
+                price: 100,
+                words: [
+                    { word: "スンデ", row: 1, col: 2, dir: "down", clue: "姉が大阪に（住すみます）います", number: 1},
+                    { word: "スワツテ", row: 1, col: 2, dir: "across", clue: "お店の入口に（座すわります）はいけません", number: 1.1},
+                    { word: "ヨンデ", row: 3, col: 0, dir: "across", clue: "5ページを（読よみます）ください", number: 2},
+                    { word: "ネテ", row: 0, col: 5, dir: "down", clue: "もう（寝ねます）も良いいですか", number: 3},
+                ]
             }
           ]
     };
