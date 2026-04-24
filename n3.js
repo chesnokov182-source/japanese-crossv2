@@ -443,6 +443,27 @@ window.crosswordsData.n3 = {
                 { word: "ヌエ", row: 3, col: 1, dir: "across", clue: "顔はサル、体はタヌキ、手足はトラ、尾はヘビ。この妖怪は何？", number: 8.1 },
                 { word: "ゴマアブラ", row: 4, col: 0, dir: "across", clue: "中華料理でよく使われる油だよ。原料はゴマ", number: 9 }
   ]
-}
+},
+{
+              name: "Кроссворд 22",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "シユクダイ", row: 0, col: 0, dir: "down", clue: "遊ぶ前に、終わらせちゃおう！", number: 1 },
+                { word: "ウエ", row: 0, col: 2, dir: "down", clue: "「目の？？のたんこぶ」は、じゃまなもののたとえ", number: 2 },
+                { word: "ガンキユウ", row: 0, col: 3, dir: "down", clue: "目玉", number: 3 },
+                { word: "イチゴ", row: 0, col: 4, dir: "down", clue: "ショートケーキには、欠かせないよね", number: 4 },
+                { word: "ウセツ", row: 1, col: 1, dir: "down", clue: "右にまがります", number: 6 },
+                { word: "シオ", row: 3, col: 2, dir: "down", clue: "おすもうさんが勝負の前に、まいているね", number: 10 },
+            
+                { word: "ウガイ", row: 0, col: 2, dir: "across", clue: "外からもどったら、ガラガラガラ", number: 2.1 },
+                { word: "ユウエンチ", row: 1, col: 0, dir: "across", clue: "観覧車は楽しいし、ジェットコースターのスリルも最高！", number: 5 },
+                { word: "クセ", row: 2, col: 0, dir: "across", clue: "どんな人にだって、少しはあるもんだよ", number: 7 },
+                { word: "キゴ", row: 2, col: 3, dir: "across", clue: "季節をあらわす言葉。俳句に欠かせないぞ", number: 8 },
+                { word: "ダツシユ", row: 3, col: 0, dir: "across", clue: "短い距離を、全力で走るぞ！", number: 9 },
+                { word: "オウジ", row: 4, col: 2, dir: "across", clue: "プリンス", number: 11 }
+  ]
+}       
     ]
 };
