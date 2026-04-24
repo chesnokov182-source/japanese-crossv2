@@ -87,14 +87,21 @@ function markSpinUsed() {
 
 function spinRoulette(isFree = false) {
     if (rouletteAnimating) return;
-    
-    if (!isFree) {
-        if (!subtractPoints(20)) return;
-    } else {
-        if (!canSpinFree()) {
-            showToast("Сегодня вы уже крутили бесплатно!", "info");
-            return;
-        }
+    rouletteAnimating = true;
+
+    if (!isFree && !subtractPoints(20)) {
+        rouletteAnimating = false;
+        return;
+    }
+    if (isFree && !canSpinFree()) {
+        showToast("Сегодня вы уже крутили бесплатно!", "info");
+        rouletteAnimating = false;
+        return;
+    }
+
+    if (isFree) {
+        const freeBtn = document.getElementById('rouletteFreeBtn');
+        if (freeBtn) freeBtn.disabled = true;
     }
 
     const prizes = [0, 10, 20, 50, 100, 200];
