@@ -12,7 +12,16 @@ export const availableSkins = [
     { id: "sushi", name: "Суши", emoji: "🍣", price: 300 },
     { id: "geisha", name: "Гейша", emoji: "👘", price: 350 },
     { id: "tempura", name: "Тэмпура", emoji: "🍤", price: 400 },
-    { id: "dragon", name: "Дракон", emoji: "🐉", price: 500 }
+    { id: "dragon", name: "Дракон", emoji: "🐉", price: 500 },
+    // Новые скины
+    { id: "torii", name: "Ворота тории", emoji: "⛩️", price: 180 },
+    { id: "koi", name: "Карп кои", emoji: "🐟", price: 220 },
+    { id: "bamboo", name: "Бамбук", emoji: "🎋", price: 150 },
+    { id: "tea", name: "Чайная церемония", emoji: "🍵", price: 280 },
+    { id: "fuji", name: "Гора Фудзи", emoji: "🗻", price: 600 },
+    { id: "crane", name: "Журавль", emoji: "🕊️", price: 400 },
+    { id: "bonsai", name: "Бонсай", emoji: "🌲", price: 350 },
+    { id: "samurai", name: "Самурай", emoji: "⚔️", price: 500 }
 ];
 
 export let purchasedSkins = [];
@@ -105,7 +114,7 @@ function spinRoulette(isFree = false) {
     }
 
     const prizes = [0, 10, 20, 50, 100, 200];
-    const probs = [35, 25, 20, 11, 6, 3];
+    const probs = [25, 20, 20, 15, 10, 10];
     const rand = Math.random() * 100;
     let cumulative = 0, selectedPrize = 0;
     for (let i = 0; i < prizes.length; i++) {
@@ -113,7 +122,6 @@ function spinRoulette(isFree = false) {
         if (rand < cumulative) { selectedPrize = prizes[i]; break; }
     }
 
-    rouletteAnimating = true;
     const display = document.getElementById('rouletteDisplay');
     const result = document.getElementById('rouletteResult');
     let spins = 0;
@@ -178,6 +186,7 @@ export function openShopModal() {
         modalContent.append(skinsSection, upgradesSection, rouletteSection);
     }
     
+    // Skins
     skinsSection.innerHTML = '';
     for (let skin of availableSkins) {
         const purchased = purchasedSkins.includes(skin.id);
@@ -201,6 +210,7 @@ export function openShopModal() {
         skinsSection.appendChild(skinDiv);
     }
     
+    // Upgrades
     upgradesSection.innerHTML = `
         <div class="upgrade-item">
             <div class="upgrade-info"><div class="upgrade-name">📈 Лимит подсказок: 3</div><div class="upgrade-price">500 очков</div></div>
@@ -212,28 +222,23 @@ export function openShopModal() {
         </div>
     `;
 
+    // Roulette
     rouletteSection.innerHTML = `
         <div class="roulette-container">
             <div class="roulette-spin-area"><span id="rouletteDisplay">🎰</span></div>
             <button id="rouletteSpinBtn" class="roulette-spin-btn">Крутить (20 очков)</button>
             <button id="rouletteFreeBtn" class="roulette-spin-btn" style="margin-top: 10px;">🎲 Бесплатное вращение (раз в день)</button>
             <div id="rouletteResult" class="roulette-result"></div>
-            <div class="roulette-info">Шансы выигрыша:<br>0 очк. – 35% | 10 очк. – 25% | 20 очк. – 20% | 50 очк. – 11% | 100 очк. – 6% | 200 очк. – 3%</div>
+            <div class="roulette-info">Шансы выигрыша:<br>0 очк. – 25% | 10 очк. – 20% | 20 очк. – 20% | 50 очк. – 15% | 100 очк. – 10% | 200 очк. – 10%</div>
         </div>
     `;
 
     const spinBtn = document.getElementById('rouletteSpinBtn');
-    if (spinBtn) {
-        spinBtn.replaceWith(spinBtn.cloneNode(true));
-        const newSpinBtn = document.getElementById('rouletteSpinBtn');
-        newSpinBtn.addEventListener('click', () => spinRoulette(false));
-    }
+    if (spinBtn) spinBtn.addEventListener('click', () => spinRoulette(false));
     const freeSpinBtn = document.getElementById('rouletteFreeBtn');
     if (freeSpinBtn) {
-        freeSpinBtn.replaceWith(freeSpinBtn.cloneNode(true));
-        const newFreeBtn = document.getElementById('rouletteFreeBtn');
-        if (!canSpinFree()) newFreeBtn.disabled = true;
-        newFreeBtn.addEventListener('click', () => spinRoulette(true));
+        if (!canSpinFree()) freeSpinBtn.disabled = true;
+        freeSpinBtn.addEventListener('click', () => spinRoulette(true));
     }
 
     skinsSection.querySelectorAll('.skin-btn.buy').forEach(btn => btn.addEventListener('click', () => { if(purchaseSkin(btn.dataset.id, parseInt(btn.dataset.price))) openShopModal(); }));
