@@ -199,9 +199,21 @@ window.crosswordsData.n5 = {
                 price: 100,
                 words: [
                     { word: "イソイデ", row: 1, col: 0, dir: "across", clue: "雨がふりそうです。（急ぎます）ください", number: 1},
-                    { word: "ケシテ", row: 3, col: 3, dir: "across", clue: "電気を（消けします）", number: 2},
+                    { word: "ケシテ", row: 3, col: 3, dir: "across", clue: "電気を（消けします", number: 2},
                     { word: "アソンデ", row: 0, col: 1, dir: "down", clue: "公園でこどもが（遊びます）います", number: 3},
                     { word: "デカケテ", row: 1, col: 3, dir: "down", clue: "今日は（出かけます）も良いですか", number: 4},
+                ]
+            },
+            {
+                name: "Кроссворд て-форма 6",
+                width: 5,
+                height: 5,
+                price: 100,
+                words: [
+                    { word: "カイテ", row: 0, col: 2, dir: "across", clue: "ここに名前を（書きます）ください", number: 1},
+                    { word: "カエツテ", row: 0, col: 2, dir: "down", clue: "兄が家に（帰ります）きます", number: 1.2},
+                    { word: "オシエテ", row: 1, col: 0, dir: "across", clue: "学校で英語を（教えます）います", number: 2},
+                    { word: "オワツテ", row: 1, col: 0, dir: "down", clue: "好きなドラマが（終わります）、悲しいです", number: 2.1},
                 ]
             },
           ]
