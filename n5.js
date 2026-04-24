@@ -167,6 +167,18 @@ window.crosswordsData.n5 = {
                     { word: "ウタツテ", row: 3, col: 0, dir: "across", clue: "パーティーでは（歌います）、踊ります", number: 2},
                     { word: "ウツテ", row: 3, col: 0, dir: "down", clue: "八百屋では、野菜を（売ります）います", number: 2.2},
                 ]
+            },
+            {
+                name: "Кроссворд て-форма 3",
+                width: 6,
+                height: 5,
+                price: 100,
+                words: [
+                    { word: "ツトメテ", row: 1, col: 2, dir: "across", clue: "夫は工場に（務めます）、10年ねんです", number: 1},
+                    { word: "ツクツテ", row: 1, col: 2, dir: "down", clue: "ここに畑を（作ります）も良いですか", number: 1.1},
+                    { word: "タツテ", row: 4, col: 0, dir: "across", clue: "席を（立ちます）、前に来てください", number: 2},
+                    { word: "シメテ", row: 0, col: 4, dir: "down", clue: "出かける時は、鍵を（閉しめます）ください", number: 3},
+                ]
             }
           ]
     };
