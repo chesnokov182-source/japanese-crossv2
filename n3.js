@@ -464,6 +464,24 @@ window.crosswordsData.n3 = {
                 { word: "ダツシユ", row: 3, col: 0, dir: "across", clue: "短い距離を、全力で走るぞ！", number: 9 },
                 { word: "オウジ", row: 4, col: 2, dir: "across", clue: "プリンス", number: 11 }
   ]
-}       
+},
+{
+              name: "Кроссворд 23",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "オオソウジ", row: 0, col: 0, dir: "down", clue: "正月になる前に、きれいにしましょう！", number: 1 },
+                { word: "シヨー", row: 0, col: 2, dir: "down", clue: "ファッション②⑦⑨⑫、ヒーロー②⑨⑫、イルカ②⑨⑫", number: 2 },
+                { word: "マフユ", row: 0, col: 4, dir: "down", clue: "「真夏」の反対の言葉は？", number: 3 },
+                { word: "バシヤ", row: 2, col: 1, dir: "down", clue: "馬が引っぱり、ガタゴト、ガタゴト", number: 5 },
+                { word: "ジザケ", row: 2, col: 3, dir: "down", clue: "ある特定の地域でつくられる日本酒", number: 6 },
+
+                { word: "オトシダマ", row: 0, col: 0, dir: "across", clue: "正月にもらえるおこづかい！", number: 1.1 },
+                { word: "ソバージユ", row: 2, col: 0, dir: "across", clue: "毛先にウェーブをつけた、自然で無造作な感じのヘアスタイル", number: 4 },
+                { word: "ウシ", row: 3, col: 0, dir: "across", clue: "ネズミの次、トラの前", number: 7 },
+                { word: "ジヤンケン", row: 4, col: 0, dir: "across", clue: "グー、チョキ、バー", number: 8 }
+  ]
+}
     ]
 };
