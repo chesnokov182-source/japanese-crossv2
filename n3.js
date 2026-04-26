@@ -544,6 +544,27 @@ window.crosswordsData.n3 = {
                 { word: "イシ", row: 3, col: 3, dir: "across", clue: "「焼け？？に水」は、助けとなる力が足りなく、何の役にも立たないことのたとえ", number: 11 },
                 { word: "トシヨシツ", row: 4, col: 0, dir: "across", clue: "学校のこの部屋には、本がたくさん！", number: 12 }
   ]
+},
+{
+  name: "Кроссворд 27",
+  width: 5,
+  height: 5,
+  price: 60,
+  words: [
+    { word: "ウシロマエ", row: 0, col: 0, dir: "down", clue: "あっ、服を逆に着ちゃった", number: 1 },
+    { word: "ワルツ", row: 0, col: 2, dir: "down", clue: "社交ダンスなどでおどられる、３拍子の曲。「円舞曲」ともいうよ", number: 2 },
+    { word: "パー", row: 0, col: 4, dir: "down", clue: "チョキには勝てないなあ", number: 3 },
+    { word: "アトアジ", row: 1, col: 3, dir: "down", clue: "飲んだり食べたりしたあと、口の中に残る味", number: 5 },
+    { word: "ケイコ", row: 2, col: 1, dir: "down", clue: "「練習」と同じ意味の言葉だね", number: 7 },
+    { word: "ユー", row: 3, col: 4, dir: "down", clue: "日本語では「あなた」「君」。英語では？", number: 10 },
+
+    { word: "ウキワ", row: 0, col: 0, dir: "across", clue: "これさえあれば、水の上でもプカプカ", number: 1.1 },
+    { word: "ルアー", row: 1, col: 2, dir: "across", clue: "人工のえさをつけた、つり針", number: 4 },
+    { word: "ロケツト", row: 2, col: 0, dir: "across", clue: "宇宙に行ってきまーす。スリー、ツー、ワン、発射！", number: 6 },
+    { word: "マイ", row: 3, col: 0, dir: "across", clue: "紙や皿など、平べったいものを数えるのに使う言葉だよ", number: 8 },
+    { word: "アユ", row: 3, col: 3, dir: "across", clue: "夏においしいとされる川魚。塩焼きが人気だね。漢字で書くと「鮎」", number: 9 },
+    { word: "エコロジー", row: 4, col: 0, dir: "across", clue: "「地球の環境を大切にしよう！」という考え方", number: 11 }
+  ]
 }
     ]
 };
