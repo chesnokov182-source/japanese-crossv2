@@ -522,6 +522,28 @@ window.crosswordsData.n3 = {
                 { word: "クキ", row: 3, col: 0, dir: "across", clue: "たけのこは、どこの部分を食べるやさいかな？", number: 8 },
                 { word: "ジテンシヤ", row: 4, col: 0, dir: "across", clue: "乗るときは、歩行者や車に注意してね", number: 9 }
   ]
+},
+{
+              name: "Кроссворд 26",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "ハイライト", row: 0, col: 0, dir: "down", clue: "ニュース、スポーツ、演劇などで、もっとも興味をそそる場面", number: 1 },
+                { word: "コン", row: 0, col: 1, dir: "down", clue: "こくて、暗い青。少し、むらさきっぽいよ。", number: 2 },
+                { word: "ホケンシツ", row: 0, col: 4, dir: "down", clue: "学校で傷ついたら、この部屋へ", number: 4 },
+                { word: "コジ", row: 1, col: 2, dir: "down", clue: "古くから伝えられてきた事がら。「五十歩百歩」は、中国の？？から生まれた言葉だよ", number: 6 },
+                { word: "カイシ", row: 2, col: 3, dir: "down", clue: "「終了」の反対の意味の言葉は？", number: 8 },
+                { word: "ヌシ", row: 3, col: 1, dir: "down", clue: "その場所の支配者。「あの犬は、この山の？？だ！」", number: 10 },
+            
+                { word: "ハコ", row: 0, col: 0, dir: "across", clue: "「ボックス」を日本語で言うと？", number: 1.1 },
+                { word: "トホ", row: 0, col: 3, dir: "across", clue: "乗り物に乗らないで、歩くこと", number: 3 },
+                { word: "インコ", row: 1, col: 0, dir: "across", clue: "人間の言葉をまねることができる、カラフルな鳥。オウムよりは小さめ", number: 5 },
+                { word: "ジカン", row: 2, col: 2, dir: "across", clue: "1日は24？？？", number: 7 },
+                { word: "イヌ", row: 3, col: 0, dir: "across", clue: "江戸幕府の第5代将軍・徳川綱吉が、とくに大切にした動物は？", number: 9 },
+                { word: "イシ", row: 3, col: 3, dir: "across", clue: "「焼け？？に水」は、助けとなる力が足りなく、何の役にも立たないことのたとえ", number: 11 },
+                { word: "トシヨシツ", row: 4, col: 0, dir: "across", clue: "学校のこの部屋には、本がたくさん！", number: 12 }
+  ]
 }
     ]
 };
