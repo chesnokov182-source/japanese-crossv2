@@ -472,7 +472,7 @@ window.crosswordsData.n3 = {
               price: 60,
               words: [
                 { word: "オオソウジ", row: 0, col: 0, dir: "down", clue: "正月になる前に、きれいにしましょう！", number: 1 },
-                { word: "シヨー", row: 0, col: 2, dir: "down", clue: "ファッション②⑦⑨⑫、ヒーロー②⑨⑫、イルカ②⑨⑫", number: 2 },
+                { word: "シヨー", row: 0, col: 2, dir: "down", clue: "ファッション？？？、ヒーロー？？？、イルカ？？？", number: 2 },
                 { word: "マフユ", row: 0, col: 4, dir: "down", clue: "「真夏」の反対の言葉は？", number: 3 },
                 { word: "バシヤ", row: 2, col: 1, dir: "down", clue: "馬が引っぱり、ガタゴト、ガタゴト", number: 5 },
                 { word: "ジザケ", row: 2, col: 3, dir: "down", clue: "ある特定の地域でつくられる日本酒", number: 6 },
@@ -481,6 +481,27 @@ window.crosswordsData.n3 = {
                 { word: "ソバージユ", row: 2, col: 0, dir: "across", clue: "毛先にウェーブをつけた、自然で無造作な感じのヘアスタイル", number: 4 },
                 { word: "ウシ", row: 3, col: 0, dir: "across", clue: "ネズミの次、トラの前", number: 7 },
                 { word: "ジヤンケン", row: 4, col: 0, dir: "across", clue: "グー、チョキ、バー", number: 8 }
+  ]
+},
+{
+              name: "Кроссворд 24",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "オトナ", row: 0, col: 0, dir: "down", clue: "子どもが大きくなると？", number: 1 },
+                { word: "ムシメガネ", row: 0, col: 1, dir: "down", clue: "小さいものが大きく見える", number: 2 },
+                { word: "イチジ", row: 0, col: 3, dir: "down", clue: "天気予報は「くもり？？？雨」。傘を持っていったほうがよさそうだね", number: 3 },
+                { word: "スズ", row: 0, col: 4, dir: "down", clue: "童話「ネズミの相談」では、ネコの首に何をつけることになった？", number: 4 },
+                { word: "クスリ", row: 2, col: 2, dir: "down", clue: "病気になったらのむ、ケガしたらぬる", number: 8 },
+                { word: "ハト", row: 3, col: 4, dir: "down", clue: "平和のシンボル。ポッポー", number: 10 },
+            
+                { word: "オムライス", row: 0, col: 0, dir: "across", clue: "ケチャップなどで味をつけたごはんを、うすい卵焼きでつつんだ料理", number: 1.1 },
+                { word: "トシ", row: 1, col: 0, dir: "across", clue: "たくさんの人が住んでいる、大きなまち", number: 5 },
+                { word: "チズ", row: 1, col: 3, dir: "across", clue: "英語では「マップ」。日本語では？", number: 6 },
+                { word: "ナメクジ", row: 2, col: 0, dir: "across", clue: "塩に弱いよ", number: 7 },
+                { word: "ガス", row: 3, col: 1, dir: "across", clue: "日本語では「気体」。英語では？", number: 9 },
+                { word: "パネリスト", row: 4, col: 0, dir: "across", clue: "集まった人々の前で、あるテーマについて討論する専門家たち", number: 11 }
   ]
 }
     ]
