@@ -503,6 +503,25 @@ window.crosswordsData.n3 = {
                 { word: "ガス", row: 3, col: 1, dir: "across", clue: "日本語では「気体」。英語では？", number: 9 },
                 { word: "パネリスト", row: 4, col: 0, dir: "across", clue: "集まった人々の前で、あるテーマについて討論する専門家たち", number: 11 }
   ]
+},
+{
+              name: "Кроссворд 25",
+              width: 5,
+              height: 5,
+              price: 60,
+              words: [
+                { word: "ジユウクジ", row: 0, col: 0, dir: "down", clue: "「夜7時」の別の言い方", number: 1 },
+                { word: "マネー", row: 0, col: 2, dir: "down", clue: "日本語では「お金」。英語では？", number: 2 },
+                { word: "ツリー", row: 0, col: 4, dir: "down", clue: "日本語では「木」。英語では？", number: 3 },
+                { word: "バタアシ", row: 1, col: 3, dir: "down", clue: "左右の足を、上下にばたばた。泳ぎの基本だね", number: 5 },
+                { word: "オキテ", row: 2, col: 1, dir: "down", clue: "決まり", number: 7 },
+            
+                { word: "ジヤマ", row: 0, col: 0, dir: "across", clue: "人の家に入るときのあいさつ。「お？？？します」", number: 1.1 },
+                { word: "ネバリ", row: 1, col: 2, dir: "across", clue: "オクラやナガイモには、何がある？", number: 4 },
+                { word: "ウオーター", row: 2, col: 0, dir: "across", clue: "日本語では「水」。英語では？", number: 6 },
+                { word: "クキ", row: 3, col: 0, dir: "across", clue: "たけのこは、どこの部分を食べるやさいかな？", number: 8 },
+                { word: "ジテンシヤ", row: 4, col: 0, dir: "across", clue: "乗るときは、歩行者や車に注意してね", number: 9 }
+  ]
 }
     ]
 };
