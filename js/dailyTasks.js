@@ -7,7 +7,7 @@ const TASKS_LIST = [
     { id: 'earn_100_points', name: 'Заработать 200 очков', target: 200, progress: 0, reward: 20 },
     { id: 'use_hint', name: 'Использовать 2 подсказки', target: 2, progress: 0, reward: 20 },
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 20 },
-    { id: 'win_roulette', name: 'Выиграть в рулетке 300 очков', target: 300, progress: 0, reward: 60 },
+    { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 60 },
     { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 }
 ];
 
