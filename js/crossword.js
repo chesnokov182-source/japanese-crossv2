@@ -562,7 +562,11 @@ function onCellInput(row, col) {
     input.value = getDisplayValue(row, col);
 }
 
-function syncWordFromGrid() { for (let w of wordsList) { for (let i = 0; i < w.cells.length; i++) w.current[i] = gridData[w.cells[i].row][w.cells[i].col] || ""; } }
+function syncWordFromGrid() { 
+    for (let w of wordsList) {
+        for (let i = 0; i < w.cells.length; i++) w.current[i] = gridData[w.cells[i].row][w.cells[i].col] || ""; 
+    } 
+}
 
 function checkCompletion() {
     let allFilled = true;
