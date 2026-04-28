@@ -268,7 +268,10 @@ function getWordNumberAt(row, col) {
     return null;
 }
 function getDisplayValue(row, col) { return romajiBuffers.get(`${row},${col}`) || (gridData[row][col] !== null ? gridData[row][col] : ""); }
-function updateCellUI(row, col) { if (cellElements[row]?.[col]) cellElements[row][col].value = getDisplayValue(row, col); }
+
+function updateCellUI(row, col) { 
+    if (cellElements[row]?.[col]) cellElements[row][col].value = getDisplayValue(row, col); 
+}
 
 function onCellFocus(row, col) {
     lastActiveRow = row;
