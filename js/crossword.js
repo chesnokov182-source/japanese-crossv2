@@ -505,50 +505,14 @@ function onCellInput(row, col) {
     if (!val) return;
     const key = `${row},${col}`;
     
-    if (/[\u30A0-\u30FF\u3040-\u309F]/.test(val)) {
-        const firstChar = val[0];
-        if (gridData[row][col] !== firstChar) {
-            gridData[row][col] = firstChar;
-            romajiBuffers.delete(key);
-            updateCellUI(row, col);
-            syncWordFromGrid();
-            checkCompletion();
-            updateClueCompletion();
-            updateWrongHighlights();
-            saveCurrentProgress();
-            const correctChar = correctCharMap.get(`${row},${col}`);
-            if (firstChar === correctChar) {
-                audio.correct();
-                const cellDiv = cellElements[row]?.[col]?.parentElement;
-                if (cellDiv) {
-                    cellDiv.classList.add('correct-animation');
-                    setTimeout(() => cellDiv.classList.remove('correct-animation'), 300);
-                }
-            } else {
-                audio.error();
-            }
-            if (activeWordId !== null) {
-                const activeWord = wordsList.find(w => w.id === activeWordId);
-                if (activeWord) {
-                    let idx = activeWord.cells.findIndex(c => c.row === row && c.col === col);
-                    if (idx !== -1 && idx + 1 < activeWord.cells.length) {
-                        let nextCell = activeWord.cells[idx + 1];
-                        if (nextCell) cellElements[nextCell.row][nextCell.col]?.focus();
-                    } else {
-                        focusNextWord(activeWord.number);
-                    }
-                }
-            }
-        }
-        input.value = getDisplayValue(row, col);
-        return;
-    }
-    
+    // Разрешаем только латиницу и дефис (строка может быть любой длины)
     if (/^[a-zA-Z-]+$/.test(val)) {
         if (!isMobile) {
+            // На ПК уже обработано в keydown – просто сбрасываем поле
             input.value = getDisplayValue(row, col);
             return;
         }
+        // Мобильные: накапливаем буфер и пытаемся преобразовать
         let buffer = input.value.toLowerCase();
         romajiBuffers.set(key, buffer);
         const converted = processBuffer(row, col, buffer);
@@ -559,6 +523,9 @@ function onCellInput(row, col) {
         return;
     }
     
+    // Если ввод содержит недопустимые символы (японские, цифры, знаки и т.д.)
+    // Показываем предупреждение и очищаем поле
+    showToast("Разрешены только английские буквы и дефис (-)", "error");
     input.value = getDisplayValue(row, col);
 }
 
