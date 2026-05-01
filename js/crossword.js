@@ -454,14 +454,15 @@ function handleKeydown(e, row, col) {
     if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
+        e.preventDefault(); // <- КЛЮЧЕВОЕ: предотвращаем стандартное удаление символа
         const key = `${row},${col}`;
         let buffer = romajiBuffers.get(key) || "";
         if (isMobile && buffer.length > 0) {
-            // На мобильных очищаем весь буфер сразу
+            // На телефонах удаляем весь буфер
             romajiBuffers.delete(key);
             updateCellUI(row, col);
         } else if (buffer.length > 0) {
-            // На ПК удаляем один символ за раз
+            // На ПК удаляем один символ
             romajiBuffers.set(key, buffer.slice(0, -1));
             updateCellUI(row, col);
         } else {
@@ -479,6 +480,7 @@ function handleKeydown(e, row, col) {
         }
         return;
     }
+
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
         let newRow = row, newCol = col;
         if (e.key === "ArrowLeft") newCol--; if (e.key === "ArrowRight") newCol++;
@@ -488,6 +490,7 @@ function handleKeydown(e, row, col) {
         }
         return;
     }
+
     if (!isMobile && e.key.length === 1 && allowedChars.test(e.key)) {
         e.preventDefault();
         const key = `${row},${col}`;
