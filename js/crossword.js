@@ -456,11 +456,18 @@ function handleKeydown(e, row, col) {
     if (e.key === "Backspace") {
         const key = `${row},${col}`;
         let buffer = romajiBuffers.get(key) || "";
-        if (buffer.length > 0) {
-            romajiBuffers.set(key, buffer.slice(0, -1)); updateCellUI(row, col);
+        if (isMobile && buffer.length > 0) {
+            // На мобильных очищаем весь буфер сразу
+            romajiBuffers.delete(key);
+            updateCellUI(row, col);
+        } else if (buffer.length > 0) {
+            // На ПК удаляем один символ за раз
+            romajiBuffers.set(key, buffer.slice(0, -1));
+            updateCellUI(row, col);
         } else {
             if (gridData[row][col] !== "") {
-                gridData[row][col] = ""; updateCellUI(row, col);
+                gridData[row][col] = "";
+                updateCellUI(row, col);
                 syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
             } else if (activeWordId !== null) {
                 const activeWord = wordsList.find(w => w.id === activeWordId);
