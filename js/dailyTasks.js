@@ -11,7 +11,8 @@ const TASKS_LIST = [
     { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 60 },
     { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 },
     { id: 'spend_200_points', description: 'Потратить 200 очков', target: 200, reward: 20 },
-    { id: 'play_roulette_5', description: 'Сыграть в рулетку 5 раз', target: 5, reward: 20 }
+    { id: 'play_roulette_5', description: 'Сыграть в рулетку 5 раз', target: 5, reward: 20 },
+    { id: 'solve_no_hints', description: 'Решить кроссворд без подсказок', target: 1, reward: 30 }
 ];
 
 let currentTasks = [];
