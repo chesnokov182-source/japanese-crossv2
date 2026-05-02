@@ -5,7 +5,7 @@ import { availableSkins, purchasedSkins } from './shop.js';
 const TASKS_KEY = 'dailyTasks';
 const TASKS_LIST = [
     { id: 'solve_2_crosswords', name: 'Решить 2 кроссворда', target: 2, progress: 0, reward: 50 },
-    { id: 'earn_100_points', name: 'Заработать 200 очков', target: 200, progress: 0, reward: 20 },
+    { id: 'earn_200_points', name: 'Заработать 200 очков', target: 200, progress: 0, reward: 20 },
     { id: 'use_hint', name: 'Использовать 2 подсказки', target: 2, progress: 0, reward: 20 },
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 20 },
     { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 60 },
@@ -44,13 +44,13 @@ let hasWinRoulette200 = false;
 for (const task of shuffled) {
     if (dailyTasks.length >= 3) break; 
 
-    if (task.id === 'earn_200' && hasWinRoulette200) continue; 
-    if (task.id === 'win_roulette_200' && hasEarn200) continue;
+    if (task.id === 'earn_200_points' && hasWinRoulette200) continue; 
+    if (task.id === 'win_roulette' && hasEarn200) continue;
 
     dailyTasks.push(task);
 
-    if (task.id === 'earn_200') hasEarn200 = true;
-    if (task.id === 'win_roulette_200') hasWinRoulette200 = true;
+    if (task.id === 'earn_200_points') hasEarn200 = true;
+    if (task.id === 'win_roulette') hasWinRoulette200 = true;
 }
 const shuffled = [...availableTasks].sort(() => 0.5 - Math.random());
     
