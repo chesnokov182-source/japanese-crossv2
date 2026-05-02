@@ -536,8 +536,6 @@ function onCellInput(row, col) {
         return;
     }
     
-    // Если ввод содержит недопустимые символы (японские, цифры, знаки и т.д.)
-    // Показываем предупреждение и очищаем поле
     showToast("Разрешены только английские буквы и дефис (-)", "error");
     input.value = getDisplayValue(row, col);
 }
@@ -563,6 +561,9 @@ function checkCompletion() {
             if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); updateTaskProgress('solve_2_crosswords', 1); }
             updatePuzzleSelect(); updateLevelProgress(); updateButtonStates();
             showToast(`Кроссворд решён! +50 очков`, "success");
+            if (!usedHintForCurrentLevel) {
+                updateTaskProgress('solve_no_hints', 1);
+            }
         }
     } else if (unlocked) {
         statusDiv.innerHTML = "Заполняйте ячейки. Вводите английскими буквами (a-z). Например: su → ス, shu → シ+ユ, n+s → ン+s, - → ー.";
