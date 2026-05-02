@@ -1,5 +1,6 @@
 import { gameStats, addPoints, saveGameStats, updateScoreUI } from './storage.js';
 import { showToast, audio } from './utils.js';
+import { availableSkins, purchasedSkins } from './shop.js';
 
 const TASKS_KEY = 'dailyTasks';
 const TASKS_LIST = [
@@ -24,7 +25,15 @@ export function loadDailyTasks() {
             return;
         }
     }
-    const shuffled = [...TASKS_LIST].sort(() => 0.5 - Math.random());
+    const availableTasks = TASKS_LIST.filter(task => {
+    if (task.id === 'buy_skin') {
+        // Показываем задание, если купленных скинов меньше, чем всего доступно
+        return purchasedSkins.length < availableSkins.length;
+    }
+    return true;
+});
+const shuffled = [...availableTasks].sort(() => 0.5 - Math.random());
+    
     currentTasks = shuffled.slice(0, 3).map(t => ({ ...t, progress: 0 }));
     localStorage.setItem(TASKS_KEY, JSON.stringify({ date: today, tasks: currentTasks }));
     renderDailyTasksPanel();
