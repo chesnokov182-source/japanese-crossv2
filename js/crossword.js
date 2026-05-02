@@ -12,6 +12,7 @@ export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCou
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 let floatingClueElement = null;
 let lastActiveRow = null, lastActiveCol = null;
+let usedHintForCurrentLevel = false;
 
 export function setCurrentLevelAndPuzzle(lvl, idx) {
     currentLevel = lvl;
@@ -134,9 +135,11 @@ export function loadCrossword(levelId, puzzleIdx, preserveSaved = true) {
         gridData = savedData.gridData.map(row => [...row]);
         hintUsed = savedData.hintUsed;
         hintCount = savedData.hintCount || 0;
+        usedHintForCurrentLevel = hintCount > 0;
     } else {
         gridData = emptyGrid.map(row => row.map(cell => (cell === null ? null : "")));
         hintUsed = false; hintCount = 0;
+        usedHintForCurrentLevel = false;
     }
     generateNumbering();
     syncWordFromGrid();
@@ -759,6 +762,8 @@ export function giveHint() {
     }
 
     if (!subtractPoints(20)) return;
+
+    usedHintForCurrentLevel = true;
 
     const correctChar = correctCharMap.get(`${lastActiveRow},${lastActiveCol}`);
     gridData[lastActiveRow][lastActiveCol] = correctChar;
