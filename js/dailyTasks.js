@@ -52,7 +52,6 @@ for (const task of shuffled) {
     if (task.id === 'earn_200_points') hasEarn200 = true;
     if (task.id === 'win_roulette') hasWinRoulette200 = true;
 }
-const shuffled = [...availableTasks].sort(() => 0.5 - Math.random());
     
     currentTasks = shuffled.slice(0, 3).map(t => ({ ...t, progress: 0 }));
     localStorage.setItem(TASKS_KEY, JSON.stringify({ date: today, tasks: currentTasks }));
