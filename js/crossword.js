@@ -727,6 +727,7 @@ export function buyCurrentPuzzle() {
                 localStorage.setItem(KEYS.UNLOCKED, JSON.stringify(unlocked));
                 subtractPoints(price); showConfetti(); showToast(`Разблокировано!`, "success");
                 loadCrossword(currentLevel, currentPuzzleIndex, true); updateButtonStates();
+                updateTaskProgress('spend_200_points', price);
             } else showToast(`Нужно ${price} очков.`, "error");
             closeModal();
         };
