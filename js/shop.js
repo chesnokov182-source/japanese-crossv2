@@ -111,6 +111,8 @@ function spinRoulette(isFree = false) {
         if (freeBtn) freeBtn.disabled = true;
     }
 
+    updateTaskProgress('play_roulette_5', 1);
+    
     const prizes = [0, 10, 20, 50, 100, 200];
     const probs = [35, 25, 20, 11, 16, 3];
     const rand = Math.random() * 100;
