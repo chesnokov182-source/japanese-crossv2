@@ -56,7 +56,6 @@ for (const task of shuffled) {
     currentTasks = shuffled.slice(0, 3).map(t => ({ ...t, progress: 0 }));
     localStorage.setItem(TASKS_KEY, JSON.stringify({ date: today, tasks: currentTasks }));
     renderDailyTasksPanel();
-    window.loadDailyTasks = loadDailyTasks;
 }
 
 export function updateTaskProgress(taskId, increment = 1, customValue = null) {
@@ -98,3 +97,4 @@ export function renderDailyTasksPanel() {
         `;
     });
 }
+window.loadDailyTasks = loadDailyTasks;
