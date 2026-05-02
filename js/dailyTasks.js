@@ -9,7 +9,10 @@ const TASKS_LIST = [
     { id: 'use_hint', name: 'Использовать 2 подсказки', target: 2, progress: 0, reward: 20 },
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 20 },
     { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 60 },
-    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 }
+    { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 },
+    { id: 'spend_200_points', description: 'Потратить 200 очков', target: 200, reward: 20 },
+    { id: 'play_roulette_5', description: 'Сыграть в рулетку 5 раз', target: 5, reward: 20 },
+    { id: 'solve_no_hints', description: 'Решить кроссворд без подсказок', target: 1, reward: 30 }
 ];
 
 let currentTasks = [];
@@ -25,13 +28,30 @@ export function loadDailyTasks() {
             return;
         }
     }
-    const availableTasks = TASKS_LIST.filter(task => {
+const availableTasks = TASKS_LIST.filter(task => {
     if (task.id === 'buy_skin') {
-        // Показываем задание, если купленных скинов меньше, чем всего доступно
         return purchasedSkins.length < availableSkins.length;
     }
     return true;
 });
+
+const shuffled = [...availableTasks].sort(() => 0.5 - Math.random());
+
+const dailyTasks = [];
+let hasEarn200 = false;
+let hasWinRoulette200 = false;
+
+for (const task of shuffled) {
+    if (dailyTasks.length >= 3) break; 
+
+    if (task.id === 'earn_200' && hasWinRoulette200) continue; 
+    if (task.id === 'win_roulette_200' && hasEarn200) continue;
+
+    dailyTasks.push(task);
+
+    if (task.id === 'earn_200') hasEarn200 = true;
+    if (task.id === 'win_roulette_200') hasWinRoulette200 = true;
+}
 const shuffled = [...availableTasks].sort(() => 0.5 - Math.random());
     
     currentTasks = shuffled.slice(0, 3).map(t => ({ ...t, progress: 0 }));
