@@ -114,7 +114,7 @@ function spinRoulette(isFree = false) {
     }
 
     updateTaskProgress('play_roulette_5', 1);
-    updateTaskProgress('spend_100_points', 20);
+    updateTaskProgress('spend_200_points', 20);
     
     const prizes = [0, 10, 20, 50, 100, 200];
     const probs = [35, 25, 20, 11, 16, 3];
