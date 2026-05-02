@@ -10,9 +10,9 @@ const TASKS_LIST = [
     { id: 'buy_skin', name: 'Купить скин', target: 1, progress: 0, reward: 20 },
     { id: 'win_roulette', name: 'Выиграть в рулетке 200 очков', target: 200, progress: 0, reward: 60 },
     { id: 'complete_any_word', name: 'Угадать любое слово', target: 1, progress: 0, reward: 20 },
-    { id: 'spend_200_points', name: 'Потратить 200 очков', target: 200, reward: 20 },
-    { id: 'play_roulette_5', name: 'Сыграть в рулетку 5 раз', target: 5, reward: 20 },
-    { id: 'solve_no_hints', name: 'Решить кроссворд без подсказок', target: 1, reward: 30 }
+    { id: 'spend_200_points', name: 'Потратить 200 очков', target: 200, progress: 0, reward: 20 },
+    { id: 'play_roulette_5', name: 'Сыграть в рулетку 5 раз', target: 5, progress: 0, reward: 20 },
+    { id: 'solve_no_hints', name: 'Решить кроссворд без подсказок', target: 1, progress: 0, reward: 30 }
 ];
 
 let currentTasks = [];
