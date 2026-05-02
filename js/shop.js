@@ -137,7 +137,7 @@ function spinRoulette(isFree = false) {
                     : `🎉 Вы выиграли ${selectedPrize} очков! 🎉`;
                 if (selectedPrize >= 100) showConfetti();
                 audio.win(selectedPrize);
-                if (!isFree && selectedPrize >= 50) {
+                if (selectedPrize > 0) {
                     updateTaskProgress('win_roulette', selectedPrize);
                 }
                 if (isFree) markSpinUsed();
