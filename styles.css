@@ -1119,3 +1119,77 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
 body.dark .cell {
     box-shadow: inset 0 0 0 1px #666;
 }
+
+/* Убираем любые подчёркивания и линии у кнопки "Тема" */
+#themeBtn,
+#themeBtn:hover,
+#themeBtn:focus,
+#themeBtn:active,
+#themeBtn:visited {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: var(--btn-bg-light) !important;
+}
+/* Для тёмной темы */
+body.dark #themeBtn,
+body.dark #themeBtn:hover,
+body.dark #themeBtn:focus {
+    background: var(--btn-bg-dark) !important;
+}
+/* Для темы сакура */
+body.sakura #themeBtn {
+    background: var(--btn-bg-sakura) !important;
+}
+
+/* ========== ПРИНУДИТЕЛЬНОЕ СМЫКАНИЕ ЯЧЕЕК ========== */
+.crossword-grid {
+    gap: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.cell {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    /* Линии рисуем внутри ячейки, чтобы не было двойных границ */
+    box-shadow: inset 0 0 0 1px #888 !important;
+}
+
+.cell input {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* Для тёмной темы */
+body.dark .cell {
+    box-shadow: inset 0 0 0 1px #666 !important;
+}
+
+/* Для темы сакура (цвет границ как в вашей теме) */
+body.sakura .cell {
+    box-shadow: inset 0 0 0 1px #e0a0b0 !important;
+}
+
+/* Для темы бамбук используем переменную */
+body.bamboo .cell {
+    box-shadow: inset 0 0 0 1px var(--border) !important;
+}
+
+/* Для темы фудзи */
+body.fuji .cell {
+    box-shadow: inset 0 0 0 1px var(--border) !important;
+}
+
+/* Также убираем возможные границы у заблокированных ячеек */
+.cell.blocked {
+    box-shadow: inset 0 0 0 1px #888 !important;
+    background: var(--cell-blocked-light) !important;
+}
+
+body.dark .cell.blocked {
+    box-shadow: inset 0 0 0 1px #666 !important;
+}
