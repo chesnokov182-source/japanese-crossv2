@@ -1153,6 +1153,7 @@ body.bamboo .upgrade-btn.buy {
 }
 body.bamboo .daily-tasks {
     background: var(--bg-container);
+    border-radius: 16px;
 }
 body.bamboo .task-progress {
     background: #c0d6a0;
@@ -1285,6 +1286,7 @@ body.fuji .upgrade-btn.buy {
 }
 body.fuji .daily-tasks {
     background: var(--bg-container);
+    border-radius: 16px;
 }
 body.fuji .task-progress {
     background: #c1d9f0;
