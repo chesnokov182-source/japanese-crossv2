@@ -1030,3 +1030,86 @@ body.sakura .task-progress {
     line-height: 1;
     vertical-align: middle;
 }
+
+/* Тема Дзен-бамбук */
+body.bamboo {
+    --bg-body: #d9e0b5;
+    --bg-container: #f0f7da;
+    --bg-clues: #eaf4cf;
+    --text: #3a5e3a;
+    --border: #8cae6e;
+    --cell-bg: #ffffe0;
+    --cell-blocked: #bdd48a;
+    --highlight: #e0f0c0;
+    --active-word: #c0e0a0;
+    --wrong: #f0a0a0;
+    --btn-bg: #6b8e23;
+    --btn-hover: #556b2f;
+    --shadow: rgba(60, 60, 0, 0.2);
+}
+body.bamboo {
+    background: var(--bg-body);
+    color: var(--text);
+}
+body.bamboo .crossword-container {
+    background: var(--bg-container);
+    box-shadow: 0 10px 30px var(--shadow);
+}
+body.bamboo .clues-section {
+    background: var(--bg-clues);
+}
+body.bamboo select, body.bamboo button {
+    background: var(--bg-container);
+    color: var(--text);
+    border-color: var(--border);
+}
+body.bamboo button {
+    background: var(--btn-bg);
+    color: white;
+}
+body.bamboo button:hover { background: var(--btn-hover); }
+body.bamboo .cell {
+    background: var(--cell-bg);
+    border-color: var(--border);
+}
+body.bamboo .cell.blocked { background: var(--cell-blocked); }
+body.bamboo .cell.highlight { background: var(--highlight); }
+body.bamboo .cell.active-word { background: var(--active-word); }
+body.bamboo .cell.wrong { background: var(--wrong); }
+body.bamboo .clue-block h3 { border-left-color: var(--btn-bg); }
+body.bamboo .clue-list li.active-clue { background: var(--active-word); }
+body.bamboo .clue-num { color: var(--btn-bg); }
+body.bamboo .status { background: rgba(107, 142, 35, 0.1); color: #3a5e3a; }
+
+/* Тема Фудзи */
+body.fuji {
+    --bg-body: #b8d5e8;
+    --bg-container: #eef5ff;
+    --bg-clues: #e0edf8;
+    --text: #2c4b6e;
+    --border: #8ab3cf;
+    --cell-bg: #ffffff;
+    --cell-blocked: #c1d9f0;
+    --highlight: #cce8ff;
+    --active-word: #a8d0ff;
+    --wrong: #ffb3b3;
+    --btn-bg: #3c8dbc;
+    --btn-hover: #2c6e9e;
+    --shadow: rgba(0,0,0,0.1);
+}
+body.fuji {
+    background: var(--bg-body);
+    color: var(--text);
+}
+body.fuji .crossword-container {
+    background: var(--bg-container);
+}
+/* остальные аналогично – скопируйте структуру из body.bamboo, заменив переменные */
+body.fuji .clues-section { background: var(--bg-clues); }
+body.fuji .cell { background: var(--cell-bg); border-color: var(--border); }
+body.fuji .cell.blocked { background: var(--cell-blocked); }
+body.fuji .cell.active-word { background: var(--active-word); }
+body.fuji .cell.wrong { background: var(--wrong); }
+body.fuji button { background: var(--btn-bg); }
+body.fuji button:hover { background: var(--btn-hover); }
+/* ... и так далее для остальных селекторов */
