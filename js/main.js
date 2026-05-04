@@ -211,4 +211,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById("helpBtn").addEventListener("click", () => { audio.click(); showTutorial(); });
     if (!localStorage.getItem("tutorialShown")) setTimeout(showTutorial, 500);
-});
+
+    // ========== МОБИЛЬНАЯ АДАПТАЦИЯ (ПРИНУДИТЕЛЬНАЯ) ==========
+    function applyMobileLayout() {
+        const isMobile = window.innerWidth <= 768;
+        const cluesSection = document.querySelector('.clues-section');
+        const floatingClue = document.getElementById('floatingClue');
+        
+        if (cluesSection) {
+            cluesSection.style.display = isMobile ? 'none' : '';
+        }
+        if (floatingClue) {
+            floatingClue.style.display = isMobile ? 'block' : 'none';
+        }
+        
+        // Перезагружаем сетку, чтобы обновить размеры ячеек (если нужно)
+        if (window.cellElements && window.gridWidth && window.gridHeight) {
+            // Просто перерисовка не требуется, но можно вызвать applyHighlight для обновления стилей
+            if (typeof applyHighlight === 'function') applyHighlight();
+        }
+    }
+    
+    // Вызываем при загрузке и при изменении размера окна
+    applyMobileLayout();
+    window.addEventListener('resize', applyMobileLayout);
+    });
