@@ -225,4 +225,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Вызываем при загрузке и при изменении размера окна
     applyMobileLayout();
     window.addEventListener('resize', applyMobileLayout);
+    }
     });
