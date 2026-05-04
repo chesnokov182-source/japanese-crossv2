@@ -636,14 +636,15 @@ function buildCorrectCharMap() {
     correctCharMap.clear();
     for (let w of wordsList) { for (let idx = 0; idx < w.cells.length; idx++) correctCharMap.set(`${w.cells[idx].row},${w.cells[idx].col}`, w.wordOrig[idx]); }
 }
+
 function updateWrongHighlights() {
     for (let i = 0; i < gridHeight; i++) {
         for (let j = 0; j < gridWidth; j++) {
-            const cellDiv = cellElements[i]?.[j]?.parentElement;
-            if (!cellDiv) continue;
+            const td = cellTdElements[i]?.[j];
+            if (!td) continue;
             const correct = correctCharMap.get(`${i},${j}`);
-            if (gridData[i][j] && gridData[i][j] !== correct && correct) cellDiv.classList.add("wrong");
-            else cellDiv.classList.remove("wrong");
+            if (gridData[i][j] && gridData[i][j] !== correct && correct) td.classList.add("wrong");
+            else td.classList.remove("wrong");
         }
     }
 }
