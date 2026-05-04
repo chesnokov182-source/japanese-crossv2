@@ -49,21 +49,24 @@ export function getSelectedSkinEmoji() {
 }
 
 function purchaseSkin(skinId, price) {
-    if (purchasedSkins.includes(skinId)) return showToast("Скин уже куплен!", "error");
+    if (purchasedSkins.includes(skinId)) {
+        showToast("Скин уже куплен!", "error");
+        return false;
+    }
     if (subtractPoints(price)) {
         purchasedSkins.push(skinId);
         saveSkinsData();
+        selectSkin(skinId);
         showConfetti();
-        showToast(`Скин куплен!`, "success");
+        showToast(`Скин куплен и применён!`, "success");
         updateTaskProgress('buy_skin', 1);
         updateTaskProgress('spend_200_points', price);
-        updateAchievementProgress('skins', purchasedSkins.length - 1);
         return true;
     }
     return false;
 }
 
-function selectSkin(skinId) {
+export function selectSkin(skinId) {
     if (!purchasedSkins.includes(skinId)) return showToast("Сначала купите этот скин!", "error");
     selectedSkinId = skinId;
     saveSkinsData();
