@@ -1209,52 +1209,55 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ – ФИНАЛЬНАЯ ВЕРСИЯ ========== */
+/* ========== МОБИЛЬНАЯ ВЕРСИЯ – ФИНАЛ ========== */
 @media (max-width: 768px) {
-    /* Скрываем панель с вопросами (подсказки) – обязательно */
+    /* Скрываем секцию с подсказками */
     .clues-section {
         display: none !important;
     }
 
-    /* Убираем лишние отступы */
+    /* Убираем лишние отступы у body и контейнера */
     body {
-        padding: 5px;
+        padding: 5px !important;
     }
     .crossword-container {
         flex-direction: column;
-        padding: 8px;
-        gap: 8px;
+        padding: 8px !important;
+        gap: 8px !important;
     }
 
-    /* Сетка – плотная, без больших промежутков */
+    /* Сетка – плотная, без зазоров */
     .crossword-grid {
-        gap: 1px !important;   /* минимальный зазор */
+        gap: 1px !important;
         background: #333;
         border-width: 1px;
+        justify-content: center;
     }
 
     /* Ячейки – удобного размера */
     .cell {
-        width: min(50px, 13vw);
-        height: min(50px, 13vw);
+        width: min(50px, 13vw) !important;
+        height: min(50px, 13vw) !important;
     }
     .cell input {
-        font-size: min(24px, 6vw);
+        font-size: min(24px, 6vw) !important;
+        padding: 0 !important;
     }
     .cell-number {
-        font-size: 9px;
-        top: 2px;
-        left: 3px;
+        font-size: 9px !important;
+        top: 2px !important;
+        left: 3px !important;
     }
     .cell-skin {
-        font-size: min(32px, 8vw);
+        font-size: min(32px, 8vw) !important;
     }
 
-    /* Кнопки и селекторы – вертикально */
+    /* Панель кнопок – вертикально */
     .level-selector {
         flex-direction: column;
         align-items: stretch;
         gap: 6px;
+        margin-bottom: 10px;
     }
     .selector-group {
         width: 100%;
@@ -1265,34 +1268,35 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         font-size: 13px;
     }
 
-    /* Плавающая подсказка – компактная, внизу */
+    /* Плавающая подсказка – обязательно видима, внизу экрана */
     #floatingClue {
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        top: auto;
-        background: rgba(0,0,0,0.85);
-        color: white;
-        border-radius: 30px;
-        padding: 8px 12px;
-        font-size: 14px;
-        text-align: center;
-        z-index: 10000;
-        pointer-events: none;
+        display: block !important;
+        position: fixed !important;
+        bottom: 10px !important;
+        left: 10px !important;
+        right: 10px !important;
+        top: auto !important;
+        background: rgba(0, 0, 0, 0.85) !important;
+        color: white !important;
+        border-radius: 30px !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+        text-align: center !important;
+        z-index: 10000 !important;
+        pointer-events: none !important;
         backdrop-filter: blur(4px);
-        white-space: normal;
-        word-break: break-word;
-        border-left: none;
+        white-space: normal !important;
+        word-break: break-word !important;
+        border-left: none !important;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    /* Модальные окна – выше плавающей подсказки */
+    /* Модалки – поверх плавающей подсказки */
     .modal {
         z-index: 10050 !important;
     }
 
-    /* Другие элементы для компактности */
+    /* Остальные элементы – компактно */
     .daily-tasks {
         margin-top: 10px;
         padding: 8px;
@@ -1308,6 +1312,7 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
     .status {
         font-size: 13px;
         padding: 6px;
+        margin-top: 10px;
     }
     .score-container {
         flex-direction: column;
@@ -1319,17 +1324,17 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
 /* Для очень узких экранов (≤400px) */
 @media (max-width: 400px) {
     .cell {
-        width: min(42px, 11vw);
-        height: min(42px, 11vw);
+        width: min(42px, 11vw) !important;
+        height: min(42px, 11vw) !important;
     }
     .cell input {
-        font-size: min(20px, 5vw);
+        font-size: min(20px, 5vw) !important;
     }
     #floatingClue {
-        font-size: 12px;
-        padding: 6px 10px;
-        bottom: 5px;
-        left: 5px;
-        right: 5px;
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+        bottom: 5px !important;
+        left: 5px !important;
+        right: 5px !important;
     }
 }
