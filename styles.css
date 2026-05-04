@@ -879,3 +879,7 @@ body.dark .cell { border-color: #666 !important; }
 body.sakura .cell { border-color: #e0a0b0 !important; }
 body.bamboo .cell { border-color: var(--border) !important; }
 body.fuji .cell { border-color: var(--border) !important; }
+
+.modal {
+    z-index: 10050 !important;
+}
