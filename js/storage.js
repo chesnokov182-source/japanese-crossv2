@@ -1,9 +1,6 @@
 import { showToast } from './utils.js';
 import { updateTaskProgress } from './dailyTasks.js';
 
-export let totalHintsUsed = 0;
-export let totalRouletteSpins = 0;
-
 export const KEYS = {
     GAME: "gameStats",
     PROGRESS: "crosswordProgress",
@@ -13,6 +10,8 @@ export const KEYS = {
 };
 
 export let gameStats = { score: 0, wordsCompleted: 0, lastBonusDate: null, maxHints: 2 };
+export let totalHintsUsed = 0;
+export let totalRouletteSpins = 0;
 
 export function loadGameStats() {
     const saved = localStorage.getItem(KEYS.GAME);
@@ -22,10 +21,12 @@ export function loadGameStats() {
     } else {
         saveGameStats();
     }
+    // Восстанавливаем счётчики
     const savedHints = localStorage.getItem('totalHintsUsed');
     if (savedHints) totalHintsUsed = parseInt(savedHints);
     const savedSpins = localStorage.getItem('totalRouletteSpins');
     if (savedSpins) totalRouletteSpins = parseInt(savedSpins);
+    
     updateScoreUI();
 }
 
@@ -40,21 +41,11 @@ export function updateScoreUI() {
     if (wordsSpan) wordsSpan.innerText = gameStats.wordsCompleted;
 }
 
-export function incrementHintsUsed() {
-    totalHintsUsed++;
-    localStorage.setItem('totalHintsUsed', totalHintsUsed);
-}
-
-export function incrementRouletteSpins() {
-    totalRouletteSpins++;
-    localStorage.setItem('totalRouletteSpins', totalRouletteSpins);
-}
-
 export function addPoints(points) {
     gameStats.score += points;
     saveGameStats();
     updateScoreUI();
-    updateTaskProgress('earn_100_points', points)
+    updateTaskProgress('earn_100_points', points);
     showToast(`+${points} очков!`, "success");
 }
 
@@ -87,4 +78,12 @@ export function checkDailyBonus() {
     }
 }
 
+export function incrementHintsUsed() {
+    totalHintsUsed++;
+    localStorage.setItem('totalHintsUsed', totalHintsUsed);
+}
 
+export function incrementRouletteSpins() {
+    totalRouletteSpins++;
+    localStorage.setItem('totalRouletteSpins', totalRouletteSpins);
+}
