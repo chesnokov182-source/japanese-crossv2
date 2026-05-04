@@ -1,6 +1,9 @@
 import { showToast } from './utils.js';
 import { updateTaskProgress } from './dailyTasks.js';
 
+export let totalHintsUsed = 0;
+export let totalRouletteSpins = 0;
+
 export const KEYS = {
     GAME: "gameStats",
     PROGRESS: "crosswordProgress",
@@ -19,6 +22,10 @@ export function loadGameStats() {
     } else {
         saveGameStats();
     }
+    const savedHints = localStorage.getItem('totalHintsUsed');
+    if (savedHints) totalHintsUsed = parseInt(savedHints);
+    const savedSpins = localStorage.getItem('totalRouletteSpins');
+    if (savedSpins) totalRouletteSpins = parseInt(savedSpins);
     updateScoreUI();
 }
 
@@ -31,6 +38,16 @@ export function updateScoreUI() {
     const wordsSpan = document.getElementById("wordsCompleted");
     if (scoreSpan) scoreSpan.innerText = gameStats.score;
     if (wordsSpan) wordsSpan.innerText = gameStats.wordsCompleted;
+}
+
+export function incrementHintsUsed() {
+    totalHintsUsed++;
+    localStorage.setItem('totalHintsUsed', totalHintsUsed);
+}
+
+export function incrementRouletteSpins() {
+    totalRouletteSpins++;
+    localStorage.setItem('totalRouletteSpins', totalRouletteSpins);
 }
 
 export function addPoints(points) {
