@@ -1209,14 +1209,14 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ========== МОБИЛЬНАЯ ВЕРСИЯ – ФИНАЛ ========== */
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ (исправленная) ========== */
 @media (max-width: 768px) {
-    /* Скрываем секцию с подсказками */
+    /* Скрываем панель с вопросами */
     .clues-section {
         display: none !important;
     }
 
-    /* Убираем лишние отступы у body и контейнера */
+    /* Основные отступы */
     body {
         padding: 5px !important;
     }
@@ -1226,41 +1226,48 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         gap: 8px !important;
     }
 
-    /* Сетка – плотная, без зазоров */
+    /* Сетка: убираем все лишние промежутки */
     .crossword-grid {
+        display: grid;
         gap: 1px !important;
         background: #333;
-        border-width: 1px;
+        border: 1px solid #333;
+        margin: 0 auto;
         justify-content: center;
     }
 
-    /* Ячейки – удобного размера */
+    /* Ячейки – правильный размер, без внутренних отступов */
     .cell {
-        width: min(50px, 13vw) !important;
-        height: min(50px, 13vw) !important;
+        width: min(48px, 12.5vw) !important;
+        height: min(48px, 12.5vw) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        background: var(--cell-bg-light);
+        position: relative;
     }
     .cell input {
-        font-size: min(24px, 6vw) !important;
+        width: 100%;
+        height: 100%;
+        font-size: min(22px, 6vw) !important;
         padding: 0 !important;
+        margin: 0 !important;
+        text-align: center;
     }
     .cell-number {
-        font-size: 9px !important;
+        font-size: 8px !important;
         top: 2px !important;
         left: 3px !important;
     }
     .cell-skin {
-        font-size: min(32px, 8vw) !important;
+        font-size: min(30px, 8vw) !important;
     }
 
-    /* Панель кнопок – вертикально */
+    /* Кнопки и селекторы */
     .level-selector {
         flex-direction: column;
         align-items: stretch;
         gap: 6px;
-        margin-bottom: 10px;
-    }
-    .selector-group {
-        width: 100%;
     }
     select, button {
         width: 100%;
@@ -1268,73 +1275,39 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         font-size: 13px;
     }
 
-    /* Плавающая подсказка – обязательно видима, внизу экрана */
+    /* Плавающая подсказка – возвращаем абсолютное позиционирование (как на ПК) */
     #floatingClue {
-        display: block !important;
-        position: fixed !important;
-        bottom: 10px !important;
-        left: 10px !important;
-        right: 10px !important;
-        top: auto !important;
-        background: rgba(0, 0, 0, 0.85) !important;
-        color: white !important;
-        border-radius: 30px !important;
-        padding: 8px 12px !important;
-        font-size: 14px !important;
-        text-align: center !important;
-        z-index: 10000 !important;
-        pointer-events: none !important;
-        backdrop-filter: blur(4px);
-        white-space: normal !important;
-        word-break: break-word !important;
-        border-left: none !important;
+        display: none;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        border-radius: 20px;
+        padding: 6px 12px;
+        font-size: 13px;
+        z-index: 10000;
+        pointer-events: none;
+        white-space: nowrap;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        border-left: none;
     }
 
-    /* Модалки – поверх плавающей подсказки */
+    /* Модальные окна – поверх */
     .modal {
         z-index: 10050 !important;
     }
 
-    /* Остальные элементы – компактно */
+    /* Остальные элементы компактно */
     .daily-tasks {
         margin-top: 10px;
         padding: 8px;
     }
-    .skin-item, .upgrade-item {
-        flex-wrap: wrap;
-    }
-    .roulette-spin-area {
-        font-size: 28px;
-        min-height: 80px;
-        padding: 10px;
-    }
     .status {
-        font-size: 13px;
-        padding: 6px;
-        margin-top: 10px;
+        font-size: 12px;
+        padding: 5px;
     }
     .score-container {
         flex-direction: column;
         align-items: center;
         gap: 4px;
-    }
-}
-
-/* Для очень узких экранов (≤400px) */
-@media (max-width: 400px) {
-    .cell {
-        width: min(42px, 11vw) !important;
-        height: min(42px, 11vw) !important;
-    }
-    .cell input {
-        font-size: min(20px, 5vw) !important;
-    }
-    #floatingClue {
-        font-size: 12px !important;
-        padding: 6px 10px !important;
-        bottom: 5px !important;
-        left: 5px !important;
-        right: 5px !important;
     }
 }
