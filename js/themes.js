@@ -3,19 +3,15 @@ import { subtractPoints, addPoints, gameStats, saveGameStats, updateScoreUI } fr
 import { showToast, showConfetti, audio } from './utils.js';
 import { updateTaskProgress } from './dailyTasks.js';
 
-// Бесплатные темы (всегда доступны)
 export const freeThemes = [
     { id: 'light', name: 'Светлая', price: 0, cssClass: '' },
     { id: 'dark', name: 'Тёмная', price: 0, cssClass: 'dark' },
     { id: 'sakura', name: 'Сакура', price: 0, cssClass: 'sakura' }
 ];
 
-// Покупаемые темы
 export const premiumThemes = [
-    { id: 'bamboo', name: 'Дзен-бамбук', price: 500, cssClass: 'bamboo', 
-      description: 'Зелёные оттенки бамбука, спокойствие' },
-    { id: 'fuji', name: 'Фудзи', price: 500, cssClass: 'fuji',
-      description: 'Голубые тона горы Фудзи, свежесть' }
+    { id: 'bamboo', name: 'Дзен-бамбук', price: 500, cssClass: 'bamboo', description: 'Зелёные оттенки бамбука' },
+    { id: 'fuji', name: 'Фудзи', price: 500, cssClass: 'fuji', description: 'Голубые тона горы Фудзи' }
 ];
 
 export let purchasedThemes = []; // id купленных тем
@@ -71,7 +67,7 @@ export function purchaseTheme(themeId) {
 }
 
 export function getAvailableThemes() {
-    return [...freeThemes, ...premiumThemes.filter(t => purchasedThemes.includes(t.id))];
+    return [...freeThemes, ...premiumThemes];
 }
 
 // Для UI – рендеринг списка тем в модалке выбора
