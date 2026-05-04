@@ -9,6 +9,7 @@ const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/
 export let currentLevel = "n5";
 export let currentPuzzleIndex = 0;
 export let gridData = [], wordsList = [], cellElements = [];
+export let cellTdElements = [];
 export let gridWidth, gridHeight, activeWordId = null, hintUsed = false, hintCount = 0;
 let correctCharMap = new Map(), romajiBuffers = new Map(), cluesAcross = [], cluesDown = [];
 let floatingClueElement = null;
@@ -213,22 +214,40 @@ export function updateAllBlockedSkins() {
 function renderGrid() {
     const container = document.getElementById("gridContainer");
     container.innerHTML = "";
-    container.style.gridTemplateColumns = `repeat(${gridWidth}, 70px)`;
-    cellElements = [];
+    
+    // Создаём таблицу
+    const table = document.createElement("table");
+    table.className = "crossword-grid";
+    table.style.borderCollapse = "collapse";
+    container.appendChild(table);
+    
     const isLocked = !isPuzzleUnlocked(currentLevel, currentPuzzleIndex);
+    cellElements = [];
+    cellTdElements = [];
+    
     for (let i = 0; i < gridHeight; i++) {
+        const tr = document.createElement("tr");
         cellElements[i] = [];
+        cellTdElements[i] = [];
         for (let j = 0; j < gridWidth; j++) {
             const isBlocked = (gridData[i][j] === null);
-            const cellDiv = document.createElement("div");
-            cellDiv.className = "cell" + (isBlocked ? " blocked" : "");
+            const td = document.createElement("td");
+            td.className = "cell" + (isBlocked ? " blocked" : "");
+            td.style.position = "relative";
+            td.style.padding = "0";
+            td.style.margin = "0";
+            td.style.border = "1px solid #888";
+            td.style.backgroundColor = isBlocked ? "var(--cell-blocked-light)" : "var(--cell-bg-light)";
+            
+            // Номер слова (если есть)
             const wordNumber = getWordNumberAt(i, j);
             if (wordNumber && !isBlocked) {
                 const spanNum = document.createElement("span");
-                spanNum.className = "cell-number"; 
+                spanNum.className = "cell-number";
                 spanNum.innerText = Math.floor(wordNumber);
-                cellDiv.appendChild(spanNum);
+                td.appendChild(spanNum);
             }
+            
             const input = document.createElement("input");
             input.type = "text";
             if (!isMobile) {
@@ -236,16 +255,23 @@ function renderGrid() {
             }
             input.value = getDisplayValue(i, j);
             input.disabled = isBlocked || isLocked;
-            input.readOnly = false;
-            const skinSpan = document.createElement("span");
-            skinSpan.className = "cell-skin";
-            skinSpan.style.display = "none";
+            input.style.width = "100%";
+            input.style.height = "100%";
+            input.style.textAlign = "center";
+            input.style.fontSize = "40px";
+            input.style.fontWeight = "bold";
+            input.style.border = "none";
+            input.style.background = "transparent";
+            input.style.padding = "0";
+            input.style.margin = "0";
+            input.style.outline = "none";
+            input.style.fontFamily = "inherit";
+            
             if (!isBlocked && !isLocked) {
                 input.addEventListener("focus", () => onCellFocus(i, j));
                 input.addEventListener("blur", () => onCellBlur(i, j));
                 input.addEventListener("keydown", (e) => handleKeydown(e, i, j));
                 input.addEventListener("input", (e) => onCellInput(i, j));
-                // Переключение слова: двойной клик (ПК) и долгое нажатие (телефон)
                 input.addEventListener('dblclick', (e) => {
                     e.stopPropagation();
                     switchWordAtCell(i, j);
@@ -255,16 +281,44 @@ function renderGrid() {
                     switchWordAtCell(i, j);
                     return false;
                 });
+                // Долгое нажатие для мобильных
+                let touchTimer;
+                input.addEventListener('touchstart', () => {
+                    touchTimer = setTimeout(() => switchWordAtCell(i, j), 500);
+                });
+                input.addEventListener('touchend', () => clearTimeout(touchTimer));
+                input.addEventListener('touchmove', () => clearTimeout(touchTimer));
             }
-            cellDiv.appendChild(input);
-            cellDiv.appendChild(skinSpan);
-            container.appendChild(cellDiv);
+            
+            td.appendChild(input);
+            
+            // Контейнер для скина (заблокированные клетки)
+            const skinSpan = document.createElement("span");
+            skinSpan.className = "cell-skin";
+            skinSpan.style.position = "absolute";
+            skinSpan.style.top = "0";
+            skinSpan.style.left = "0";
+            skinSpan.style.width = "100%";
+            skinSpan.style.height = "100%";
+            skinSpan.style.display = "flex";
+            skinSpan.style.alignItems = "center";
+            skinSpan.style.justifyContent = "center";
+            skinSpan.style.fontSize = "48px";
+            skinSpan.style.pointerEvents = "none";
+            skinSpan.style.zIndex = "1";
+            skinSpan.style.background = "transparent";
+            td.appendChild(skinSpan);
+            
+            tr.appendChild(td);
             cellElements[i][j] = input;
+            cellTdElements[i][j] = td;
         }
+        table.appendChild(tr);
     }
+    
+    updateAllBlockedSkins();
     applyHighlight();
     updateWrongHighlights();
-    if (typeof updateAllBlockedSkins === 'function') updateAllBlockedSkins();
 }
 
 function getWordNumberAt(row, col) {
