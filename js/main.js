@@ -71,20 +71,36 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("buyPuzzleBtn").addEventListener("click", () => { audio.click(); buyCurrentPuzzle(); });
     document.getElementById("closeShopBtn").addEventListener("click", () => document.getElementById("shopModal").style.display = "none");
 
-    document.getElementById("resetProgressBtn").addEventListener("click", async () => {
-        if (await showConfirmDialog("Удалить весь прогресс? Это действие нельзя отменить.")) {
-            localStorage.removeItem(KEYS.PROGRESS);
-            localStorage.removeItem(KEYS.COMPLETED);
-            localStorage.removeItem(KEYS.UNLOCKED);
-            localStorage.removeItem(KEYS.EARNED);
-            const lastBonus = gameStats.lastBonusDate;
-            localStorage.removeItem(KEYS.GAME);
-            gameStats.score = 0; gameStats.wordsCompleted = 0; gameStats.lastBonusDate = lastBonus; gameStats.maxHints = 2;
-            saveGameStats(); updateScoreUI();
-            setCurrentLevelAndPuzzle(currentLevel, 0); updatePuzzleSelect(); loadCrossword(currentLevel, 0, false);
-            showToast("Прогресс удалён.", "success");
-        }
-    });
+document.getElementById("resetProgressBtn").addEventListener("click", async () => {
+    if (await showConfirmDialog("Удалить весь прогресс? Это действие нельзя отменить.")) {
+        localStorage.removeItem(KEYS.PROGRESS);      
+        localStorage.removeItem(KEYS.COMPLETED);     
+        localStorage.removeItem(KEYS.UNLOCKED);      
+        localStorage.removeItem(KEYS.EARNED);        
+        localStorage.removeItem(KEYS.GAME);          
+        localStorage.removeItem("skins");            
+        localStorage.removeItem("shopActiveTab");    
+        localStorage.removeItem("dailyTasks");       
+        localStorage.removeItem("lastFreeSpin");     
+        localStorage.removeItem("lastPlayedLevel");  
+        localStorage.removeItem("lastPlayedPuzzle"); 
+        
+        gameStats.score = 0;
+        gameStats.wordsCompleted = 0;
+        gameStats.maxHints = 2;                    
+        gameStats.lastBonusDate = null;           
+        saveGameStats();
+        updateScoreUI();
+        loadSkinsData();                           
+        loadDailyTasks();                           
+        renderDailyTasksPanel();
+        setCurrentLevelAndPuzzle("n5", 0);
+        document.getElementById("levelSelect").value = "n5";
+        updatePuzzleSelect();
+        loadCrossword("n5", 0, false);
+        showToast("Прогресс полностью сброшен.", "success");
+    }
+});
 
     const showTutorial = () => {
         const modal = document.getElementById("tutorialModal");
