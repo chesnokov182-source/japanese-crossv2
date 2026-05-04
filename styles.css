@@ -883,3 +883,111 @@ body.fuji .cell { border-color: var(--border) !important; }
 .modal {
     z-index: 10050 !important;
 }
+
+/* ========== ТАБЛИЧНАЯ СЕТКА (БЕЗ ЗАЗОРОВ) ========== */
+.crossword-grid {
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: #888; /* цвет фона для линий */
+}
+.crossword-grid td {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #888;
+    background: var(--cell-bg-light);
+    width: 70px;
+    height: 70px;
+    position: relative;
+    box-sizing: border-box;
+}
+body.dark .crossword-grid td {
+    border-color: #666;
+    background: var(--cell-bg-dark);
+}
+.crossword-grid td.blocked {
+    background: var(--cell-blocked-light);
+}
+body.dark .crossword-grid td.blocked {
+    background: var(--cell-blocked-dark);
+}
+.crossword-grid td.highlight {
+    background: var(--highlight-light);
+}
+body.dark .crossword-grid td.highlight {
+    background: var(--highlight-dark);
+}
+.crossword-grid td.active-word {
+    background: var(--active-word-light);
+}
+body.dark .crossword-grid td.active-word {
+    background: var(--active-word-dark);
+}
+.crossword-grid td.wrong {
+    background: var(--wrong-light);
+}
+body.dark .crossword-grid td.wrong {
+    background: var(--wrong-dark);
+}
+.crossword-grid input {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+}
+.cell-number {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+    pointer-events: none;
+    z-index: 2;
+}
+body.dark .cell-number {
+    color: #aaa;
+}
+.cell-skin {
+    font-size: 48px;
+}
+@media (max-width: 768px) {
+    .crossword-grid td {
+        width: 55px;
+        height: 55px;
+    }
+    .crossword-grid input {
+        font-size: 28px;
+    }
+    .cell-number {
+        font-size: 9px;
+        top: 2px;
+        left: 3px;
+    }
+    .cell-skin {
+        font-size: 36px;
+    }
+}
+@media (max-width: 480px) {
+    .crossword-grid td {
+        width: 45px;
+        height: 45px;
+    }
+    .crossword-grid input {
+        font-size: 22px;
+    }
+    .cell-number {
+        font-size: 8px;
+        top: 1px;
+        left: 2px;
+    }
+    .cell-skin {
+        font-size: 28px;
+    }
+}
