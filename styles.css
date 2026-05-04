@@ -1017,3 +1017,24 @@ body.dark .cell-number {
     vertical-align: middle;
     text-align: center;
 }
+
+/* Активное слово */
+.crossword-grid td.active-word {
+    background: var(--active-word-light) !important;
+}
+body.dark .crossword-grid td.active-word {
+    background: var(--active-word-dark) !important;
+}
+body.sakura .crossword-grid td.active-word {
+    background: var(--active-word-sakura) !important;
+}
+/* Неправильная буква */
+.crossword-grid td.wrong {
+    background: var(--wrong-light) !important;
+}
+body.dark .crossword-grid td.wrong {
+    background: var(--wrong-dark) !important;
+}
+body.sakura .crossword-grid td.wrong {
+    background: var(--wrong-sakura) !important;
+}
