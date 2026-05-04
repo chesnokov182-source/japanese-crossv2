@@ -1,7 +1,7 @@
-// js/themes.js
 import { subtractPoints, addPoints, gameStats, saveGameStats, updateScoreUI } from './storage.js';
 import { showToast, showConfetti, audio } from './utils.js';
 import { updateTaskProgress } from './dailyTasks.js';
+import { showConfirmDialog } from './utils.js';
 
 export const freeThemes = [
     { id: 'light', name: 'Светлая', price: 0, cssClass: '' },
@@ -112,4 +112,18 @@ export function renderThemesList(container) {
             showToast(`Тема "${allThemes.find(t=>t.id===id).name}" применена`, 'success');
         });
     });
+}
+
+export async function confirmPurchaseTheme(themeId) {
+    const theme = premiumThemes.find(t => t.id === themeId);
+    if (!theme) return false;
+    if (purchasedThemes.includes(themeId)) {
+        showToast('Тема уже куплена', 'info');
+        return false;
+    }
+    const confirmed = await showConfirmDialog(`Купить тему "${theme.name}" за ${theme.price} очков?`);
+    if (confirmed) {
+        return purchaseTheme(themeId);
+    }
+    return false;
 }
