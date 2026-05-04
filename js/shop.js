@@ -1,4 +1,4 @@
-import { gameStats, saveGameStats, subtractPoints, addPoints, updateScoreUI } from './storage.js';
+import { gameStats, saveGameStats, subtractPoints, addPoints, updateScoreUI, incrementRouletteSpins, totalRouletteSpins } from './storage.js';
 import { audio, showToast, showConfetti } from './utils.js';
 import { updateAllBlockedSkins, updateButtonStates } from './crossword.js';
 import { updateTaskProgress } from './dailyTasks.js';
@@ -158,6 +158,8 @@ function spinRoulette(isFree = false) {
             rouletteAnimating = false;
         }
     }, 50);
+    incrementRouletteSpins();
+    updateAchievementProgress('roulette_spins', totalRouletteSpins);
 }
 
 export function openShopModal() {
