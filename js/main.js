@@ -1,13 +1,13 @@
 import { audio, showConfirmDialog, showToast } from './utils.js';
-import { loadGameStats, checkDailyBonus, KEYS, gameStats, saveGameStats, updateScoreUI } from './storage.js';
+import { loadGameStats, checkDailyBonus, KEYS, gameStats, saveGameStats, updateScoreUI, incrementHintsUsed, incrementRouletteSpins, totalHintsUsed, totalRouletteSpins } from './storage.js';
 import { loadSkinsData, openShopModal } from './shop.js';
 import { 
     currentLevel, currentPuzzleIndex, setCurrentLevelAndPuzzle, loadCrossword, 
-    updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
+    updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked, getCompletedCrosswords
 } from './crossword.js';
 import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
 import { loadThemesData, getAvailableThemes, applyTheme, confirmPurchaseTheme, currentThemeId, purchasedThemes } from './themes.js';
-import { loadAchievements, renderAchievementsModal } from './achievements.js';
+import { loadAchievements, updateAchievementProgress, renderAchievementsModal } from './achievements.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
-    loadThemesData();
+    loadThemesData(); 
     loadAchievements();
     loadDailyTasks();
     renderDailyTasksPanel();
@@ -41,77 +41,77 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
-// ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ (ИСПРАВЛЕННЫЙ) ==========
-const themeBtn = document.getElementById('themeBtn');
-const themeDropdown = document.getElementById('themeDropdown');
+    // ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ ==========
+    const themeBtn = document.getElementById('themeBtn');
+    const themeDropdown = document.getElementById('themeDropdown');
 
-if (themeBtn && themeDropdown) {
-    function updateThemeDropdown() {
-        const themes = getAvailableThemes();
-        themeDropdown.innerHTML = '';
-        themes.forEach(theme => {
-            const btn = document.createElement('button');
-            let displayText;
-            if (theme.id === currentThemeId) {
-                displayText = `${theme.name} ✓`;
-            } else if (purchasedThemes.includes(theme.id)) {
-                displayText = theme.name;
-            } else {
-                displayText = `${theme.name} (${theme.price} очков)`;
-            }
-            btn.textContent = displayText;
-            if (theme.id === currentThemeId) {
-                btn.style.fontWeight = 'bold';
-            }
-            // Стили для кнопок внутри выпадающего списка
-            Object.assign(btn.style, {
-                display: 'block',
-                width: '100%',
-                textAlign: 'left',
-                padding: '8px 12px',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: '1px solid var(--border, #ccc)',
-                cursor: 'pointer',
-                fontSize: '14px',
-                color: 'inherit'
-            });
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
-                    const ok = await confirmPurchaseTheme(theme.id);
-                    if (ok) {
+    if (themeBtn && themeDropdown) {
+        function updateThemeDropdown() {
+            const themes = getAvailableThemes();
+            themeDropdown.innerHTML = '';
+            themes.forEach(theme => {
+                const btn = document.createElement('button');
+                let displayText;
+                if (theme.id === currentThemeId) {
+                    displayText = `${theme.name} ✓`;
+                } else if (purchasedThemes.includes(theme.id)) {
+                    displayText = theme.name;
+                } else {
+                    displayText = `${theme.name} (${theme.price} очков)`;
+                }
+                btn.textContent = displayText;
+                if (theme.id === currentThemeId) {
+                    btn.style.fontWeight = 'bold';
+                }
+                Object.assign(btn.style, {
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '8px 12px',
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1px solid var(--border, #ccc)',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    color: 'inherit'
+                });
+                btn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
+                        const ok = await confirmPurchaseTheme(theme.id);
+                        if (ok) {
+                            updateThemeDropdown();
+                        }
+                    } else if (purchasedThemes.includes(theme.id)) {
+                        applyTheme(theme.id);
                         updateThemeDropdown();
                     }
-                } else if (purchasedThemes.includes(theme.id)) {
-                    applyTheme(theme.id);
-                    updateThemeDropdown();
-                }
-                themeDropdown.style.display = 'none';
+                    themeDropdown.style.display = 'none';
+                });
+                themeDropdown.appendChild(btn);
             });
-            themeDropdown.appendChild(btn);
+        }
+
+        themeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = themeDropdown.style.display === 'block';
+            if (isVisible) {
+                themeDropdown.style.display = 'none';
+            } else {
+                updateThemeDropdown();
+                themeDropdown.style.display = 'block';
+            }
         });
+
+        document.addEventListener('click', () => {
+            themeDropdown.style.display = 'none';
+        });
+        themeDropdown.addEventListener('click', (e) => e.stopPropagation());
+    } else {
+        console.warn('Theme button or dropdown not found');
     }
 
-    // Открытие / закрытие при клике на кнопку
-    themeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isVisible = themeDropdown.style.display === 'block';
-        if (isVisible) {
-            themeDropdown.style.display = 'none';
-        } else {
-            updateThemeDropdown();      // заполняем свежими данными
-            themeDropdown.style.display = 'block';
-        }
-    });
-    document.addEventListener('click', () => {
-        themeDropdown.style.display = 'none';
-    });
-    themeDropdown.addEventListener('click', (e) => e.stopPropagation());
-} else {
-    console.error('❌ Не найдены #themeBtn или #themeDropdown');
-}
-    
+    // ========== ОСТАЛЬНЫЕ КНОПКИ ==========
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
@@ -137,40 +137,56 @@ if (themeBtn && themeDropdown) {
     document.getElementById("buyPuzzleBtn").addEventListener("click", () => { audio.click(); buyCurrentPuzzle(); });
     document.getElementById("closeShopBtn").addEventListener("click", () => document.getElementById("shopModal").style.display = "none");
 
-document.getElementById("resetProgressBtn").addEventListener("click", async () => {
-    if (await showConfirmDialog("Удалить весь прогресс? Это действие нельзя отменить.")) {
-        localStorage.removeItem(KEYS.PROGRESS);      
-        localStorage.removeItem(KEYS.COMPLETED);     
-        localStorage.removeItem(KEYS.UNLOCKED);      
-        localStorage.removeItem(KEYS.EARNED);        
-        localStorage.removeItem(KEYS.GAME);          
-        localStorage.removeItem("skins");            
-        localStorage.removeItem("shopActiveTab");    
-        localStorage.removeItem("dailyTasks");       
-        localStorage.removeItem("lastFreeSpin");     
-        localStorage.removeItem("lastPlayedLevel");  
-        localStorage.removeItem("lastPlayedPuzzle"); 
-        localStorage.removeItem('themes');  
-
-        
-        gameStats.score = 0;
-        gameStats.wordsCompleted = 0;
-        gameStats.maxHints = 2;                    
-        gameStats.lastBonusDate = null;           
-        saveGameStats();
-        updateScoreUI();
-        loadSkinsData();                           
-        loadDailyTasks(); 
-        loadThemesData();
-        renderDailyTasksPanel();
-        setCurrentLevelAndPuzzle("n5", 0);
-        document.getElementById("levelSelect").value = "n5";
-        updatePuzzleSelect();
-        loadCrossword("n5", 0, false);
-        showToast("Прогресс полностью сброшен.", "success");
+    // ========== ДОСТИЖЕНИЯ ==========
+    const achievementsBtn = document.getElementById('achievementsBtn');
+    if (achievementsBtn) {
+        achievementsBtn.addEventListener('click', () => {
+            audio.click();
+            renderAchievementsModal();
+        });
+    } else {
+        console.warn('Achievements button not found');
     }
-});
 
+    // ========== СБРОС ВСЕГО ПРОГРЕССА ==========
+    document.getElementById("resetProgressBtn").addEventListener("click", async () => {
+        if (await showConfirmDialog("Удалить весь прогресс? Это действие нельзя отменить.")) {
+            localStorage.removeItem(KEYS.PROGRESS);
+            localStorage.removeItem(KEYS.COMPLETED);
+            localStorage.removeItem(KEYS.UNLOCKED);
+            localStorage.removeItem(KEYS.EARNED);
+            localStorage.removeItem(KEYS.GAME);
+            localStorage.removeItem("skins");
+            localStorage.removeItem("shopActiveTab");
+            localStorage.removeItem("dailyTasks");
+            localStorage.removeItem("lastFreeSpin");
+            localStorage.removeItem("lastPlayedLevel");
+            localStorage.removeItem("lastPlayedPuzzle");
+            localStorage.removeItem('themes');
+            localStorage.removeItem('achievements');
+            localStorage.removeItem('totalHintsUsed');
+            localStorage.removeItem('totalRouletteSpins');
+            
+            gameStats.score = 0;
+            gameStats.wordsCompleted = 0;
+            gameStats.maxHints = 2;
+            gameStats.lastBonusDate = null;
+            saveGameStats();
+            updateScoreUI();
+            loadSkinsData();
+            loadDailyTasks();
+            loadThemesData();
+            loadAchievements();
+            renderDailyTasksPanel();
+            setCurrentLevelAndPuzzle("n5", 0);
+            document.getElementById("levelSelect").value = "n5";
+            updatePuzzleSelect();
+            loadCrossword("n5", 0, false);
+            showToast("Прогресс полностью сброшен.", "success");
+        }
+    });
+
+    // ========== ТУТОРИАЛ ==========
     const showTutorial = () => {
         const modal = document.getElementById("tutorialModal");
         const msg = document.getElementById("tutorialMessage");
@@ -189,7 +205,8 @@ document.getElementById("resetProgressBtn").addEventListener("click", async () =
         const close = () => { modal.style.display = "none"; localStorage.setItem("tutorialShown", "true"); };
         nextBtn.onclick = () => { step++; if (step < steps.length) update(); else close(); };
         document.getElementById("tutorialClose").onclick = close;
-        update(); modal.style.display = "flex";
+        update();
+        modal.style.display = "flex";
     };
 
     document.getElementById("helpBtn").addEventListener("click", () => { audio.click(); showTutorial(); });
