@@ -194,15 +194,14 @@ function generateNumbering() {
 }
 
 export function updateAllBlockedSkins() {
-    if (!cellElements) return;
+    if (!cellTdElements) return;
+    const emoji = getSelectedSkinEmoji();
     for (let i = 0; i < gridHeight; i++) {
         for (let j = 0; j < gridWidth; j++) {
             if (gridData[i][j] === null) {
-                const cellDiv = cellElements[i]?.[j]?.parentElement;
-                if (!cellDiv) continue;
-                const skinSpan = cellDiv.querySelector('.cell-skin');
+                const td = cellTdElements[i]?.[j];
+                const skinSpan = td?.querySelector('.cell-skin');
                 if (skinSpan) {
-                    const emoji = getSelectedSkinEmoji();
                     skinSpan.style.display = emoji ? "flex" : "none";
                     skinSpan.textContent = emoji;
                 }
