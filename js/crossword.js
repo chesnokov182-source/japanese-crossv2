@@ -214,7 +214,6 @@ function renderGrid() {
     const container = document.getElementById("gridContainer");
     container.innerHTML = "";
     
-    // Создаём таблицу
     const table = document.createElement("table");
     table.className = "crossword-grid";
     table.style.borderCollapse = "collapse";
@@ -238,7 +237,6 @@ function renderGrid() {
             td.style.border = "1px solid #888";
             td.style.backgroundColor = isBlocked ? "var(--cell-blocked-light)" : "var(--cell-bg-light)";
             
-            // Номер слова (если есть)
             const wordNumber = getWordNumberAt(i, j);
             if (wordNumber && !isBlocked) {
                 const spanNum = document.createElement("span");
@@ -249,9 +247,7 @@ function renderGrid() {
             
             const input = document.createElement("input");
             input.type = "text";
-            if (!isMobile) {
-                input.maxLength = 1;
-            }
+            if (!isMobile) input.maxLength = 1;
             input.value = getDisplayValue(i, j);
             input.disabled = isBlocked || isLocked;
             input.style.width = "100%";
@@ -280,7 +276,6 @@ function renderGrid() {
                     switchWordAtCell(i, j);
                     return false;
                 });
-                // Долгое нажатие для мобильных
                 let touchTimer;
                 input.addEventListener('touchstart', () => {
                     touchTimer = setTimeout(() => switchWordAtCell(i, j), 500);
@@ -291,7 +286,6 @@ function renderGrid() {
             
             td.appendChild(input);
             
-            // Контейнер для скина (заблокированные клетки)
             const skinSpan = document.createElement("span");
             skinSpan.className = "cell-skin";
             skinSpan.style.position = "absolute";
@@ -325,7 +319,6 @@ function getWordNumberAt(row, col) {
     return null;
 }
 function getDisplayValue(row, col) { return romajiBuffers.get(`${row},${col}`) || (gridData[row][col] !== null ? gridData[row][col] : ""); }
-
 function updateCellUI(row, col) { 
     if (cellElements[row]?.[col]) cellElements[row][col].value = getDisplayValue(row, col); 
 }
@@ -414,7 +407,12 @@ function insertKatakanaArray(row, col, katakanaArray, startIndex) {
     const char = katakanaArray[startIndex];
     gridData[row][col] = char;
     updateCellUI(row, col);
-    syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
+    syncWordFromGrid(); 
+    checkCompletion(); 
+    updateClueCompletion(); 
+    updateWrongHighlights(); 
+    saveCurrentProgress();
+    
     const correctChar = correctCharMap.get(`${row},${col}`);
     if (char === correctChar) {
         audio.correct();
@@ -423,8 +421,14 @@ function insertKatakanaArray(row, col, katakanaArray, startIndex) {
             cellDiv.classList.add('correct-animation');
             setTimeout(() => cellDiv.classList.remove('correct-animation'), 300);
         }
-    } else { audio.error(); }
-    if (katakanaArray.length > 1 && startIndex === 0 || startIndex + 1 < katakanaArray.length) {
+    } else { 
+        audio.error(); 
+    }
+    
+    // Обновляем активное слово (на случай, если изменилось)
+    if (activeWordId !== null) applyHighlight();
+    
+    if ((katakanaArray.length > 1 && startIndex === 0) || (startIndex + 1 < katakanaArray.length)) {
         const activeWord = activeWordId !== null ? wordsList.find(w => w.id === activeWordId) : null;
         if (activeWord) {
             let idx = activeWord.cells.findIndex(c => c.row === row && c.col === col);
@@ -512,22 +516,25 @@ function handleKeydown(e, row, col) {
     if (!isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) e.preventDefault();
     
     if (e.key === "Backspace") {
-        e.preventDefault(); // <- КЛЮЧЕВОЕ: предотвращаем стандартное удаление символа
+        e.preventDefault();
         const key = `${row},${col}`;
         let buffer = romajiBuffers.get(key) || "";
         if (isMobile && buffer.length > 0) {
-            // На телефонах удаляем весь буфер
             romajiBuffers.delete(key);
             updateCellUI(row, col);
         } else if (buffer.length > 0) {
-            // На ПК удаляем один символ
             romajiBuffers.set(key, buffer.slice(0, -1));
             updateCellUI(row, col);
         } else {
             if (gridData[row][col] !== "") {
                 gridData[row][col] = "";
                 updateCellUI(row, col);
-                syncWordFromGrid(); checkCompletion(); updateClueCompletion(); updateWrongHighlights(); saveCurrentProgress();
+                syncWordFromGrid(); 
+                checkCompletion(); 
+                updateClueCompletion(); 
+                updateWrongHighlights(); 
+                saveCurrentProgress();
+                applyHighlight(); 
             } else if (activeWordId !== null) {
                 const activeWord = wordsList.find(w => w.id === activeWordId);
                 if (activeWord) {
@@ -541,8 +548,10 @@ function handleKeydown(e, row, col) {
 
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
         let newRow = row, newCol = col;
-        if (e.key === "ArrowLeft") newCol--; if (e.key === "ArrowRight") newCol++;
-        if (e.key === "ArrowUp") newRow--; if (e.key === "ArrowDown") newRow++;
+        if (e.key === "ArrowLeft") newCol--;
+        if (e.key === "ArrowRight") newCol++;
+        if (e.key === "ArrowUp") newRow--;
+        if (e.key === "ArrowDown") newRow++;
         if (newRow >= 0 && newRow < gridHeight && newCol >= 0 && newCol < gridWidth && gridData[newRow][newCol] !== null) {
             cellElements[newRow][newCol]?.focus();
         }
@@ -562,6 +571,7 @@ function handleKeydown(e, row, col) {
             updateClueCompletion();
             updateWrongHighlights();
             saveCurrentProgress();
+            applyHighlight();
         }
         processBuffer(row, col, buffer);
     }
@@ -573,14 +583,11 @@ function onCellInput(row, col) {
     if (!val) return;
     const key = `${row},${col}`;
     
-    // Разрешаем только латиницу и дефис (строка может быть любой длины)
     if (/^[a-zA-Z-]+$/.test(val)) {
         if (!isMobile) {
-            // На ПК уже обработано в keydown – просто сбрасываем поле
             input.value = getDisplayValue(row, col);
             return;
         }
-        // Мобильные: накапливаем буфер и пытаемся преобразовать
         let buffer = input.value.toLowerCase();
         romajiBuffers.set(key, buffer);
         const converted = processBuffer(row, col, buffer);
@@ -624,6 +631,7 @@ function checkCompletion() {
             updateAchievementProgress('crosswords', completedCount);
             if (!usedHintForCurrentLevel) {
                 updateTaskProgress('solve_no_hints', 1);
+                updateAchievementProgress('no_hints', 1);
             }
         }
     } else if (unlocked) {
@@ -723,16 +731,11 @@ function updateFloatingCluePosition() {
     const clueText = `${Math.floor(word.number)}. ${word.clue}`;
     floatingClueElement.innerText = clueText;
 
-    // Позиционируем над ячейкой, но если не хватает места сверху – под ячейкой
     let top = rect.top + scrollTop - floatingClueElement.offsetHeight - 5;
     let left = rect.left + scrollLeft;
-    const viewportHeight = window.innerHeight;
-
     if (top < scrollTop + 10) {
-        // Не хватает места сверху – ставим под ячейкой
         top = rect.bottom + scrollTop + 5;
     }
-    // Горизонтальное позиционирование: не выходить за правый край
     if (left + floatingClueElement.offsetWidth > window.innerWidth + scrollLeft) {
         left = window.innerWidth + scrollLeft - floatingClueElement.offsetWidth - 5;
     }
@@ -848,6 +851,7 @@ export function giveHint() {
     checkCompletion();
     updateClueCompletion();
     updateWrongHighlights();
+    applyHighlight();  // обновить подсветку после подсказки
 
     hintCount++;
     saveCurrentProgress();
@@ -858,4 +862,3 @@ export function giveHint() {
     updateAchievementProgress('hints', totalHintsUsed);
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
 }
-
