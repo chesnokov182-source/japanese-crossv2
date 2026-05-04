@@ -250,7 +250,7 @@ export function renderAchievementsModal() {
         allAchs.push({
             id: a.id, title: a.title, target: a.target, reward: a.reward,
             current: progress.words || 0,
-            desc: `Угадать ${a.target} слов${a.target===10?'':'а'}`
+            desc: `Угадать ${a.target} слов${a.target===10?'':''}`
         });
     });
     // Подсказки
