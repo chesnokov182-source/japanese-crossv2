@@ -1031,7 +1031,7 @@ body.sakura .task-progress {
     vertical-align: middle;
 }
 
-/* Тема Дзен-бамбук */
+/* ========== ТЕМА: ДЗЕН-БАМБУК ========== */
 body.bamboo {
     --bg-body: #d9e0b5;
     --bg-container: #f0f7da;
@@ -1058,7 +1058,8 @@ body.bamboo .crossword-container {
 body.bamboo .clues-section {
     background: var(--bg-clues);
 }
-body.bamboo select, body.bamboo button {
+body.bamboo select,
+body.bamboo button {
     background: var(--bg-container);
     color: var(--text);
     border-color: var(--border);
@@ -1067,21 +1068,102 @@ body.bamboo button {
     background: var(--btn-bg);
     color: white;
 }
-body.bamboo button:hover { background: var(--btn-hover); }
+body.bamboo button:hover {
+    background: var(--btn-hover);
+}
 body.bamboo .cell {
     background: var(--cell-bg);
     border-color: var(--border);
 }
-body.bamboo .cell.blocked { background: var(--cell-blocked); }
-body.bamboo .cell.highlight { background: var(--highlight); }
-body.bamboo .cell.active-word { background: var(--active-word); }
-body.bamboo .cell.wrong { background: var(--wrong); }
-body.bamboo .clue-block h3 { border-left-color: var(--btn-bg); }
-body.bamboo .clue-list li.active-clue { background: var(--active-word); }
-body.bamboo .clue-num { color: var(--btn-bg); }
-body.bamboo .status { background: rgba(107, 142, 35, 0.1); color: #3a5e3a; }
+body.bamboo .cell.blocked {
+    background: var(--cell-blocked);
+}
+body.bamboo .cell.highlight {
+    background: var(--highlight);
+}
+body.bamboo .cell.active-word {
+    background: var(--active-word);
+}
+body.bamboo .cell.wrong {
+    background: var(--wrong);
+}
+body.bamboo .cell-number {
+    color: #2c5e2c;
+}
+body.bamboo .clue-block h3 {
+    border-left-color: var(--btn-bg);
+}
+body.bamboo .clue-list li {
+    color: var(--text);
+}
+body.bamboo .clue-list li.active-clue {
+    background: var(--active-word);
+    color: #1a3a1a;
+    border-left: 4px solid var(--btn-bg);
+}
+body.bamboo .clue-num {
+    color: var(--btn-bg);
+}
+body.bamboo .status {
+    background: rgba(107, 142, 35, 0.1);
+    color: #2c5e2c;
+}
+body.bamboo .score-container {
+    background: var(--bg-container);
+    border-color: var(--border);
+}
+body.bamboo .progress-bar {
+    background: #c0d6a0;
+}
+body.bamboo .progress-fill {
+    background: var(--btn-bg);
+}
+body.bamboo .toast {
+    background: var(--bg-container);
+    color: var(--text);
+    border-left: 4px solid var(--btn-bg);
+}
+body.bamboo .modal-content {
+    background: var(--bg-container);
+    color: var(--text);
+}
+body.bamboo .modal-no {
+    background: #c0d6a0;
+    color: #2c5e2c;
+}
+body.bamboo .shop-tabs {
+    border-bottom-color: var(--border);
+}
+body.bamboo .shop-tab.active {
+    background: var(--btn-bg);
+}
+body.bamboo .skin-item,
+body.bamboo .upgrade-item {
+    background: var(--bg-container);
+    border-color: var(--border);
+}
+body.bamboo .roulette-spin-area {
+    background: var(--bg-container);
+    border-color: var(--border);
+    color: var(--text);
+}
+body.bamboo .skin-btn.buy,
+body.bamboo .upgrade-btn.buy {
+    background: var(--btn-bg);
+}
+body.bamboo .daily-tasks {
+    background: var(--bg-container);
+}
+body.bamboo .task-progress {
+    background: #c0d6a0;
+}
+body.bamboo #floatingClue {
+    background: var(--bg-container);
+    color: var(--text);
+    border-left-color: var(--btn-bg);
+}
 
-/* Тема Фудзи */
+/* ========== ТЕМА: ФУДЗИ ========== */
 body.fuji {
     --bg-body: #b8d5e8;
     --bg-container: #eef5ff;
@@ -1095,7 +1177,7 @@ body.fuji {
     --wrong: #ffb3b3;
     --btn-bg: #3c8dbc;
     --btn-hover: #2c6e9e;
-    --shadow: rgba(0,0,0,0.1);
+    --shadow: rgba(0, 0, 0, 0.1);
 }
 body.fuji {
     background: var(--bg-body);
@@ -1103,16 +1185,115 @@ body.fuji {
 }
 body.fuji .crossword-container {
     background: var(--bg-container);
+    box-shadow: 0 10px 30px var(--shadow);
 }
-/* остальные аналогично – скопируйте структуру из body.bamboo, заменив переменные */
-body.fuji .clues-section { background: var(--bg-clues); }
-body.fuji .cell { background: var(--cell-bg); border-color: var(--border); }
-body.fuji .cell.blocked { background: var(--cell-blocked); }
-body.fuji .cell.active-word { background: var(--active-word); }
-body.fuji .cell.wrong { background: var(--wrong); }
-body.fuji button { background: var(--btn-bg); }
-body.fuji button:hover { background: var(--btn-hover); }
-/* ... и так далее для остальных селекторов */
+body.fuji .clues-section {
+    background: var(--bg-clues);
+}
+body.fuji select,
+body.fuji button {
+    background: var(--bg-container);
+    color: var(--text);
+    border-color: var(--border);
+}
+body.fuji button {
+    background: var(--btn-bg);
+    color: white;
+}
+body.fuji button:hover {
+    background: var(--btn-hover);
+}
+body.fuji .cell {
+    background: var(--cell-bg);
+    border-color: var(--border);
+}
+body.fuji .cell.blocked {
+    background: var(--cell-blocked);
+}
+body.fuji .cell.highlight {
+    background: var(--highlight);
+}
+body.fuji .cell.active-word {
+    background: var(--active-word);
+}
+body.fuji .cell.wrong {
+    background: var(--wrong);
+}
+body.fuji .cell-number {
+    color: #1e4d7e;
+}
+body.fuji .clue-block h3 {
+    border-left-color: var(--btn-bg);
+}
+body.fuji .clue-list li {
+    color: var(--text);
+}
+body.fuji .clue-list li.active-clue {
+    background: var(--active-word);
+    color: #0f2c4a;
+    border-left: 4px solid var(--btn-bg);
+}
+body.fuji .clue-num {
+    color: var(--btn-bg);
+}
+body.fuji .status {
+    background: rgba(60, 141, 188, 0.1);
+    color: #1e4d7e;
+}
+body.fuji .score-container {
+    background: var(--bg-container);
+    border-color: var(--border);
+}
+body.fuji .progress-bar {
+    background: #c1d9f0;
+}
+body.fuji .progress-fill {
+    background: var(--btn-bg);
+}
+body.fuji .toast {
+    background: var(--bg-container);
+    color: var(--text);
+    border-left: 4px solid var(--btn-bg);
+}
+body.fuji .modal-content {
+    background: var(--bg-container);
+    color: var(--text);
+}
+body.fuji .modal-no {
+    background: #c1d9f0;
+    color: #1e4d7e;
+}
+body.fuji .shop-tabs {
+    border-bottom-color: var(--border);
+}
+body.fuji .shop-tab.active {
+    background: var(--btn-bg);
+}
+body.fuji .skin-item,
+body.fuji .upgrade-item {
+    background: var(--bg-container);
+    border-color: var(--border);
+}
+body.fuji .roulette-spin-area {
+    background: var(--bg-container);
+    border-color: var(--border);
+    color: var(--text);
+}
+body.fuji .skin-btn.buy,
+body.fuji .upgrade-btn.buy {
+    background: var(--btn-bg);
+}
+body.fuji .daily-tasks {
+    background: var(--bg-container);
+}
+body.fuji .task-progress {
+    background: #c1d9f0;
+}
+body.fuji #floatingClue {
+    background: var(--bg-container);
+    color: var(--text);
+    border-left-color: var(--btn-bg);
+}
 
 .theme-dropdown {
     margin-top: 5px;
