@@ -7,6 +7,7 @@ import {
 } from './crossword.js';
 import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
 import { loadThemesData, getAvailableThemes, applyTheme, confirmPurchaseTheme, currentThemeId, purchasedThemes } from './themes.js';
+import { loadAchievements, renderAchievementsModal } from './achievements.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -19,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
-    loadThemesData(); 
+    loadThemesData();
+    loadAchievements();
     loadDailyTasks();
     renderDailyTasksPanel();
 
