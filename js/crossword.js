@@ -562,6 +562,8 @@ function checkCompletion() {
             if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); updateTaskProgress('solve_2_crosswords', 1); }
             updatePuzzleSelect(); updateLevelProgress(); updateButtonStates();
             showToast(`Кроссворд решён! +50 очков`, "success");
+            const completedCount = getCompletedCrosswords().length;
+            updateAchievementProgress('crosswords', completedCount);
             if (!usedHintForCurrentLevel) {
                 updateTaskProgress('solve_no_hints', 1);
             }
@@ -599,7 +601,7 @@ function updateClueCompletion() {
                 earned.words[w.id] = true; saveEarnedPointsForCurrent(earned);
                 addPoints(10); 
                 updateTaskProgress('complete_any_word', 1); incrementWordsCompleted(); audio.pop();
-                updateTaskProgress('complete_any_word', 1)
+                updateAchievementProgress('words', gameStats.wordsCompleted);
             }
         }
     }
@@ -781,5 +783,7 @@ export function giveHint() {
     updateTaskProgress('use_hint', 1);
     updateTaskProgress('spend_200_points', 20);
     updateButtonStates();
+    incrementHintsUsed();
+    updateAchievementProgress('hints', totalHintsUsed);
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
 }
