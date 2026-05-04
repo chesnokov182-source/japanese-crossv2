@@ -802,6 +802,7 @@ body.dark .cell.correct-animation {
     100% { transform: scale(1); }
 }
 
+/* ========== ПЛАВАЮЩАЯ ПОДСКАЗКА (базовая) ========== */
 #floatingClue {
     display: none;
     position: absolute;
@@ -843,16 +844,21 @@ body.sakura #floatingClue {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+    /* Очень важно: убираем двойные границы, чтобы сетка была плотной */
     .crossword-grid {
         gap: 1px;
-        justify-content: center;
+        background: #333;
+        border: 1px solid #333;
     }
     .cell {
         width: 55px;
         height: 55px;
+        border: none;          /* убираем собственную рамку – линии от фона сетки */
+        background: var(--cell-bg-light);
     }
     .cell input {
         font-size: 28px;
+        padding: 0;
     }
     .cell-number {
         font-size: 11px;
@@ -875,31 +881,25 @@ body.sakura #floatingClue {
         padding: 8px 12px;
         font-size: 14px;
     }
-    /* Скрываем секцию с подсказками, используем плавающую */
+    /* Скрываем секцию с подсказками (ПК) */
     .clues-section {
         display: none;
     }
+    /* Плавающая подсказка: остаёмся абсолютной, но сдвигаем вниз, если мало места (это уже делает JS) */
     #floatingClue {
-        display: block;
-        position: fixed;
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
-        top: auto;
+        font-size: 13px;
+        padding: 6px 12px;
+        white-space: nowrap;
+        border-radius: 20px;
         background: rgba(0,0,0,0.85);
         color: white;
-        border-radius: 40px;
-        text-align: center;
-        backdrop-filter: blur(4px);
-        font-size: 16px;
-        white-space: normal;
-        word-break: break-word;
+        border-left: none;
     }
     body.dark #floatingClue,
     body.sakura #floatingClue {
         background: rgba(0,0,0,0.85);
         color: white;
-        border-left-color: var(--btn-bg);
+        border-left: none;
     }
     .modal-content {
         width: 95%;
@@ -982,11 +982,8 @@ body.sakura #floatingClue {
         font-size: 28px;
     }
     #floatingClue {
-        font-size: 14px;
-        padding: 8px 12px;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
+        font-size: 11px;
+        padding: 4px 10px;
     }
 }
 
@@ -1208,136 +1205,3 @@ body.fuji .skin-btn.buy, body.fuji .upgrade-btn.buy { background: var(--btn-bg);
 body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
-
-/* ========== МОБИЛЬНЫЕ УСТРОЙСТВА (ШИРИНА ≤ 768px) ========== */
-@media (max-width: 768px) {
-    /* Скрываем панель с вопросами */
-    .clues-section {
-        display: none !important;
-    }
-
-    /* Принудительно убираем все отступы у body и контейнера */
-    body {
-        padding: 5px !important;
-        margin: 0 !important;
-    }
-    .crossword-container {
-        padding: 8px !important;
-        margin: 0 !important;
-        gap: 10px !important;
-        flex-direction: column !important;
-    }
-
-    /* ===== СЕТКА КРОССВОРДА ===== */
-    .crossword-grid {
-        display: grid !important;
-        gap: 1px !important;
-        background-color: #333 !important;
-        border: 1px solid #333 !important;
-        margin: 0 auto !important;
-        justify-content: center !important;
-    }
-    /* Ячейки – без отступов и рамок */
-    .cell {
-        width: 50px !important;
-        height: 50px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: none !important;
-        background: var(--cell-bg-light) !important;
-        position: relative !important;
-    }
-    /* Поле ввода */
-    .cell input {
-        width: 100% !important;
-        height: 100% !important;
-        font-size: 24px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        text-align: center !important;
-        border: none !important;
-        background: transparent !important;
-    }
-    /* Номер ячейки (маленький) */
-    .cell-number {
-        font-size: 9px !important;
-        top: 2px !important;
-        left: 3px !important;
-    }
-    /* Скин на клетке */
-    .cell-skin {
-        font-size: 32px !important;
-    }
-
-    /* ===== ПЛАВАЮЩАЯ ПОДСКАЗКА (над клеткой) ===== */
-    #floatingClue {
-        position: absolute !important;
-        display: none !important;
-        background: rgba(0, 0, 0, 0.85) !important;
-        color: white !important;
-        border-radius: 16px !important;
-        padding: 5px 10px !important;
-        font-size: 13px !important;
-        white-space: nowrap !important;
-        z-index: 10000 !important;
-        pointer-events: none !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-        font-family: inherit !important;
-        border-left: none !important;
-    }
-
-    /* ===== КНОПКИ И ЭЛЕМЕНТЫ УПРАВЛЕНИЯ ===== */
-    .level-selector {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 6px !important;
-    }
-    .selector-group {
-        width: 100% !important;
-    }
-    select, button {
-        width: 100% !important;
-        padding: 6px 10px !important;
-        font-size: 13px !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Модальные окна – выше подсказки */
-    .modal {
-        z-index: 10050 !important;
-    }
-
-    /* Другие блоки – компактно */
-    .daily-tasks {
-        margin-top: 10px;
-        padding: 8px;
-    }
-    .status {
-        font-size: 12px;
-        padding: 5px;
-    }
-    .score-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-    }
-}
-
-/* Очень узкие экраны (например, iPhone SE) */
-@media (max-width: 400px) {
-    .cell {
-        width: 42px !important;
-        height: 42px !important;
-    }
-    .cell input {
-        font-size: 20px !important;
-    }
-    .cell-skin {
-        font-size: 26px !important;
-    }
-    #floatingClue {
-        font-size: 11px !important;
-        padding: 4px 8px !important;
-        border-radius: 12px !important;
-    }
-}
