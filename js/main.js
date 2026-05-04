@@ -221,17 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cluesSection) {
             cluesSection.style.display = isMobile ? 'none' : '';
         }
-        if (floatingClue) {
-            floatingClue.style.display = isMobile ? 'block' : 'none';
-        }
-        
-        // Перезагружаем сетку, чтобы обновить размеры ячеек (если нужно)
-        if (window.cellElements && window.gridWidth && window.gridHeight) {
-            // Просто перерисовка не требуется, но можно вызвать applyHighlight для обновления стилей
-            if (typeof applyHighlight === 'function') applyHighlight();
-        }
-    }
-    
+
     // Вызываем при загрузке и при изменении размера окна
     applyMobileLayout();
     window.addEventListener('resize', applyMobileLayout);
