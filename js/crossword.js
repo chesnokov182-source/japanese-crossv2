@@ -648,7 +648,7 @@ function initFloatingClue() {
 }
 
 function updateFloatingCluePosition() {
-    if (!isMobile || !floatingClueElement) return;
+    if (!floatingClueElement) return;
     if (activeWordId === null) {
         floatingClueElement.style.display = 'none';
         return;
@@ -661,19 +661,31 @@ function updateFloatingCluePosition() {
     const firstCell = word.cells[0];
     const inputEl = cellElements[firstCell.row]?.[firstCell.col];
     if (!inputEl) return;
-    
+
     const rect = inputEl.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-    let top = rect.top + scrollTop - 42;
+    const clueText = `${Math.floor(word.number)}. ${word.clue}`;
+    floatingClueElement.innerText = clueText;
+
+    // Позиционируем над ячейкой, но если не хватает места сверху – под ячейкой
+    let top = rect.top + scrollTop - floatingClueElement.offsetHeight - 5;
     let left = rect.left + scrollLeft;
+    const viewportHeight = window.innerHeight;
+
     if (top < scrollTop + 10) {
+        // Не хватает места сверху – ставим под ячейкой
         top = rect.bottom + scrollTop + 5;
     }
+    // Горизонтальное позиционирование: не выходить за правый край
+    if (left + floatingClueElement.offsetWidth > window.innerWidth + scrollLeft) {
+        left = window.innerWidth + scrollLeft - floatingClueElement.offsetWidth - 5;
+    }
+    if (left < scrollLeft) left = scrollLeft + 5;
+
     floatingClueElement.style.left = left + 'px';
     floatingClueElement.style.top = top + 'px';
     floatingClueElement.style.display = 'block';
-    floatingClueElement.innerText = `${Math.floor(word.number)}. ${word.clue}`;
 }
 
 function switchWordAtCell(row, col) {
