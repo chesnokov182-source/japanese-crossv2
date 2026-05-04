@@ -1094,3 +1094,98 @@ body.fuji .skin-btn.buy, body.fuji .upgrade-btn.buy { background: var(--btn-bg);
 body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
+
+/* ===== 1. Убираем подчёркивание у кнопки "Тема" и её родителя ===== */
+.selector-group {
+    border-bottom: none !important;
+    border-top: none !important;
+}
+#themeBtn,
+#themeBtn::before,
+#themeBtn::after,
+#themeBtn:hover,
+#themeBtn:focus,
+#themeBtn:active {
+    border-bottom: none !important;
+    border-top: none !important;
+    outline: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+/* Убираем возможную границу у выпадающего списка, когда он скрыт */
+.theme-dropdown {
+    border-top: none !important;
+}
+.theme-dropdown:empty {
+    display: none;
+}
+
+/* ===== 2. Экстремальное смыкание ячеек (переопределяем всё) ===== */
+.crossword-grid {
+    gap: 0 !important;
+    background: #333 !important;          /* цвет линий сетки */
+    border: none !important;
+    line-height: 0 !important;            /* убираем лишние отступы */
+    font-size: 0 !important;
+}
+.cell {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    /* Линия внутри ячейки (имитация границы) */
+    box-shadow: inset 0 0 0 1px #888 !important;
+    /* важные сбросы */
+    line-height: normal !important;
+    font-size: 40px !important;           /* ваш размер */
+}
+/* Для мобильных – переопределяем размеры, но сохраняем смыкание */
+@media (max-width: 768px) {
+    .cell {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 28px !important;
+        box-shadow: inset 0 0 0 1px #888 !important;
+    }
+    .cell-skin {
+        font-size: 36px !important;
+    }
+}
+@media (max-width: 480px) {
+    .cell {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 22px !important;
+    }
+    .cell-skin {
+        font-size: 28px !important;
+    }
+}
+/* Для каждой темы – переопределяем цвет линии */
+body.dark .cell {
+    box-shadow: inset 0 0 0 1px #666 !important;
+}
+body.sakura .cell {
+    box-shadow: inset 0 0 0 1px #e0a0b0 !important;
+}
+body.bamboo .cell {
+    box-shadow: inset 0 0 0 1px var(--border) !important;
+}
+body.fuji .cell {
+    box-shadow: inset 0 0 0 1px var(--border) !important;
+}
+
+#themeBtn {
+    all: revert;
+    background: var(--btn-bg-light);
+    color: white;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-bottom: none !important;
+}
+
+.theme-dropdown {
+    display: none !important;
+}
