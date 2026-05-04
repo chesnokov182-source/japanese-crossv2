@@ -832,174 +832,45 @@ body.sakura #floatingClue {
 
 /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    .crossword-container {
-        flex-direction: column;
-        padding: 16px;
-        gap: 16px;
-    }
-    .grid-section {
-        min-width: auto;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    /* Сетка: без зазоров, у ячеек убираем внешние отступы, чтобы они прилегали */
-    .crossword-grid {
-        gap: 0;
-        border: 1px solid #333;
-    }
-    .cell {
-        width: 55px;
-        height: 55px;
-        border: 1px solid #888;  /* одинарная граница, без двойных линий */
-    }
-    .cell input {
-        font-size: 28px;
-        padding: 0;
-    }
-    .cell-number {
-        font-size: 11px;
-        top: 2px;
-        left: 4px;
-    }
-    .cell-skin {
-        font-size: 36px;
-    }
-    /* Панель с вопросами скрываем */
-    .clues-section {
-        display: none;
-    }
-    /* Показываем блок очков и прогресса вверху (компактно) */
-    .score-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        font-size: 14px;
-        padding: 8px 12px;
-        margin-bottom: 12px;
-    }
-    .level-progress {
-        display: none;  /* скрываем прогресс уровня на телефонах, чтобы не загромождать */
-    }
+    body { padding: 10px; }
+    .crossword-container { flex-direction: column; padding: 16px; gap: 16px; }
+    .grid-section { min-width: auto; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    /* Сетка на мобильных: ячейки меньше */
+    .cell { width: 55px; height: 55px; }
+    .cell input { font-size: 28px; }
+    .cell-number { font-size: 11px; top: 2px; left: 4px; }
+    .cell-skin { font-size: 36px; }
+    /* Скрываем панель с вопросами */
+    .clues-section { display: none; }
     /* Кнопки и селекторы вертикально */
-    .level-selector {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-        margin-bottom: 12px;
-    }
-    .selector-group {
-        width: 100%;
-    }
-    select, button {
-        width: 100%;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    /* Плавающая подсказка: уменьшаем шрифт */
-    #floatingClue {
-        font-size: 13px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        background: rgba(0,0,0,0.85);
-        color: white;
-        border-left: none;
-    }
-    body.dark #floatingClue,
-    body.sakura #floatingClue {
-        background: rgba(0,0,0,0.85);
-        color: white;
-        border-left: none;
-    }
-    /* Модальные окна */
-    .modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-    .modal-message {
-        font-size: 18px;
-    }
-    .modal-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-    /* Магазин */
-    .skin-item, .upgrade-item {
-        flex-wrap: wrap;
-    }
-    .skin-info {
-        width: 100%;
-    }
-    .skin-btn, .upgrade-btn {
-        width: 100%;
-        margin-top: 6px;
-    }
-    /* Рулетка */
-    .roulette-spin-area {
-        font-size: 32px;
-        min-height: 100px;
-    }
-    .roulette-spin-btn {
-        width: 100%;
-        padding: 12px;
-    }
-    /* Ежедневные задания */
-    .daily-tasks {
-        padding: 12px;
-    }
-    .task-progress {
-        width: 80px;
-    }
-    .status {
-        font-size: 14px;
-        padding: 8px;
-    }
-    .toast {
-        font-size: 14px;
-        padding: 12px 18px;
-        max-width: 90vw;
-        bottom: 20px;
-        right: 20px;
-    }
-    /* Выпадающий список тем – статический на мобильных */
-    .theme-dropdown {
-        position: static;
-        margin-top: 4px;
-        width: 100%;
-        max-width: none;
-        white-space: normal;
-    }
-    #themeBtn {
-        width: 100%;
-    }
+    .level-selector { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
+    .selector-group { width: 100%; }
+    select, button { width: 100%; padding: 8px 12px; font-size: 14px; }
+    /* Плавающая подсказка */
+    #floatingClue { font-size: 13px; padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.85); color: white; border-left: none; }
+    body.dark #floatingClue, body.sakura #floatingClue { background: rgba(0,0,0,0.85); color: white; border-left: none; }
+    /* Модальные окна, магазин, рулетка, тосты – как раньше */
+    .modal-content { width: 95%; padding: 20px; }
+    .skin-item, .upgrade-item { flex-wrap: wrap; }
+    .skin-info { width: 100%; }
+    .skin-btn, .upgrade-btn { width: 100%; margin-top: 6px; }
+    .roulette-spin-area { font-size: 32px; min-height: 100px; }
+    .roulette-spin-btn { width: 100%; padding: 12px; }
+    .daily-tasks { padding: 12px; }
+    .task-progress { width: 80px; }
+    .status { font-size: 14px; padding: 8px; }
+    .toast { font-size: 14px; padding: 12px 18px; max-width: 90vw; bottom: 20px; right: 20px; }
+    .theme-dropdown { position: static; width: 100%; white-space: normal; }
+    #themeBtn { width: 100%; }
+    /* Счёт очков и слов уже виден, так как мы перенесли его в .grid-section */
 }
 
 @media (max-width: 480px) {
-    .cell {
-        width: 45px;
-        height: 45px;
-    }
-    .cell input {
-        font-size: 22px;
-    }
-    .cell-number {
-        font-size: 9px;
-        top: 1px;
-        left: 2px;
-    }
-    .cell-skin {
-        font-size: 28px;
-    }
-    #floatingClue {
-        font-size: 11px;
-        padding: 4px 10px;
-    }
-    .score-container {
-        font-size: 12px;
-    }
+    .cell { width: 45px; height: 45px; }
+    .cell input { font-size: 22px; }
+    .cell-number { font-size: 9px; top: 1px; left: 2px; }
+    .cell-skin { font-size: 28px; }
+    #floatingClue { font-size: 11px; padding: 4px 10px; }
 }
 
 /* ========== ТЕМЫ: ТЁМНАЯ, САКУРА, БАМБУК, ФУДЗИ ========== */
