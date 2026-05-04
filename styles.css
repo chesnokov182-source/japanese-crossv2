@@ -1,3 +1,4 @@
+/* ========== ПЕРЕМЕННЫЕ (темы) ========== */
 :root {
     --bg-body-light: #f5f3ef;
     --bg-container-light: white;
@@ -42,6 +43,7 @@
     --shadow-sakura: rgba(183, 28, 68, 0.15);
 }
 
+/* ========== БАЗОВЫЕ СТИЛИ ========== */
 * {
     user-select: none;
     box-sizing: border-box;
@@ -152,6 +154,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* ========== СЕТКА КРОССВОРДА ========== */
 .crossword-grid {
     display: grid;
     gap: 2px;
@@ -264,9 +267,10 @@ body.dark .cell-number {
     pointer-events: none;
     z-index: 1;
     background: transparent;
-    transform: none; 
+    line-height: 1;
 }
 
+/* ========== ПОДСКАЗКИ (ПК) ========== */
 .clue-block {
     margin-bottom: 24px;
 }
@@ -309,10 +313,16 @@ body.dark .clue-list li:hover {
 .clue-list li.active-clue {
     background: var(--active-word-light);
     font-weight: bold;
+    color: #004080;
+    border-left: 4px solid #4a6fa5;
+    box-shadow: 0 2px 5px rgba(74, 111, 165, 0.2);
 }
 
 body.dark .clue-list li.active-clue {
     background: var(--active-word-dark);
+    color: #ffffff;
+    border-left: 4px solid #6c8fb5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .clue-list li.completed {
@@ -339,6 +349,7 @@ body.dark .clue-num {
     flex: 1;
 }
 
+/* ========== СТАТУС И ИНФОРМАЦИЯ ========== */
 .status {
     margin-top: 24px;
     text-align: center;
@@ -398,6 +409,7 @@ body.dark .progress-fill {
     background: #6c8fb5;
 }
 
+/* ========== ТОСТЫ (С ОЧЕРЕДЬЮ) ========== */
 .toast {
     position: fixed;
     bottom: 30px;
@@ -411,7 +423,7 @@ body.dark .progress-fill {
     z-index: 10000;
     pointer-events: none;
     max-width: 400px;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s ease;
     opacity: 0;
 }
 
@@ -428,6 +440,7 @@ body.dark .toast {
 .toast.success { border-left: 4px solid #2c6e2c; }
 .toast.error { border-left: 4px solid #c94f4f; }
 
+/* ========== МОДАЛЬНЫЕ ОКНА ========== */
 .modal {
     display: none;
     position: fixed;
@@ -448,7 +461,7 @@ body.dark .toast {
     padding: 32px;
     border-radius: 20px;
     box-shadow: 0 10px 30px var(--shadow-light);
-    max-width: 500px;
+    max-width: 550px;
     width: 90%;
     text-align: center;
 }
@@ -488,11 +501,9 @@ body.dark .modal-content {
 body.dark .modal-yes {
     background: var(--btn-bg-dark);
 }
-
 .modal-yes:hover {
     background: var(--btn-hover-light);
 }
-
 body.dark .modal-yes:hover {
     background: var(--btn-hover-dark);
 }
@@ -501,12 +512,12 @@ body.dark .modal-yes:hover {
     background: #e0e0e0;
     color: #333;
 }
-
 body.dark .modal-no {
     background: #4a4a5a;
     color: #e0e0e0;
 }
 
+/* ========== МАГАЗИН И СКИНЫ ========== */
 .shop-tabs {
     display: flex;
     gap: 10px;
@@ -541,6 +552,7 @@ body.dark .shop-tab.active {
 .shop-section.active {
     display: block;
 }
+
 .skin-item, .upgrade-item {
     display: flex;
     align-items: center;
@@ -627,6 +639,8 @@ body.dark .upgrade-desc {
     font-size: 14px;
     color: #4a6fa5;
 }
+
+/* ========== РУЛЕТКА ========== */
 .roulette-container {
     text-align: center;
     padding: 20px;
@@ -679,302 +693,12 @@ body.dark .roulette-info {
     color: #aaa;
 }
 
-body.sakura {
-    background: var(--bg-body-sakura);
-    color: var(--text-sakura);
-}
-body.sakura .crossword-container {
-    background: var(--bg-container-sakura);
-    box-shadow: 0 10px 30px var(--shadow-sakura);
-}
-body.sakura .clues-section {
-    background: var(--bg-clues-sakura);
-}
-body.sakura select, 
-body.sakura button {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    border-color: var(--border-sakura);
-}
-body.sakura button {
-    background: var(--btn-bg-sakura);
-    color: white;
-}
-body.sakura button:hover {
-    background: var(--btn-hover-sakura);
-}
-body.sakura .cell {
-    background: var(--cell-bg-sakura);
-    color: var(--text-sakura);
-    border-color: #e0a0b0;
-}
-body.sakura .cell input {
-    caret-color: var(--btn-bg-sakura);
-    color: var(--text-sakura);
-}
-body.sakura .cell.blocked {
-    background: var(--cell-blocked-sakura);
-}
-body.sakura .cell.highlight {
-    background: var(--highlight-sakura);
-}
-body.sakura .cell.active-word {
-    background: var(--active-word-sakura);
-}
-body.sakura .cell.wrong {
-    background: var(--wrong-sakura);
-}
-body.sakura .cell-number {
-    color: #ad1457;
-}
-body.sakura .clue-block h3 {
-    border-left-color: var(--btn-bg-sakura);
-}
-body.sakura .clue-list li:hover {
-    background: #fce4ec;
-}
-body.sakura .clue-list li.active-clue {
-    background: var(--active-word-sakura);
-    color: #880e4f;
-}
-body.sakura .clue-num {
-    color: var(--btn-bg-sakura);
-}
-body.sakura .status {
-    background: rgba(236, 64, 122, 0.05);
-    color: #c2185b;
-}
-body.sakura .score-container {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-}
-body.sakura .progress-bar {
-    background: #fce4ec;
-}
-body.sakura .progress-fill {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .toast {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    border-left: 4px solid var(--btn-bg-sakura);
-}
-body.sakura .modal-content {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    box-shadow: 0 10px 30px var(--shadow-sakura);
-}
-body.sakura .modal-no {
-    background: #f8bbd0;
-    color: #880e4f;
-}
-body.sakura .shop-tabs {
-    border-bottom-color: var(--border-sakura);
-}
-body.sakura .shop-tab.active {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .skin-item, 
-body.sakura .upgrade-item {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-}
-body.sakura .roulette-spin-area {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-    color: var(--text-sakura);
-}
-body.sakura .skin-btn.buy, 
-body.sakura .upgrade-btn.buy {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .skin-btn.select {
-    background: #2e7d32;
-}
-
-.clue-list li.active-clue {
-    background: var(--active-word-light); 
-    color: #004080; 
-    font-weight: bold;
-    border-left: 4px solid #4a6fa5; 
-    box-shadow: 0 2px 5px rgba(74, 111, 165, 0.2); 
-}
-body.dark .clue-list li.active-clue {
-    background: var(--active-word-dark); 
-    color: #ffffff; 
-    font-weight: bold;
-    border-left: 4px solid #6c8fb5; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes successPop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); background-color: #a5d6a7; } 
-    100% { transform: scale(1); }
-}
-.cell.correct-animation {
-    animation: successPop 0.3s ease-out;
-}
-body.dark .cell.correct-animation {
-    animation: successPopDark 0.3s ease-out;
-}
-@keyframes successPopDark {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); background-color: #2e7d32; }
-    100% { transform: scale(1); }
-}
-
-/* Мобильные стили (до 800px) */
-@media (max-width: 800px) {
-    .cell {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
-    .cell input {
-        font-size: 24px;
-    }
-    .cell-number {
-        font-size: 11px;
-    }
-    .clue-list li {
-        font-size: 14px;
-    }
-    .modal-message {
-        font-size: 18px;
-    }
-    .modal-btn {
-        font-size: 16px;
-        padding: 10px 24px;
-    }
-    .roulette-spin-area {
-        font-size: 32px;
-        min-height: 100px;
-    }
-    .skin-btn, .upgrade-btn {
-        min-width: 70px;
-        font-size: 12px;
-    }
-    .skin-emoji {
-        width: 36px;
-        font-size: 24px;
-    }
-    .crossword-grid {
-        gap: 1px;
-    }
-    .level-selector {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-    }
-    .level-selector > * {
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-    }
-    select, button {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 6px 12px;
-        font-size: 14px;
-    }
-    .selector-group {
-        display: flex;
-        width: 100%;
-        gap: 10px;
-        align-items: baseline;
-    }
-    .selector-group span {
-        flex-shrink: 0;
-    }
-    .selector-group select {
-        flex: 1;
-        width: auto !important;
-    }
-    .clues-section {
-        display: none;
-    }
-    .grid-section {
-        min-width: auto;
-        width: 100%;
-    }
-    /* Плавающая подсказка */
-    #floatingClue {
-        display: block;
-        white-space: normal;
-        word-break: break-word;
-        max-width: 90vw;
-        font-size: 18px;
-        padding: 10px 14px;
-    }
-    .toast {
-        font-size: 16px;
-        padding: 14px 20px;
-        max-width: 90vw;
-        bottom: 20px;
-        right: 20px;
-    }
-}
-
-@media (max-width: 500px) {
-    .cell {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
-    .cell input {
-        font-size: 18px;
-    }
-    .cell-number {
-        font-size: 8px;
-        top: 1px;
-        left: 2px;
-    }
-    .clue-list li {
-        font-size: 12px;
-        padding: 6px 8px;
-    }
-    .clue-num {
-        min-width: 28px;
-    }
-    #floatingClue {
-        font-size: 16px;
-        padding: 8px 12px;
-    }
-}
-
-/* Плавающая подсказка – базовые стили (на ПК скрыта) */
-#floatingClue {
-    display: none;
-    position: absolute;
-    background: var(--bg-container-light);
-    color: var(--text-light);
-    border-left: 4px solid var(--btn-bg-light);
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 14px;
-    z-index: 1000;
-    pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: all 0.1s ease;
-}
-body.dark #floatingClue {
-    background: #2d2d44;
-    color: #ffffff;
-    border-left-color: #6c8fb5;
-}
-body.sakura #floatingClue {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    border-left-color: var(--btn-bg-sakura);
-}
-
+/* ========== ЕЖЕДНЕВНЫЕ ЗАДАНИЯ ========== */
 .daily-tasks {
     background: var(--bg-container-light);
     border-radius: 16px;
     padding: 15px;
     margin-top: 20px;
-    /* границ нет, сливается с фоном */
 }
 .daily-task {
     display: flex;
@@ -1004,7 +728,6 @@ body.sakura #floatingClue {
     color: #ff9800;
 }
 
-/* Тёмная тема */
 body.dark .daily-tasks {
     background: var(--bg-container-dark);
 }
@@ -1015,296 +738,30 @@ body.dark .task-progress {
     background: #4a4a5a;
 }
 
-/* Сакура-тема */
-body.sakura .daily-tasks {
-    background: var(--bg-container-sakura);
+/* ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ ========== */
+.selector-group {
+    position: relative;
+    display: inline-block;
+}
+#themeBtn {
+    min-width: 100px;
+    text-align: center;
 }
-body.sakura .task-name {
-    color: var(--text-sakura);
-}
-body.sakura .task-progress {
-    background: #f8bbd0;
-}
-
-.cell-skin {
-    line-height: 1;
-    vertical-align: middle;
-}
-
-/* ========== ТЕМА: ДЗЕН-БАМБУК ========== */
-body.bamboo {
-    --bg-body: #d9e0b5;
-    --bg-container: #f0f7da;
-    --bg-clues: #eaf4cf;
-    --text: #3a5e3a;
-    --border: #8cae6e;
-    --cell-bg: #ffffe0;
-    --cell-blocked: #bdd48a;
-    --highlight: #e0f0c0;
-    --active-word: #c0e0a0;
-    --wrong: #f0a0a0;
-    --btn-bg: #6b8e23;
-    --btn-hover: #556b2f;
-    --shadow: rgba(60, 60, 0, 0.2);
-}
-body.bamboo {
-    background: var(--bg-body);
-    color: var(--text);
-}
-body.bamboo .crossword-container {
-    background: var(--bg-container);
-    box-shadow: 0 10px 30px var(--shadow);
-}
-body.bamboo .clues-section {
-    background: var(--bg-clues);
-}
-body.bamboo select,
-body.bamboo button {
-    background: var(--bg-container);
-    color: var(--text);
-    border-color: var(--border);
-}
-body.bamboo button {
-    background: var(--btn-bg);
-    color: white;
-}
-body.bamboo button:hover {
-    background: var(--btn-hover);
-}
-body.bamboo .cell {
-    background: var(--cell-bg);
-    border-color: var(--border);
-}
-body.bamboo .cell.blocked {
-    background: var(--cell-blocked);
-}
-body.bamboo .cell.highlight {
-    background: var(--highlight);
-}
-body.bamboo .cell.active-word {
-    background: var(--active-word);
-}
-body.bamboo .cell.wrong {
-    background: var(--wrong);
-}
-body.bamboo .cell-number {
-    color: #2c5e2c;
-}
-body.bamboo .clue-block h3 {
-    border-left-color: var(--btn-bg);
-}
-body.bamboo .clue-list li {
-    color: var(--text);
-}
-body.bamboo .clue-list li.active-clue {
-    background: var(--active-word);
-    color: #1a3a1a;
-    border-left: 4px solid var(--btn-bg);
-}
-body.bamboo .clue-num {
-    color: var(--btn-bg);
-}
-body.bamboo .status {
-    background: rgba(107, 142, 35, 0.1);
-    color: #2c5e2c;
-}
-body.bamboo .score-container {
-    background: var(--bg-container);
-    border-color: var(--border);
-}
-body.bamboo .progress-bar {
-    background: #c0d6a0;
-}
-body.bamboo .progress-fill {
-    background: var(--btn-bg);
-}
-body.bamboo .toast {
-    background: var(--bg-container);
-    color: var(--text);
-    border-left: 4px solid var(--btn-bg);
-}
-body.bamboo .modal-content {
-    background: var(--bg-container);
-    color: var(--text);
-}
-body.bamboo .modal-no {
-    background: #c0d6a0;
-    color: #2c5e2c;
-}
-body.bamboo .shop-tabs {
-    border-bottom-color: var(--border);
-}
-body.bamboo .shop-tab.active {
-    background: var(--btn-bg);
-}
-body.bamboo .skin-item,
-body.bamboo .upgrade-item {
-    background: var(--bg-container);
-    border-color: var(--border);
-}
-body.bamboo .roulette-spin-area {
-    background: var(--bg-container);
-    border-color: var(--border);
-    color: var(--text);
-}
-body.bamboo .skin-btn.buy,
-body.bamboo .upgrade-btn.buy {
-    background: var(--btn-bg);
-}
-body.bamboo .daily-tasks {
-    background: var(--bg-container);
-    border-radius: 16px;
-}
-body.bamboo .task-progress {
-    background: #c0d6a0;
-}
-body.bamboo #floatingClue {
-    background: var(--bg-container);
-    color: var(--text);
-    border-left-color: var(--btn-bg);
-}
-
-/* ========== ТЕМА: ФУДЗИ ========== */
-body.fuji {
-    --bg-body: #b8d5e8;
-    --bg-container: #eef5ff;
-    --bg-clues: #e0edf8;
-    --text: #2c4b6e;
-    --border: #8ab3cf;
-    --cell-bg: #ffffff;
-    --cell-blocked: #c1d9f0;
-    --highlight: #cce8ff;
-    --active-word: #a8d0ff;
-    --wrong: #ffb3b3;
-    --btn-bg: #3c8dbc;
-    --btn-hover: #2c6e9e;
-    --shadow: rgba(0, 0, 0, 0.1);
-}
-body.fuji {
-    background: var(--bg-body);
-    color: var(--text);
-}
-body.fuji .crossword-container {
-    background: var(--bg-container);
-    box-shadow: 0 10px 30px var(--shadow);
-}
-body.fuji .clues-section {
-    background: var(--bg-clues);
-}
-body.fuji select,
-body.fuji button {
-    background: var(--bg-container);
-    color: var(--text);
-    border-color: var(--border);
-}
-body.fuji button {
-    background: var(--btn-bg);
-    color: white;
-}
-body.fuji button:hover {
-    background: var(--btn-hover);
-}
-body.fuji .cell {
-    background: var(--cell-bg);
-    border-color: var(--border);
-}
-body.fuji .cell.blocked {
-    background: var(--cell-blocked);
-}
-body.fuji .cell.highlight {
-    background: var(--highlight);
-}
-body.fuji .cell.active-word {
-    background: var(--active-word);
-}
-body.fuji .cell.wrong {
-    background: var(--wrong);
-}
-body.fuji .cell-number {
-    color: #1e4d7e;
-}
-body.fuji .clue-block h3 {
-    border-left-color: var(--btn-bg);
-}
-body.fuji .clue-list li {
-    color: var(--text);
-}
-body.fuji .clue-list li.active-clue {
-    background: var(--active-word);
-    color: #0f2c4a;
-    border-left: 4px solid var(--btn-bg);
-}
-body.fuji .clue-num {
-    color: var(--btn-bg);
-}
-body.fuji .status {
-    background: rgba(60, 141, 188, 0.1);
-    color: #1e4d7e;
-}
-body.fuji .score-container {
-    background: var(--bg-container);
-    border-color: var(--border);
-}
-body.fuji .progress-bar {
-    background: #c1d9f0;
-}
-body.fuji .progress-fill {
-    background: var(--btn-bg);
-}
-body.fuji .toast {
-    background: var(--bg-container);
-    color: var(--text);
-    border-left: 4px solid var(--btn-bg);
-}
-body.fuji .modal-content {
-    background: var(--bg-container);
-    color: var(--text);
-}
-body.fuji .modal-no {
-    background: #c1d9f0;
-    color: #1e4d7e;
-}
-body.fuji .shop-tabs {
-    border-bottom-color: var(--border);
-}
-body.fuji .shop-tab.active {
-    background: var(--btn-bg);
-}
-body.fuji .skin-item,
-body.fuji .upgrade-item {
-    background: var(--bg-container);
-    border-color: var(--border);
-}
-body.fuji .roulette-spin-area {
-    background: var(--bg-container);
-    border-color: var(--border);
-    color: var(--text);
-}
-body.fuji .skin-btn.buy,
-body.fuji .upgrade-btn.buy {
-    background: var(--btn-bg);
-}
-body.fuji .daily-tasks {
-    background: var(--bg-container);
-    border-radius: 16px;
-}
-body.fuji .task-progress {
-    background: #c1d9f0;
-}
-body.fuji #floatingClue {
-    background: var(--bg-container);
-    color: var(--text);
-    border-left-color: var(--btn-bg);
-}
-
-
 .theme-dropdown {
-    margin-top: 5px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    margin-top: 4px;
     background: var(--bg-container);
     border: 1px solid var(--border);
-    border-radius: 0px;        
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    overflow: hidden;      
+    overflow: hidden;
+    z-index: 1000;
+    min-width: 180px;
+    max-width: 90vw;
+    white-space: nowrap;
 }
 .theme-dropdown button {
     display: block;
@@ -1318,7 +775,7 @@ body.fuji #floatingClue {
     font-size: 15px;
     cursor: pointer;
     transition: background 0.1s;
-    border-radius: 0;          
+    border-radius: 0;
 }
 .theme-dropdown button:last-child {
     border-bottom: none;
@@ -1327,33 +784,427 @@ body.fuji #floatingClue {
     background: var(--highlight);
 }
 
-.selector-group {
-    position: relative;  
-    display: inline-block;
+/* ========== АНИМАЦИИ ========== */
+@keyframes successPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); background-color: #a5d6a7; }
+    100% { transform: scale(1); }
+}
+.cell.correct-animation {
+    animation: successPop 0.3s ease-out;
+}
+body.dark .cell.correct-animation {
+    animation: successPopDark 0.3s ease-out;
+}
+@keyframes successPopDark {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); background-color: #2e7d32; }
+    100% { transform: scale(1); }
 }
 
-.theme-dropdown {
+#floatingClue {
+    display: none;
     position: absolute;
-    top: 100%;
-    right: 0;         
-    left: auto;        
-    margin-top: 4px;
-    background: var(--bg-container);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    overflow: hidden;
+    background: var(--bg-container-light);
+    color: var(--text-light);
+    border-left: 4px solid var(--btn-bg-light);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 14px;
     z-index: 1000;
-    min-width: 180px;
-    max-width: 90vw;    
-    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
+}
+body.dark #floatingClue {
+    background: #2d2d44;
+    color: #ffffff;
+    border-left-color: #6c8fb5;
+}
+body.sakura #floatingClue {
+    background: var(--bg-container-sakura);
+    color: var(--text-sakura);
+    border-left-color: var(--btn-bg-sakura);
 }
 
-#themeBtn {
-    min-width: 100px;   
-    text-align: center;
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .crossword-container {
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+    }
+    .grid-section {
+        min-width: auto;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .crossword-grid {
+        gap: 1px;
+        justify-content: center;
+    }
+    .cell {
+        width: 55px;
+        height: 55px;
+    }
+    .cell input {
+        font-size: 28px;
+    }
+    .cell-number {
+        font-size: 11px;
+        top: 2px;
+        left: 4px;
+    }
+    .cell-skin {
+        font-size: 36px;
+    }
+    .level-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .selector-group {
+        width: 100%;
+    }
+    select, button {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    /* Скрываем секцию с подсказками, используем плавающую */
+    .clues-section {
+        display: none;
+    }
+    #floatingClue {
+        display: block;
+        position: fixed;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        top: auto;
+        background: rgba(0,0,0,0.85);
+        color: white;
+        border-radius: 40px;
+        text-align: center;
+        backdrop-filter: blur(4px);
+        font-size: 16px;
+        white-space: normal;
+        word-break: break-word;
+    }
+    body.dark #floatingClue,
+    body.sakura #floatingClue {
+        background: rgba(0,0,0,0.85);
+        color: white;
+        border-left-color: var(--btn-bg);
+    }
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    .modal-message {
+        font-size: 18px;
+    }
+    .modal-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    .skin-item, .upgrade-item {
+        flex-wrap: wrap;
+    }
+    .skin-info {
+        width: 100%;
+    }
+    .skin-btn, .upgrade-btn {
+        width: 100%;
+        margin-top: 6px;
+    }
+    .roulette-spin-area {
+        font-size: 32px;
+        min-height: 100px;
+    }
+    .roulette-spin-btn {
+        width: 100%;
+        padding: 12px;
+    }
+    .daily-tasks {
+        padding: 12px;
+    }
+    .task-progress {
+        width: 80px;
+    }
+    .status {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .score-container {
+        font-size: 14px;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+    .toast {
+        font-size: 14px;
+        padding: 12px 18px;
+        max-width: 90vw;
+        bottom: 20px;
+        right: 20px;
+    }
+    .theme-dropdown {
+        position: static;
+        margin-top: 4px;
+        width: 100%;
+        max-width: none;
+        white-space: normal;
+    }
+    #themeBtn {
+        width: 100%;
+    }
 }
 
-.toast {
-    transition: opacity 0.2s ease;
+@media (max-width: 480px) {
+    .cell {
+        width: 45px;
+        height: 45px;
+    }
+    .cell input {
+        font-size: 22px;
+    }
+    .cell-number {
+        font-size: 9px;
+        top: 1px;
+        left: 2px;
+    }
+    .cell-skin {
+        font-size: 28px;
+    }
+    #floatingClue {
+        font-size: 14px;
+        padding: 8px 12px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
 }
+
+/* ========== ТЕМЫ: ТЁМНАЯ, САКУРА, БАМБУК, ФУДЗИ ========== */
+body.dark {
+    --bg-container: var(--bg-container-dark);
+    --bg-clues: var(--bg-clues-dark);
+    --text: var(--text-dark);
+    --border: var(--border-dark);
+    --cell-bg: var(--cell-bg-dark);
+    --cell-blocked: var(--cell-blocked-dark);
+    --highlight: var(--highlight-dark);
+    --active-word: var(--active-word-dark);
+    --wrong: var(--wrong-dark);
+    --btn-bg: var(--btn-bg-dark);
+    --btn-hover: var(--btn-hover-dark);
+    --shadow: var(--shadow-dark);
+}
+body.sakura {
+    background: var(--bg-body-sakura);
+    color: var(--text-sakura);
+}
+body.sakura .crossword-container {
+    background: var(--bg-container-sakura);
+    box-shadow: 0 10px 30px var(--shadow-sakura);
+}
+body.sakura .clues-section {
+    background: var(--bg-clues-sakura);
+}
+body.sakura select, body.sakura button {
+    background: var(--bg-container-sakura);
+    color: var(--text-sakura);
+    border-color: var(--border-sakura);
+}
+body.sakura button {
+    background: var(--btn-bg-sakura);
+    color: white;
+}
+body.sakura button:hover {
+    background: var(--btn-hover-sakura);
+}
+body.sakura .cell {
+    background: var(--cell-bg-sakura);
+    border-color: #e0a0b0;
+}
+body.sakura .cell.blocked {
+    background: var(--cell-blocked-sakura);
+}
+body.sakura .cell.highlight {
+    background: var(--highlight-sakura);
+}
+body.sakura .cell.active-word {
+    background: var(--active-word-sakura);
+}
+body.sakura .cell.wrong {
+    background: var(--wrong-sakura);
+}
+body.sakura .cell-number {
+    color: #ad1457;
+}
+body.sakura .clue-block h3 {
+    border-left-color: var(--btn-bg-sakura);
+}
+body.sakura .clue-list li:hover {
+    background: #fce4ec;
+}
+body.sakura .clue-list li.active-clue {
+    background: var(--active-word-sakura);
+    color: #880e4f;
+    border-left-color: var(--btn-bg-sakura);
+}
+body.sakura .clue-num {
+    color: var(--btn-bg-sakura);
+}
+body.sakura .status {
+    background: rgba(236, 64, 122, 0.05);
+    color: #c2185b;
+}
+body.sakura .score-container {
+    background: var(--bg-container-sakura);
+    border-color: var(--border-sakura);
+}
+body.sakura .progress-bar {
+    background: #fce4ec;
+}
+body.sakura .progress-fill {
+    background: var(--btn-bg-sakura);
+}
+body.sakura .toast {
+    background: var(--bg-container-sakura);
+    color: var(--text-sakura);
+    border-left-color: var(--btn-bg-sakura);
+}
+body.sakura .modal-content {
+    background: var(--bg-container-sakura);
+    color: var(--text-sakura);
+    box-shadow: 0 10px 30px var(--shadow-sakura);
+}
+body.sakura .modal-no {
+    background: #f8bbd0;
+    color: #880e4f;
+}
+body.sakura .shop-tabs {
+    border-bottom-color: var(--border-sakura);
+}
+body.sakura .shop-tab.active {
+    background: var(--btn-bg-sakura);
+}
+body.sakura .skin-item, body.sakura .upgrade-item {
+    background: var(--bg-container-sakura);
+    border-color: var(--border-sakura);
+}
+body.sakura .roulette-spin-area {
+    background: var(--bg-container-sakura);
+    border-color: var(--border-sakura);
+    color: var(--text-sakura);
+}
+body.sakura .skin-btn.buy, body.sakura .upgrade-btn.buy {
+    background: var(--btn-bg-sakura);
+}
+body.sakura .skin-btn.select {
+    background: #2e7d32;
+}
+body.sakura .daily-tasks {
+    background: var(--bg-container-sakura);
+}
+body.sakura .task-progress {
+    background: #f8bbd0;
+}
+
+body.bamboo {
+    background: #d9e0b5;
+    color: #3a5e3a;
+    --bg-container: #f0f7da;
+    --bg-clues: #eaf4cf;
+    --text: #3a5e3a;
+    --border: #8cae6e;
+    --cell-bg: #ffffe0;
+    --cell-blocked: #bdd48a;
+    --highlight: #e0f0c0;
+    --active-word: #c0e0a0;
+    --wrong: #f0a0a0;
+    --btn-bg: #6b8e23;
+    --btn-hover: #556b2f;
+    --shadow: rgba(60, 60, 0, 0.2);
+}
+body.bamboo .crossword-container { background: var(--bg-container); box-shadow: 0 10px 30px var(--shadow); }
+body.bamboo .clues-section { background: var(--bg-clues); }
+body.bamboo select, body.bamboo button { background: var(--bg-container); color: var(--text); border-color: var(--border); }
+body.bamboo button { background: var(--btn-bg); color: white; }
+body.bamboo button:hover { background: var(--btn-hover); }
+body.bamboo .cell { background: var(--cell-bg); border-color: var(--border); }
+body.bamboo .cell.blocked { background: var(--cell-blocked); }
+body.bamboo .cell.highlight { background: var(--highlight); }
+body.bamboo .cell.active-word { background: var(--active-word); }
+body.bamboo .cell.wrong { background: var(--wrong); }
+body.bamboo .cell-number { color: #2c5e2c; }
+body.bamboo .clue-block h3 { border-left-color: var(--btn-bg); }
+body.bamboo .clue-list li.active-clue { background: var(--active-word); color: #1a3a1a; border-left-color: var(--btn-bg); }
+body.bamboo .clue-num { color: var(--btn-bg); }
+body.bamboo .status { background: rgba(107, 142, 35, 0.1); color: #2c5e2c; }
+body.bamboo .score-container { background: var(--bg-container); border-color: var(--border); }
+body.bamboo .progress-bar { background: #c0d6a0; }
+body.bamboo .progress-fill { background: var(--btn-bg); }
+body.bamboo .toast { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
+body.bamboo .modal-content { background: var(--bg-container); color: var(--text); }
+body.bamboo .modal-no { background: #c0d6a0; color: #2c5e2c; }
+body.bamboo .shop-tabs { border-bottom-color: var(--border); }
+body.bamboo .shop-tab.active { background: var(--btn-bg); }
+body.bamboo .skin-item, body.bamboo .upgrade-item { background: var(--bg-container); border-color: var(--border); }
+body.bamboo .roulette-spin-area { background: var(--bg-container); border-color: var(--border); color: var(--text); }
+body.bamboo .skin-btn.buy, body.bamboo .upgrade-btn.buy { background: var(--btn-bg); }
+body.bamboo .daily-tasks { background: var(--bg-container); }
+body.bamboo .task-progress { background: #c0d6a0; }
+body.bamboo #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
+
+body.fuji {
+    background: #b8d5e8;
+    color: #2c4b6e;
+    --bg-container: #eef5ff;
+    --bg-clues: #e0edf8;
+    --text: #2c4b6e;
+    --border: #8ab3cf;
+    --cell-bg: #ffffff;
+    --cell-blocked: #c1d9f0;
+    --highlight: #cce8ff;
+    --active-word: #a8d0ff;
+    --wrong: #ffb3b3;
+    --btn-bg: #3c8dbc;
+    --btn-hover: #2c6e9e;
+    --shadow: rgba(0,0,0,0.1);
+}
+body.fuji .crossword-container { background: var(--bg-container); box-shadow: 0 10px 30px var(--shadow); }
+body.fuji .clues-section { background: var(--bg-clues); }
+body.fuji select, body.fuji button { background: var(--bg-container); color: var(--text); border-color: var(--border); }
+body.fuji button { background: var(--btn-bg); color: white; }
+body.fuji button:hover { background: var(--btn-hover); }
+body.fuji .cell { background: var(--cell-bg); border-color: var(--border); }
+body.fuji .cell.blocked { background: var(--cell-blocked); }
+body.fuji .cell.highlight { background: var(--highlight); }
+body.fuji .cell.active-word { background: var(--active-word); }
+body.fuji .cell.wrong { background: var(--wrong); }
+body.fuji .cell-number { color: #1e4d7e; }
+body.fuji .clue-block h3 { border-left-color: var(--btn-bg); }
+body.fuji .clue-list li.active-clue { background: var(--active-word); color: #0f2c4a; border-left-color: var(--btn-bg); }
+body.fuji .clue-num { color: var(--btn-bg); }
+body.fuji .status { background: rgba(60, 141, 188, 0.1); color: #1e4d7e; }
+body.fuji .score-container { background: var(--bg-container); border-color: var(--border); }
+body.fuji .progress-bar { background: #c1d9f0; }
+body.fuji .progress-fill { background: var(--btn-bg); }
+body.fuji .toast { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
+body.fuji .modal-content { background: var(--bg-container); color: var(--text); }
+body.fuji .modal-no { background: #c1d9f0; color: #1e4d7e; }
+body.fuji .shop-tabs { border-bottom-color: var(--border); }
+body.fuji .shop-tab.active { background: var(--btn-bg); }
+body.fuji .skin-item, body.fuji .upgrade-item { background: var(--bg-container); border-color: var(--border); }
+body.fuji .roulette-spin-area { background: var(--bg-container); border-color: var(--border); color: var(--text); }
+body.fuji .skin-btn.buy, body.fuji .upgrade-btn.buy { background: var(--btn-bg); }
+body.fuji .daily-tasks { background: var(--bg-container); }
+body.fuji .task-progress { background: #c1d9f0; }
+body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
