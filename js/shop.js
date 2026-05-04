@@ -57,6 +57,7 @@ function purchaseSkin(skinId, price) {
         showToast(`Скин куплен!`, "success");
         updateTaskProgress('buy_skin', 1);
         updateTaskProgress('spend_200_points', price);
+        updateAchievementProgress('skins', purchasedSkins.length - 1);
         return true;
     }
     return false;
@@ -78,6 +79,8 @@ function upgradeMaxHints(newLimit, price) {
         saveGameStats();
         showToast(`Лимит подсказок увеличен до ${newLimit}!`, "success");
         updateButtonStates();
+        const upgradesBought = gameStats.maxHints - 2;
+        updateAchievementProgress('upgrades', upgradesBought);
         updateTaskProgress('spend_200_points', price);
         return true;
     }
