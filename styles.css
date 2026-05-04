@@ -1069,3 +1069,36 @@ body.sakura .crossword-grid td.wrong {
         border-left: 3px solid var(--btn-bg);
     }
 }
+
+/* Адаптивный размер ячеек для больших кроссвордов на мобильных */
+@media (max-width: 768px) {
+    /* Для кроссвордов с 8 и более столбцами – более мелкие ячейки */
+    .crossword-grid[data-cols="8"] td,
+    .crossword-grid[data-cols="9"] td,
+    .crossword-grid[data-cols="10"] td {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .crossword-grid[data-cols="8"] input,
+    .crossword-grid[data-cols="9"] input,
+    .crossword-grid[data-cols="10"] input {
+        font-size: 20px !important;
+    }
+    .crossword-grid[data-cols="8"] .cell-number,
+    .crossword-grid[data-cols="9"] .cell-number,
+    .crossword-grid[data-cols="10"] .cell-number {
+        font-size: 8px !important;
+        top: 1px;
+        left: 2px;
+    }
+    /* Для очень широких (11+ колонок) – ещё мельче */
+    .crossword-grid[data-cols="11"] td,
+    .crossword-grid[data-cols="12"] td {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .crossword-grid[data-cols="11"] input,
+    .crossword-grid[data-cols="12"] input {
+        font-size: 18px !important;
+    }
+}
