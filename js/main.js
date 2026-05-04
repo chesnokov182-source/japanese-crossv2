@@ -118,6 +118,8 @@ document.getElementById("resetProgressBtn").addEventListener("click", async () =
         localStorage.removeItem("lastFreeSpin");     
         localStorage.removeItem("lastPlayedLevel");  
         localStorage.removeItem("lastPlayedPuzzle"); 
+        localStorage.removeItem('themes');  
+
         
         gameStats.score = 0;
         gameStats.wordsCompleted = 0;
@@ -126,7 +128,8 @@ document.getElementById("resetProgressBtn").addEventListener("click", async () =
         saveGameStats();
         updateScoreUI();
         loadSkinsData();                           
-        loadDailyTasks();                           
+        loadDailyTasks(); 
+        loadThemesData();
         renderDailyTasksPanel();
         setCurrentLevelAndPuzzle("n5", 0);
         document.getElementById("levelSelect").value = "n5";
