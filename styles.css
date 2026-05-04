@@ -1038,3 +1038,34 @@ body.dark .crossword-grid td.wrong {
 body.sakura .crossword-grid td.wrong {
     background: var(--wrong-sakura) !important;
 }
+/* Плавающая подсказка для мобильных – в стиле активной темы */
+@media (max-width: 768px) {
+    #floatingClue {
+        font-size: 13px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border-left: none;
+        background: var(--bg-container-light);
+        color: var(--text-light);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    body.dark #floatingClue {
+        background: var(--bg-container-dark);
+        color: var(--text-dark);
+    }
+    body.sakura #floatingClue {
+        background: var(--bg-container-sakura);
+        color: var(--text-sakura);
+        border-left: 3px solid var(--btn-bg-sakura);
+    }
+    body.bamboo #floatingClue {
+        background: var(--bg-container);
+        color: var(--text);
+        border-left: 3px solid var(--btn-bg);
+    }
+    body.fuji #floatingClue {
+        background: var(--bg-container);
+        color: var(--text);
+        border-left: 3px solid var(--btn-bg);
+    }
+}
