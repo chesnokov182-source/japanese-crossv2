@@ -276,9 +276,13 @@ function renderGrid() {
                     switchWordAtCell(i, j);
                     return false;
                 });
+                // Долгое нажатие для мобильных (исправлено)
                 let touchTimer;
-                input.addEventListener('touchstart', () => {
-                    touchTimer = setTimeout(() => switchWordAtCell(i, j), 500);
+                input.addEventListener('touchstart', (e) => {
+                    touchTimer = setTimeout(() => {
+                        // Не вызываем preventDefault(), чтобы не блокировать фокус
+                        switchWordAtCell(i, j);
+                    }, 500);
                 });
                 input.addEventListener('touchend', () => clearTimeout(touchTimer));
                 input.addEventListener('touchmove', () => clearTimeout(touchTimer));
@@ -425,7 +429,6 @@ function insertKatakanaArray(row, col, katakanaArray, startIndex) {
         audio.error(); 
     }
     
-    // Обновляем активное слово (на случай, если изменилось)
     if (activeWordId !== null) applyHighlight();
     
     if ((katakanaArray.length > 1 && startIndex === 0) || (startIndex + 1 < katakanaArray.length)) {
@@ -851,7 +854,7 @@ export function giveHint() {
     checkCompletion();
     updateClueCompletion();
     updateWrongHighlights();
-    applyHighlight();  // обновить подсветку после подсказки
+    applyHighlight();
 
     hintCount++;
     saveCurrentProgress();
