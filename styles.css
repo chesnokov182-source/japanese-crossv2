@@ -779,12 +779,12 @@ body.dark .task-progress {
     background: var(--highlight);
 }
 
-/* Обычная кнопка темы (как все остальные кнопки) */
+/* Обычная кнопка темы (наследует стили обычных кнопок) */
 #themeBtn {
     min-width: 100px;
     text-align: center;
 }
-/* Убираем любые подчёркивания и сохраняем фон как у обычной кнопки */
+/* Убираем подчёркивание и лишние границы */
 #themeBtn,
 #themeBtn:hover,
 #themeBtn:focus,
@@ -1095,37 +1095,13 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ===== 1. Убираем подчёркивание у кнопки "Тема" и её родителя ===== */
-.selector-group {
-    border-bottom: none !important;
-    border-top: none !important;
-}
-#themeBtn,
-#themeBtn::before,
-#themeBtn::after,
-#themeBtn:hover,
-#themeBtn:focus,
-#themeBtn:active {
-    border-bottom: none !important;
-    border-top: none !important;
-    outline: none !important;
-    text-decoration: none !important;
-    box-shadow: none !important;
-}
-/* Убираем возможную границу у выпадающего списка, когда он скрыт */
-.theme-dropdown {
-    border-top: none !important;
-}
-.theme-dropdown:empty {
-    display: none;
-}
-
-/* ===== 2. Экстремальное смыкание ячеек (переопределяем всё) ===== */
+/* ===== Финальные правки для смыкания ячеек и кнопки ===== */
+/* Экстремальное смыкание ячеек (гарантия) */
 .crossword-grid {
     gap: 0 !important;
-    background: #333 !important;          /* цвет линий сетки */
+    background: #333 !important;
     border: none !important;
-    line-height: 0 !important;            /* убираем лишние отступы */
+    line-height: 0 !important;
     font-size: 0 !important;
 }
 .cell {
@@ -1134,13 +1110,10 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
     border: none !important;
     outline: none !important;
     box-sizing: border-box !important;
-    /* Линия внутри ячейки (имитация границы) */
     box-shadow: inset 0 0 0 1px #888 !important;
-    /* важные сбросы */
     line-height: normal !important;
-    font-size: 40px !important;           /* ваш размер */
+    font-size: 40px !important;
 }
-/* Для мобильных – переопределяем размеры, но сохраняем смыкание */
 @media (max-width: 768px) {
     .cell {
         width: 55px !important;
@@ -1148,9 +1121,7 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         font-size: 28px !important;
         box-shadow: inset 0 0 0 1px #888 !important;
     }
-    .cell-skin {
-        font-size: 36px !important;
-    }
+    .cell-skin { font-size: 36px !important; }
 }
 @media (max-width: 480px) {
     .cell {
@@ -1158,33 +1129,38 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         height: 45px !important;
         font-size: 22px !important;
     }
-    .cell-skin {
-        font-size: 28px !important;
-    }
+    .cell-skin { font-size: 28px !important; }
 }
-/* Для каждой темы – переопределяем цвет линии */
-body.dark .cell {
-    box-shadow: inset 0 0 0 1px #666 !important;
-}
-body.sakura .cell {
-    box-shadow: inset 0 0 0 1px #e0a0b0 !important;
-}
-body.bamboo .cell {
-    box-shadow: inset 0 0 0 1px var(--border) !important;
-}
-body.fuji .cell {
-    box-shadow: inset 0 0 0 1px var(--border) !important;
-}
+body.dark .cell { box-shadow: inset 0 0 0 1px #666 !important; }
+body.sakura .cell { box-shadow: inset 0 0 0 1px #e0a0b0 !important; }
+body.bamboo .cell { box-shadow: inset 0 0 0 1px var(--border) !important; }
+body.fuji .cell { box-shadow: inset 0 0 0 1px var(--border) !important; }
 
+/* Убираем любые линии у родителя кнопки */
+.selector-group {
+    border-bottom: none !important;
+    border-top: none !important;
+}
 #themeBtn {
     background: var(--btn-bg-light);
     color: white;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-bottom: none !important;
+    cursor: pointer;
+    /* Не переопределяем другие свойства, чтобы не ломать клик */
 }
-
+#themeBtn:hover {
+    background: var(--btn-hover-light);
+}
+/* Убираем подчёркивание */
+#themeBtn,
+#themeBtn:hover,
+#themeBtn:focus,
+#themeBtn:active {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+/* Возвращаем нормальное поведение выпадающему списку */
 .theme-dropdown {
-    display: none !important;
+    display: none; /* Изначально скрыт, JS покажет */
 }
