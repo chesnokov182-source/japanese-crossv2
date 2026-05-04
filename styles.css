@@ -153,10 +153,10 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* ========== СЕТКА КРОССВОРДА – ПЛОТНАЯ, БЕЗ ЗАЗОРОВ ========== */
+/* ========== СЕТКА КРОССВОРДА (плотная, без зазоров) ========== */
 .crossword-grid {
     display: grid;
-    gap: 0;               /* убираем зазор */
+    gap: 0;
     background: transparent;
     width: fit-content;
     margin: 0 auto;
@@ -174,18 +174,15 @@ button:disabled {
     position: relative;
     caret-color: #4a6fa5;
     transition: background 0.2s;
-    /* Линии сетки рисуем внутри ячеек, чтобы не было двойных линий */
+    margin: 0;
+    padding: 0;
+    border: none;
     box-shadow: inset 0 0 0 1px #888;
 }
 
 body.dark .cell {
     background: var(--cell-bg-dark);
     box-shadow: inset 0 0 0 1px #666;
-}
-
-body.dark .cell input {
-    caret-color: white;
-    color: white;
 }
 
 .cell input {
@@ -198,6 +195,7 @@ body.dark .cell input {
     background: transparent;
     font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
     padding: 0;
+    margin: 0;
     outline: none;
     text-transform: uppercase;
     color: inherit;
@@ -368,7 +366,6 @@ body.dark .status {
     color: #8bc34a;
 }
 
-/* Блок очков и слов – общий для всех */
 .score-container {
     background: var(--bg-container-light);
     padding: 10px;
@@ -745,10 +742,6 @@ body.dark .task-progress {
     position: relative;
     display: inline-block;
 }
-#themeBtn {
-    min-width: 100px;
-    text-align: center;
-}
 .theme-dropdown {
     position: absolute;
     top: 100%;
@@ -784,6 +777,22 @@ body.dark .task-progress {
 }
 .theme-dropdown button:hover {
     background: var(--highlight);
+}
+
+/* Обычная кнопка темы (как все остальные кнопки) */
+#themeBtn {
+    min-width: 100px;
+    text-align: center;
+}
+/* Убираем любые подчёркивания и сохраняем фон как у обычной кнопки */
+#themeBtn,
+#themeBtn:hover,
+#themeBtn:focus,
+#themeBtn:active {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* ========== АНИМАЦИИ ========== */
@@ -835,21 +844,16 @@ body.sakura #floatingClue {
     body { padding: 10px; }
     .crossword-container { flex-direction: column; padding: 16px; gap: 16px; }
     .grid-section { min-width: auto; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    /* Сетка на мобильных: ячейки меньше */
     .cell { width: 55px; height: 55px; }
     .cell input { font-size: 28px; }
     .cell-number { font-size: 11px; top: 2px; left: 4px; }
     .cell-skin { font-size: 36px; }
-    /* Скрываем панель с вопросами */
     .clues-section { display: none; }
-    /* Кнопки и селекторы вертикально */
     .level-selector { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
     .selector-group { width: 100%; }
     select, button { width: 100%; padding: 8px 12px; font-size: 14px; }
-    /* Плавающая подсказка */
     #floatingClue { font-size: 13px; padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.85); color: white; border-left: none; }
     body.dark #floatingClue, body.sakura #floatingClue { background: rgba(0,0,0,0.85); color: white; border-left: none; }
-    /* Модальные окна, магазин, рулетка, тосты – как раньше */
     .modal-content { width: 95%; padding: 20px; }
     .skin-item, .upgrade-item { flex-wrap: wrap; }
     .skin-info { width: 100%; }
@@ -862,7 +866,6 @@ body.sakura #floatingClue {
     .toast { font-size: 14px; padding: 12px 18px; max-width: 90vw; bottom: 20px; right: 20px; }
     .theme-dropdown { position: static; width: 100%; white-space: normal; }
     #themeBtn { width: 100%; }
-    /* Счёт очков и слов уже виден, так как мы перенесли его в .grid-section */
 }
 
 @media (max-width: 480px) {
@@ -913,7 +916,7 @@ body.sakura button:hover {
 }
 body.sakura .cell {
     background: var(--cell-bg-sakura);
-    border-color: #e0a0b0;
+    box-shadow: inset 0 0 0 1px #e0a0b0;
 }
 body.sakura .cell.blocked {
     background: var(--cell-blocked-sakura);
@@ -1021,7 +1024,7 @@ body.bamboo .clues-section { background: var(--bg-clues); }
 body.bamboo select, body.bamboo button { background: var(--bg-container); color: var(--text); border-color: var(--border); }
 body.bamboo button { background: var(--btn-bg); color: white; }
 body.bamboo button:hover { background: var(--btn-hover); }
-body.bamboo .cell { background: var(--cell-bg); border-color: var(--border); }
+body.bamboo .cell { background: var(--cell-bg); box-shadow: inset 0 0 0 1px var(--border); }
 body.bamboo .cell.blocked { background: var(--cell-blocked); }
 body.bamboo .cell.highlight { background: var(--highlight); }
 body.bamboo .cell.active-word { background: var(--active-word); }
@@ -1067,7 +1070,7 @@ body.fuji .clues-section { background: var(--bg-clues); }
 body.fuji select, body.fuji button { background: var(--bg-container); color: var(--text); border-color: var(--border); }
 body.fuji button { background: var(--btn-bg); color: white; }
 body.fuji button:hover { background: var(--btn-hover); }
-body.fuji .cell { background: var(--cell-bg); border-color: var(--border); }
+body.fuji .cell { background: var(--cell-bg); box-shadow: inset 0 0 0 1px var(--border); }
 body.fuji .cell.blocked { background: var(--cell-blocked); }
 body.fuji .cell.highlight { background: var(--highlight); }
 body.fuji .cell.active-word { background: var(--active-word); }
@@ -1091,105 +1094,3 @@ body.fuji .skin-btn.buy, body.fuji .upgrade-btn.buy { background: var(--btn-bg);
 body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
-
-/* Убираем подчёркивание и outline у кнопки темы */
-#themeBtn {
-    text-decoration: none !important;
-    outline: none !important;
-    border-bottom: none !important;
-}
-
-/* Принудительное смыкание ячеек */
-.crossword-grid {
-    gap: 0 !important;
-    background: transparent !important;
-}
-.cell {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    box-shadow: inset 0 0 0 1px #888;
-}
-.cell input {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-}
-/* Для тёмной темы и других */
-body.dark .cell {
-    box-shadow: inset 0 0 0 1px #666;
-}
-
-/* Убираем любые подчёркивания и линии у кнопки "Тема" */
-#themeBtn,
-#themeBtn:hover,
-#themeBtn:focus,
-#themeBtn:active,
-#themeBtn:visited {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    background: var(--btn-bg-light) !important;
-}
-/* Для тёмной темы */
-body.dark #themeBtn,
-body.dark #themeBtn:hover,
-body.dark #themeBtn:focus {
-    background: var(--btn-bg-dark) !important;
-}
-/* Для темы сакура */
-body.sakura #themeBtn {
-    background: var(--btn-bg-sakura) !important;
-}
-
-/* ========== ПРИНУДИТЕЛЬНОЕ СМЫКАНИЕ ЯЧЕЕК ========== */
-.crossword-grid {
-    gap: 0 !important;
-    background: transparent !important;
-    border: none !important;
-}
-
-.cell {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    /* Линии рисуем внутри ячейки, чтобы не было двойных границ */
-    box-shadow: inset 0 0 0 1px #888 !important;
-}
-
-.cell input {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-/* Для тёмной темы */
-body.dark .cell {
-    box-shadow: inset 0 0 0 1px #666 !important;
-}
-
-/* Для темы сакура (цвет границ как в вашей теме) */
-body.sakura .cell {
-    box-shadow: inset 0 0 0 1px #e0a0b0 !important;
-}
-
-/* Для темы бамбук используем переменную */
-body.bamboo .cell {
-    box-shadow: inset 0 0 0 1px var(--border) !important;
-}
-
-/* Для темы фудзи */
-body.fuji .cell {
-    box-shadow: inset 0 0 0 1px var(--border) !important;
-}
-
-/* Также убираем возможные границы у заблокированных ячеек */
-.cell.blocked {
-    box-shadow: inset 0 0 0 1px #888 !important;
-    background: var(--cell-blocked-light) !important;
-}
-
-body.dark .cell.blocked {
-    box-shadow: inset 0 0 0 1px #666 !important;
-}
