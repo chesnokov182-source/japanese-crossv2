@@ -43,7 +43,6 @@
     --shadow-sakura: rgba(183, 28, 68, 0.15);
 }
 
-/* ========== БАЗОВЫЕ СТИЛИ ========== */
 * {
     user-select: none;
     box-sizing: border-box;
@@ -154,12 +153,11 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* ========== СЕТКА КРОССВОРДА (исправлено: без чёрных промежутков) ========== */
+/* ========== СЕТКА КРОССВОРДА – ПЛОТНАЯ, БЕЗ ЗАЗОРОВ ========== */
 .crossword-grid {
     display: grid;
-    gap: 0;               /* убираем зазор, ячейки будут вплотную */
-    background: #333;     /* цвет линий сетки */
-    border: 2px solid #333;
+    gap: 0;               /* убираем зазор */
+    background: transparent;
     width: fit-content;
     margin: 0 auto;
 }
@@ -176,12 +174,13 @@ button:disabled {
     position: relative;
     caret-color: #4a6fa5;
     transition: background 0.2s;
-    border: 1px solid #888;   /* границы ячеек */
+    /* Линии сетки рисуем внутри ячеек, чтобы не было двойных линий */
+    box-shadow: inset 0 0 0 1px #888;
 }
 
 body.dark .cell {
     background: var(--cell-bg-dark);
-    border-color: #666;
+    box-shadow: inset 0 0 0 1px #666;
 }
 
 body.dark .cell input {
@@ -209,10 +208,12 @@ body.dark .cell input {
 
 .cell.blocked {
     background: var(--cell-blocked-light);
+    box-shadow: inset 0 0 0 1px #888;
 }
 
 body.dark .cell.blocked {
     background: var(--cell-blocked-dark);
+    box-shadow: inset 0 0 0 1px #666;
 }
 
 .cell.highlight {
