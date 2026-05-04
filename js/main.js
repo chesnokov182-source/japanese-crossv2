@@ -6,6 +6,7 @@ import {
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
 import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
+import { loadThemesData, getAvailableThemes, applyTheme, purchaseTheme, renderThemesList } from './themes.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGameStats();
     checkDailyBonus();
     loadSkinsData();
+    loadThemesData(); 
     loadDailyTasks();
     renderDailyTasksPanel();
 
