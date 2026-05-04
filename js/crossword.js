@@ -558,6 +558,10 @@ function checkCompletion() {
             const completed = getCompletedCrosswords();
             completed.push(`${currentLevel}_${currentPuzzleIndex}`);
             localStorage.setItem(KEYS.COMPLETED, JSON.stringify(completed));
+            
+            const levelCompletedCount = completed.filter(key => key.startsWith(currentLevel)).length;
+            updateAchievementProgress(`level_${currentLevel}`, levelCompletedCount);
+            
             const earned = getEarnedPointsForCurrent();
             if (!earned.completed) { earned.completed = true; saveEarnedPointsForCurrent(earned); addPoints(50); updateTaskProgress('solve_2_crosswords', 1); }
             updatePuzzleSelect(); updateLevelProgress(); updateButtonStates();
