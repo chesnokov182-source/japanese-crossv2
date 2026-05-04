@@ -60,7 +60,6 @@ body {
     transition: background 0.3s, color 0.3s;
     font-size: 18px;
 }
-
 body.dark {
     background: var(--bg-body-dark);
     color: var(--text-dark);
@@ -79,7 +78,6 @@ body.dark {
     justify-content: center;
     transition: background 0.3s, box-shadow 0.3s;
 }
-
 body.dark .crossword-container {
     background: var(--bg-container-dark);
     box-shadow: 0 10px 30px var(--shadow-dark);
@@ -93,7 +91,6 @@ body.dark .crossword-container {
     flex-direction: column;
     align-items: center;
 }
-
 .clues-section {
     flex: 1;
     min-width: 320px;
@@ -103,10 +100,7 @@ body.dark .crossword-container {
     transition: background 0.3s;
     font-size: 16px;
 }
-
-body.dark .clues-section {
-    background: var(--bg-clues-dark);
-}
+body.dark .clues-section { background: var(--bg-clues-dark); }
 
 .level-selector {
     margin-bottom: 24px;
@@ -115,7 +109,6 @@ body.dark .clues-section {
     align-items: baseline;
     flex-wrap: wrap;
 }
-
 select, button {
     padding: 10px 20px;
     font-size: 16px;
@@ -127,31 +120,19 @@ select, button {
     transition: background 0.2s;
     margin: 0;
 }
-
 body.dark select, body.dark button {
     background: var(--bg-container-dark);
     color: var(--text-dark);
     border-color: var(--border-dark);
 }
-
 button {
     background: var(--btn-bg-light);
     color: white;
     border: none;
 }
-
-button:hover {
-    background: var(--btn-hover-light);
-}
-
-body.dark button:hover {
-    background: var(--btn-hover-dark);
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+button:hover { background: var(--btn-hover-light); }
+body.dark button:hover { background: var(--btn-hover-dark); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ========== СЕТКА КРОССВОРДА (плотная, без зазоров) ========== */
 .crossword-grid {
@@ -160,8 +141,9 @@ button:disabled {
     background: transparent;
     width: fit-content;
     margin: 0 auto;
+    justify-content: start;
+    align-content: start;
 }
-
 .cell {
     width: 70px;
     height: 70px;
@@ -179,12 +161,10 @@ button:disabled {
     border: none;
     box-shadow: inset 0 0 0 1px #888;
 }
-
 body.dark .cell {
     background: var(--cell-bg-dark);
     box-shadow: inset 0 0 0 1px #666;
 }
-
 .cell input {
     width: 100%;
     height: 100%;
@@ -201,43 +181,15 @@ body.dark .cell {
     color: inherit;
     position: relative;
     z-index: 2;
-    -webkit-touch-callout: none;
 }
-
-.cell.blocked {
-    background: var(--cell-blocked-light);
-    box-shadow: inset 0 0 0 1px #888;
-}
-
-body.dark .cell.blocked {
-    background: var(--cell-blocked-dark);
-    box-shadow: inset 0 0 0 1px #666;
-}
-
-.cell.highlight {
-    background: var(--highlight-light);
-}
-
-body.dark .cell.highlight {
-    background: var(--highlight-dark);
-}
-
-.cell.active-word {
-    background: var(--active-word-light);
-}
-
-body.dark .cell.active-word {
-    background: var(--active-word-dark);
-}
-
-.cell.wrong {
-    background: var(--wrong-light);
-}
-
-body.dark .cell.wrong {
-    background: var(--wrong-dark);
-}
-
+.cell.blocked { background: var(--cell-blocked-light); box-shadow: inset 0 0 0 1px #888; }
+body.dark .cell.blocked { background: var(--cell-blocked-dark); box-shadow: inset 0 0 0 1px #666; }
+.cell.highlight { background: var(--highlight-light); }
+body.dark .cell.highlight { background: var(--highlight-dark); }
+.cell.active-word { background: var(--active-word-light); }
+body.dark .cell.active-word { background: var(--active-word-dark); }
+.cell.wrong { background: var(--wrong-light); }
+body.dark .cell.wrong { background: var(--wrong-dark); }
 .cell-number {
     position: absolute;
     top: 3px;
@@ -248,11 +200,7 @@ body.dark .cell.wrong {
     pointer-events: none;
     z-index: 1;
 }
-
-body.dark .cell-number {
-    color: #aaa;
-}
-
+body.dark .cell-number { color: #aaa; }
 .cell-skin {
     position: absolute;
     top: 0;
@@ -270,26 +218,15 @@ body.dark .cell-number {
 }
 
 /* ========== ПОДСКАЗКИ (ПК) ========== */
-.clue-block {
-    margin-bottom: 24px;
-}
-
+.clue-block { margin-bottom: 24px; }
 .clue-block h3 {
     font-size: 20px;
     border-left: 5px solid #4a6fa5;
     padding-left: 14px;
     margin: 12px 0;
 }
-
-body.dark .clue-block h3 {
-    border-left-color: #6c8fb5;
-}
-
-.clue-list {
-    list-style: none;
-    padding-left: 0;
-}
-
+body.dark .clue-block h3 { border-left-color: #6c8fb5; }
+.clue-list { list-style: none; padding-left: 0; }
 .clue-list li {
     padding: 10px 12px;
     margin: 6px 0;
@@ -300,53 +237,33 @@ body.dark .clue-block h3 {
     display: flex;
     gap: 10px;
 }
-
-.clue-list li:hover {
-    background: #e9e5dc;
-}
-
-body.dark .clue-list li:hover {
-    background: #3a3a4a;
-}
-
+.clue-list li:hover { background: #e9e5dc; }
+body.dark .clue-list li:hover { background: #3a3a4a; }
 .clue-list li.active-clue {
     background: var(--active-word-light);
     font-weight: bold;
     color: #004080;
     border-left: 4px solid #4a6fa5;
-    box-shadow: 0 2px 5px rgba(74, 111, 165, 0.2);
+    box-shadow: 0 2px 5px rgba(74,111,165,0.2);
 }
-
 body.dark .clue-list li.active-clue {
     background: var(--active-word-dark);
-    color: #ffffff;
-    border-left: 4px solid #6c8fb5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border-left-color: #6c8fb5;
 }
-
 .clue-list li.completed {
     text-decoration: line-through;
     opacity: 0.7;
     background-color: #e0ffe0;
 }
-
-body.dark .clue-list li.completed {
-    background-color: #2e5c2e;
-}
-
+body.dark .clue-list li.completed { background-color: #2e5c2e; }
 .clue-num {
     font-weight: bold;
     color: #4a6fa5;
     min-width: 35px;
 }
-
-body.dark .clue-num {
-    color: #8aadff;
-}
-
-.clue-text {
-    flex: 1;
-}
+body.dark .clue-num { color: #8aadff; }
+.clue-text { flex: 1; }
 
 /* ========== СТАТУС И ИНФОРМАЦИЯ ========== */
 .status {
@@ -360,12 +277,10 @@ body.dark .clue-num {
     width: 100%;
     box-sizing: border-box;
 }
-
 body.dark .status {
     background: rgba(255,255,255,0.05);
     color: #8bc34a;
 }
-
 .score-container {
     background: var(--bg-container-light);
     padding: 10px;
@@ -376,15 +291,8 @@ body.dark .status {
     font-weight: bold;
     border: 1px solid var(--border-light);
 }
-
-body.dark .score-container {
-    background: var(--bg-container-dark);
-}
-
-.level-progress {
-    margin-bottom: 20px;
-}
-
+body.dark .score-container { background: var(--bg-container-dark); }
+.level-progress { margin-bottom: 20px; }
 .progress-bar {
     background: #e0e0e0;
     border-radius: 10px;
@@ -392,21 +300,14 @@ body.dark .score-container {
     overflow: hidden;
     margin-top: 5px;
 }
-
-body.dark .progress-bar {
-    background: #4a4a5a;
-}
-
+body.dark .progress-bar { background: #4a4a5a; }
 .progress-fill {
     background: #4a6fa5;
     width: 0%;
     height: 100%;
     transition: width 0.3s;
 }
-
-body.dark .progress-fill {
-    background: #6c8fb5;
-}
+body.dark .progress-fill { background: #6c8fb5; }
 
 /* ========== ТОСТЫ ========== */
 .toast {
@@ -425,16 +326,11 @@ body.dark .progress-fill {
     transition: opacity 0.2s ease;
     opacity: 0;
 }
-
 body.dark .toast {
     background: var(--bg-container-dark);
     color: var(--text-dark);
 }
-
-.toast.show {
-    opacity: 1;
-}
-
+.toast.show { opacity: 1; }
 .toast.info { border-left: 4px solid #4a6fa5; }
 .toast.success { border-left: 4px solid #2c6e2c; }
 .toast.error { border-left: 4px solid #c94f4f; }
@@ -453,7 +349,6 @@ body.dark .toast {
     align-items: center;
     justify-content: center;
 }
-
 .modal-content {
     background: var(--bg-container-light);
     color: var(--text-light);
@@ -464,25 +359,17 @@ body.dark .toast {
     width: 90%;
     text-align: center;
 }
-
 body.dark .modal-content {
     background: var(--bg-container-dark);
     color: var(--text-dark);
     box-shadow: 0 10px 30px var(--shadow-dark);
 }
-
 .modal-message {
     font-size: 20px;
     margin-bottom: 28px;
     line-height: 1.5;
 }
-
-.modal-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-}
-
+.modal-buttons { display: flex; gap: 16px; justify-content: center; }
 .modal-btn {
     padding: 12px 28px;
     font-size: 18px;
@@ -491,22 +378,13 @@ body.dark .modal-content {
     cursor: pointer;
     font-weight: 500;
 }
-
 .modal-yes {
     background: var(--btn-bg-light);
     color: white;
 }
-
-body.dark .modal-yes {
-    background: var(--btn-bg-dark);
-}
-.modal-yes:hover {
-    background: var(--btn-hover-light);
-}
-body.dark .modal-yes:hover {
-    background: var(--btn-hover-dark);
-}
-
+body.dark .modal-yes { background: var(--btn-bg-dark); }
+.modal-yes:hover { background: var(--btn-hover-light); }
+body.dark .modal-yes:hover { background: var(--btn-hover-dark); }
 .modal-no {
     background: #e0e0e0;
     color: #333;
@@ -537,21 +415,14 @@ body.dark .modal-no {
     background: var(--btn-bg-light);
     color: white;
 }
-body.dark .shop-tab.active {
-    background: var(--btn-bg-dark);
-}
-.shop-tab:hover:not(.active) {
-    background: rgba(0,0,0,0.05);
-}
+body.dark .shop-tab.active { background: var(--btn-bg-dark); }
+.shop-tab:hover:not(.active) { background: rgba(0,0,0,0.05); }
 .shop-section {
     display: none;
     max-height: 400px;
     overflow-y: auto;
 }
-.shop-section.active {
-    display: block;
-}
-
+.shop-section.active { display: block; }
 .skin-item, .upgrade-item {
     display: flex;
     align-items: center;
@@ -563,9 +434,7 @@ body.dark .shop-tab.active {
     border: 1px solid var(--border-light);
     gap: 15px;
 }
-body.dark .skin-item, body.dark .upgrade-item {
-    background: var(--bg-container-dark);
-}
+body.dark .skin-item, body.dark .upgrade-item { background: var(--bg-container-dark); }
 .skin-info {
     display: flex;
     align-items: center;
@@ -579,10 +448,7 @@ body.dark .skin-item, body.dark .upgrade-item {
     text-align: center;
     flex-shrink: 0;
 }
-.skin-details {
-    flex: 1;
-    min-width: 0;
-}
+.skin-details { flex: 1; min-width: 0; }
 .skin-name {
     font-weight: bold;
     font-size: 16px;
@@ -605,45 +471,21 @@ body.dark .skin-item, body.dark .upgrade-item {
     text-align: center;
     flex-shrink: 0;
 }
-.skin-btn.buy, .upgrade-btn.buy {
-    background: #4a6fa5;
-    color: white;
-}
-.skin-btn.select {
-    background: #2c6e2c;
-    color: white;
-}
+.skin-btn.buy, .upgrade-btn.buy { background: #4a6fa5; color: white; }
+.skin-btn.select { background: #2c6e2c; color: white; }
 .skin-btn.selected, .upgrade-btn.disabled {
     background: #999;
     cursor: not-allowed;
     opacity: 0.6;
 }
-.upgrade-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.upgrade-name {
-    font-weight: bold;
-    font-size: 16px;
-}
-.upgrade-desc {
-    font-size: 12px;
-    color: #666;
-}
-body.dark .upgrade-desc {
-    color: #aaa;
-}
-.upgrade-price {
-    font-size: 14px;
-    color: #4a6fa5;
-}
+.upgrade-info { display: flex; flex-direction: column; flex: 1; }
+.upgrade-name { font-weight: bold; font-size: 16px; }
+.upgrade-desc { font-size: 12px; color: #666; }
+body.dark .upgrade-desc { color: #aaa; }
+.upgrade-price { font-size: 14px; color: #4a6fa5; }
 
 /* ========== РУЛЕТКА ========== */
-.roulette-container {
-    text-align: center;
-    padding: 20px;
-}
+.roulette-container { text-align: center; padding: 20px; }
 .roulette-spin-area {
     font-size: 48px;
     font-weight: bold;
@@ -659,12 +501,8 @@ body.dark .upgrade-desc {
     color: var(--text-light);
     text-shadow: 0 0 4px rgba(0,0,0,0.3);
 }
-body.dark .roulette-spin-area {
-    color: black;
-}
-.roulette-spin-area span {
-    color: inherit;
-}
+body.dark .roulette-spin-area { color: black; }
+.roulette-spin-area span { color: inherit; }
 .roulette-spin-btn {
     background: var(--btn-bg-light);
     color: white;
@@ -675,9 +513,7 @@ body.dark .roulette-spin-area {
     cursor: pointer;
     transition: transform 0.1s;
 }
-.roulette-spin-btn:active {
-    transform: scale(0.95);
-}
+.roulette-spin-btn:active { transform: scale(0.95); }
 .roulette-result {
     margin-top: 15px;
     font-size: 18px;
@@ -688,9 +524,7 @@ body.dark .roulette-spin-area {
     color: #666;
     margin-top: 15px;
 }
-body.dark .roulette-info {
-    color: #aaa;
-}
+body.dark .roulette-info { color: #aaa; }
 
 /* ========== ЕЖЕДНЕВНЫЕ ЗАДАНИЯ ========== */
 .daily-tasks {
@@ -726,16 +560,9 @@ body.dark .roulette-info {
     font-weight: bold;
     color: #ff9800;
 }
-
-body.dark .daily-tasks {
-    background: var(--bg-container-dark);
-}
-body.dark .task-name {
-    color: var(--text-dark);
-}
-body.dark .task-progress {
-    background: #4a4a5a;
-}
+body.dark .daily-tasks { background: var(--bg-container-dark); }
+body.dark .task-name { color: var(--text-dark); }
+body.dark .task-progress { background: #4a4a5a; }
 
 /* ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ ========== */
 .selector-group {
@@ -753,7 +580,7 @@ body.dark .task-progress {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     overflow: hidden;
-    z-index: 1000;
+    z-index: 10000;
     min-width: 180px;
     max-width: 90vw;
     white-space: nowrap;
@@ -772,19 +599,13 @@ body.dark .task-progress {
     transition: background 0.1s;
     border-radius: 0;
 }
-.theme-dropdown button:last-child {
-    border-bottom: none;
-}
-.theme-dropdown button:hover {
-    background: var(--highlight);
-}
+.theme-dropdown button:last-child { border-bottom: none; }
+.theme-dropdown button:hover { background: var(--highlight); }
 
-/* Обычная кнопка темы (наследует стили обычных кнопок) */
 #themeBtn {
     min-width: 100px;
     text-align: center;
 }
-/* Убираем подчёркивание и лишние границы */
 #themeBtn,
 #themeBtn:hover,
 #themeBtn:focus,
@@ -801,19 +622,14 @@ body.dark .task-progress {
     50% { transform: scale(1.2); background-color: #a5d6a7; }
     100% { transform: scale(1); }
 }
-.cell.correct-animation {
-    animation: successPop 0.3s ease-out;
-}
-body.dark .cell.correct-animation {
-    animation: successPopDark 0.3s ease-out;
-}
+.cell.correct-animation { animation: successPop 0.3s ease-out; }
+body.dark .cell.correct-animation { animation: successPopDark 0.3s ease-out; }
 @keyframes successPopDark {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); background-color: #2e7d32; }
     100% { transform: scale(1); }
 }
 
-/* ========== ПЛАВАЮЩАЯ ПОДСКАЗКА ========== */
 #floatingClue {
     display: none;
     position: absolute;
@@ -826,11 +642,10 @@ body.dark .cell.correct-animation {
     z-index: 1000;
     pointer-events: none;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: all 0.1s ease;
 }
 body.dark #floatingClue {
     background: #2d2d44;
-    color: #ffffff;
+    color: #fff;
     border-left-color: #6c8fb5;
 }
 body.sakura #floatingClue {
@@ -852,7 +667,14 @@ body.sakura #floatingClue {
     .level-selector { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
     .selector-group { width: 100%; }
     select, button { width: 100%; padding: 8px 12px; font-size: 14px; }
-    #floatingClue { font-size: 13px; padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.85); color: white; border-left: none; }
+    #floatingClue {
+        font-size: 13px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: rgba(0,0,0,0.85);
+        color: white;
+        border-left: none;
+    }
     body.dark #floatingClue, body.sakura #floatingClue { background: rgba(0,0,0,0.85); color: white; border-left: none; }
     .modal-content { width: 95%; padding: 20px; }
     .skin-item, .upgrade-item { flex-wrap: wrap; }
@@ -864,10 +686,17 @@ body.sakura #floatingClue {
     .task-progress { width: 80px; }
     .status { font-size: 14px; padding: 8px; }
     .toast { font-size: 14px; padding: 12px 18px; max-width: 90vw; bottom: 20px; right: 20px; }
-    .theme-dropdown { position: static; width: 100%; white-space: normal; }
+    .theme-dropdown {
+        position: absolute !important;
+        top: 100%;
+        left: 0;
+        right: auto;
+        width: auto;
+        min-width: 180px;
+        white-space: nowrap;
+    }
     #themeBtn { width: 100%; }
 }
-
 @media (max-width: 480px) {
     .cell { width: 45px; height: 45px; }
     .cell input { font-size: 22px; }
@@ -899,9 +728,7 @@ body.sakura .crossword-container {
     background: var(--bg-container-sakura);
     box-shadow: 0 10px 30px var(--shadow-sakura);
 }
-body.sakura .clues-section {
-    background: var(--bg-clues-sakura);
-}
+body.sakura .clues-section { background: var(--bg-clues-sakura); }
 body.sakura select, body.sakura button {
     background: var(--bg-container-sakura);
     color: var(--text-sakura);
@@ -911,97 +738,36 @@ body.sakura button {
     background: var(--btn-bg-sakura);
     color: white;
 }
-body.sakura button:hover {
-    background: var(--btn-hover-sakura);
-}
-body.sakura .cell {
-    background: var(--cell-bg-sakura);
-    box-shadow: inset 0 0 0 1px #e0a0b0;
-}
-body.sakura .cell.blocked {
-    background: var(--cell-blocked-sakura);
-}
-body.sakura .cell.highlight {
-    background: var(--highlight-sakura);
-}
-body.sakura .cell.active-word {
-    background: var(--active-word-sakura);
-}
-body.sakura .cell.wrong {
-    background: var(--wrong-sakura);
-}
-body.sakura .cell-number {
-    color: #ad1457;
-}
-body.sakura .clue-block h3 {
-    border-left-color: var(--btn-bg-sakura);
-}
-body.sakura .clue-list li:hover {
-    background: #fce4ec;
-}
+body.sakura button:hover { background: var(--btn-hover-sakura); }
+body.sakura .cell { background: var(--cell-bg-sakura); box-shadow: inset 0 0 0 1px #e0a0b0; }
+body.sakura .cell.blocked { background: var(--cell-blocked-sakura); }
+body.sakura .cell.highlight { background: var(--highlight-sakura); }
+body.sakura .cell.active-word { background: var(--active-word-sakura); }
+body.sakura .cell.wrong { background: var(--wrong-sakura); }
+body.sakura .cell-number { color: #ad1457; }
+body.sakura .clue-block h3 { border-left-color: var(--btn-bg-sakura); }
+body.sakura .clue-list li:hover { background: #fce4ec; }
 body.sakura .clue-list li.active-clue {
     background: var(--active-word-sakura);
     color: #880e4f;
     border-left-color: var(--btn-bg-sakura);
 }
-body.sakura .clue-num {
-    color: var(--btn-bg-sakura);
-}
-body.sakura .status {
-    background: rgba(236, 64, 122, 0.05);
-    color: #c2185b;
-}
-body.sakura .score-container {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-}
-body.sakura .progress-bar {
-    background: #fce4ec;
-}
-body.sakura .progress-fill {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .toast {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    border-left-color: var(--btn-bg-sakura);
-}
-body.sakura .modal-content {
-    background: var(--bg-container-sakura);
-    color: var(--text-sakura);
-    box-shadow: 0 10px 30px var(--shadow-sakura);
-}
-body.sakura .modal-no {
-    background: #f8bbd0;
-    color: #880e4f;
-}
-body.sakura .shop-tabs {
-    border-bottom-color: var(--border-sakura);
-}
-body.sakura .shop-tab.active {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .skin-item, body.sakura .upgrade-item {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-}
-body.sakura .roulette-spin-area {
-    background: var(--bg-container-sakura);
-    border-color: var(--border-sakura);
-    color: var(--text-sakura);
-}
-body.sakura .skin-btn.buy, body.sakura .upgrade-btn.buy {
-    background: var(--btn-bg-sakura);
-}
-body.sakura .skin-btn.select {
-    background: #2e7d32;
-}
-body.sakura .daily-tasks {
-    background: var(--bg-container-sakura);
-}
-body.sakura .task-progress {
-    background: #f8bbd0;
-}
+body.sakura .clue-num { color: var(--btn-bg-sakura); }
+body.sakura .status { background: rgba(236,64,122,0.05); color: #c2185b; }
+body.sakura .score-container { background: var(--bg-container-sakura); border-color: var(--border-sakura); }
+body.sakura .progress-bar { background: #fce4ec; }
+body.sakura .progress-fill { background: var(--btn-bg-sakura); }
+body.sakura .toast { background: var(--bg-container-sakura); color: var(--text-sakura); border-left-color: var(--btn-bg-sakura); }
+body.sakura .modal-content { background: var(--bg-container-sakura); color: var(--text-sakura); box-shadow: 0 10px 30px var(--shadow-sakura); }
+body.sakura .modal-no { background: #f8bbd0; color: #880e4f; }
+body.sakura .shop-tabs { border-bottom-color: var(--border-sakura); }
+body.sakura .shop-tab.active { background: var(--btn-bg-sakura); }
+body.sakura .skin-item, body.sakura .upgrade-item { background: var(--bg-container-sakura); border-color: var(--border-sakura); }
+body.sakura .roulette-spin-area { background: var(--bg-container-sakura); border-color: var(--border-sakura); color: var(--text-sakura); }
+body.sakura .skin-btn.buy, body.sakura .upgrade-btn.buy { background: var(--btn-bg-sakura); }
+body.sakura .skin-btn.select { background: #2e7d32; }
+body.sakura .daily-tasks { background: var(--bg-container-sakura); }
+body.sakura .task-progress { background: #f8bbd0; }
 
 body.bamboo {
     background: #d9e0b5;
@@ -1017,7 +783,7 @@ body.bamboo {
     --wrong: #f0a0a0;
     --btn-bg: #6b8e23;
     --btn-hover: #556b2f;
-    --shadow: rgba(60, 60, 0, 0.2);
+    --shadow: rgba(60,60,0,0.2);
 }
 body.bamboo .crossword-container { background: var(--bg-container); box-shadow: 0 10px 30px var(--shadow); }
 body.bamboo .clues-section { background: var(--bg-clues); }
@@ -1033,7 +799,7 @@ body.bamboo .cell-number { color: #2c5e2c; }
 body.bamboo .clue-block h3 { border-left-color: var(--btn-bg); }
 body.bamboo .clue-list li.active-clue { background: var(--active-word); color: #1a3a1a; border-left-color: var(--btn-bg); }
 body.bamboo .clue-num { color: var(--btn-bg); }
-body.bamboo .status { background: rgba(107, 142, 35, 0.1); color: #2c5e2c; }
+body.bamboo .status { background: rgba(107,142,35,0.1); color: #2c5e2c; }
 body.bamboo .score-container { background: var(--bg-container); border-color: var(--border); }
 body.bamboo .progress-bar { background: #c0d6a0; }
 body.bamboo .progress-fill { background: var(--btn-bg); }
@@ -1079,7 +845,7 @@ body.fuji .cell-number { color: #1e4d7e; }
 body.fuji .clue-block h3 { border-left-color: var(--btn-bg); }
 body.fuji .clue-list li.active-clue { background: var(--active-word); color: #0f2c4a; border-left-color: var(--btn-bg); }
 body.fuji .clue-num { color: var(--btn-bg); }
-body.fuji .status { background: rgba(60, 141, 188, 0.1); color: #1e4d7e; }
+body.fuji .status { background: rgba(60,141,188,0.1); color: #1e4d7e; }
 body.fuji .score-container { background: var(--bg-container); border-color: var(--border); }
 body.fuji .progress-bar { background: #c1d9f0; }
 body.fuji .progress-fill { background: var(--btn-bg); }
@@ -1095,143 +861,17 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ===== Финальные правки для смыкания ячеек и кнопки ===== */
-/* Экстремальное смыкание ячеек (гарантия) */
+/* ========== ГАРАНТИЯ СМЫКАНИЯ ЯЧЕЕК (ПОВЕРХ ВСЕГО) ========== */
 .crossword-grid {
     gap: 0 !important;
-    background: #333 !important;
-    border: none !important;
-    line-height: 0 !important;
-    font-size: 0 !important;
+    justify-content: start !important;
+    align-content: start !important;
+    width: fit-content !important;
+    margin: 0 auto !important;
 }
 .cell {
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
-    outline: none !important;
-    box-sizing: border-box !important;
     box-shadow: inset 0 0 0 1px #888 !important;
-    line-height: normal !important;
-    font-size: 40px !important;
-}
-@media (max-width: 768px) {
-    .cell {
-        width: 55px !important;
-        height: 55px !important;
-        font-size: 28px !important;
-        box-shadow: inset 0 0 0 1px #888 !important;
-    }
-    .cell-skin { font-size: 36px !important; }
-}
-@media (max-width: 480px) {
-    .cell {
-        width: 45px !important;
-        height: 45px !important;
-        font-size: 22px !important;
-    }
-    .cell-skin { font-size: 28px !important; }
-}
-body.dark .cell { box-shadow: inset 0 0 0 1px #666 !important; }
-body.sakura .cell { box-shadow: inset 0 0 0 1px #e0a0b0 !important; }
-body.bamboo .cell { box-shadow: inset 0 0 0 1px var(--border) !important; }
-body.fuji .cell { box-shadow: inset 0 0 0 1px var(--border) !important; }
-
-/* Убираем любые линии у родителя кнопки */
-.selector-group {
-    border-bottom: none !important;
-    border-top: none !important;
-}
-#themeBtn {
-    background: var(--btn-bg-light);
-    color: white;
-    cursor: pointer;
-    /* Не переопределяем другие свойства, чтобы не ломать клик */
-}
-#themeBtn:hover {
-    background: var(--btn-hover-light);
-}
-/* Убираем подчёркивание */
-#themeBtn,
-#themeBtn:hover,
-#themeBtn:focus,
-#themeBtn:active {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-/* Возвращаем нормальное поведение выпадающему списку */
-.theme-dropdown {
-    display: none; /* Изначально скрыт, JS покажет */
-}
-
-/* ========== УБИРАЕМ ПРОМЕЖУТКИ МЕЖДУ ЯЧЕЙКАМИ (принудительно) ========== */
-.crossword-grid {
-    display: grid !important;
-    justify-content: start !important;  /* выравнивание влево, без распределения пространства */
-    align-content: start !important;
-    width: fit-content !important;      /* сетка занимает только нужную ширину */
-}
-
-/* Дополнительная гарантия: убираем возможные отступы у контейнера */
-.crossword-container,
-.grid-section {
-    max-width: 100%;
-    overflow-x: auto;
-}
-
-/* Кнопка "Тема" – только убираем подчёркивание, фон наследуется от темы */
-#themeBtn {
-    min-width: 100px;
-    text-align: center;
-    /* Не задаём background – он возьмётся из стилей кнопок темы */
-}
-#themeBtn,
-#themeBtn:hover,
-#themeBtn:focus,
-#themeBtn:active {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* ========== КНОПКА ТЕМЫ – НАСЛЕДУЕТ ФОН ТЕМЫ ========== */
-#themeBtn {
-    background: inherit !important;  /* убираем явный фон */
-    color: inherit;
-}
-/* Но нужен цвет текста белый, так как темы задают белые кнопки – оставляем как есть */
-
-/* ========== ВЫПАДАЮЩИЙ СПИСОК ВСЕГДА ПОВЕРХ ========== */
-.theme-dropdown {
-    z-index: 10000 !important;
-    position: absolute !important;
-}
-@media (max-width: 768px) {
-    .theme-dropdown {
-        position: absolute !important; /* на мобильных тоже абсолют, чтобы не сдвигать */
-        top: 100%;
-        left: 0;
-        right: auto;
-        width: auto;
-        min-width: 180px;
-    }
-    .selector-group {
-        position: relative !important;
-    }
-}
-
-/* ========== ГАРАНТИЯ СМЫКАНИЯ ЯЧЕЕК ========== */
-.crossword-grid {
-    display: grid !important;
-    justify-content: start !important;   /* колонки прижаты влево */
-    align-content: start !important;
-    width: min-content !important;       /* ширина ровно под содержимое */
-    margin: 0 auto !important;           /* центрирование сетки, но не распределение */
-}
-/* Дополнительно – убираем возможные влияния родителя */
-.crossword-container,
-.grid-section {
-    text-align: left !important;         /* отменяем text-align: justify */
 }
