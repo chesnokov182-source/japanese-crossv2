@@ -70,7 +70,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 6",
                 width: 8,
                 height: 6,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ベンキヨウシマス", row: 1, col: 0, dir: "across", clue: "Учиться", number: 1},
                     { word: "ナキマス", row: 5, col: 1, dir: "across", clue: "Плакать", number: 2},
@@ -83,7 +83,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 7",
                 width: 8,
                 height: 7,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ケシマス", row: 0, col: 1, dir: "across", clue: "Тушить, гасить; Выключать", number: 1},
                     { word: "ケツコンシマス", row: 0, col: 1, dir: "down", clue: "Жениться, Выходить замуж", number: 1.1},
@@ -96,7 +96,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 8",
                 width: 6,
                 height: 6,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ツカイマス", row: 0, col: 1, dir: "across", clue: "Использовать", number: 1},
                     { word: "オコリマス", row: 2, col: 0, dir: "across", clue: "Злиться", number: 2.1},
@@ -109,7 +109,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 9",
                 width: 7,
                 height: 4,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "エンピツ", row: 2, col: 0, dir: "across", clue: "Используется для письма. Написанное можно стереть", number: 1},
                     { word: "ガクセイ", row: 1, col: 3, dir: "across", clue: "Учится в школе", number: 2},
@@ -122,7 +122,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 10",
                 width: 8,
                 height: 5,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "アイスクリーム", row: 0, col: 1, dir: "across", clue: "Холодная еда из смеси молока и яиц", number: 1},
                     { word: "パン", row: 4, col: 0, dir: "across", clue: "Выпекаемое мучное изделие", number: 2},
@@ -135,7 +135,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд 11",
                 width: 6,
                 height: 8,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ヒルゴハン", row: 2, col: 0, dir: "across", clue: "Рис на обед", number: 1},
                     { word: "バナナ", row: 4, col: 3, dir: "across", clue: "Длинный продолговатый фрукт", number: 2},
@@ -148,7 +148,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 1",
                 width: 6,
                 height: 4,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "スンデ", row: 1, col: 2, dir: "down", clue: "姉が大阪に（住すみます）います", number: 1},
                     { word: "スワツテ", row: 1, col: 2, dir: "across", clue: "お店の入口に（座すわります）はいけません", number: 1.1},
@@ -160,7 +160,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 2",
                 width: 6,
                 height: 6,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "オキテ", row: 0, col: 3, dir: "across", clue: "朝（起おきます）、歯を磨きます", number: 1},
                     { word: "オコツテ", row: 0, col: 3, dir: "down", clue: " あの人が悪いです。（怒ります）良ですよ", number: 1.1},
@@ -172,7 +172,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 3",
                 width: 6,
                 height: 5,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ツトメテ", row: 1, col: 2, dir: "across", clue: "夫は工場に（務めます）、10年ねんです", number: 1},
                     { word: "ツクツテ", row: 1, col: 2, dir: "down", clue: "ここに畑を（作ります）も良いですか", number: 1.1},
@@ -184,7 +184,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 4",
                 width: 5,
                 height: 6,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "ハナシテ", row: 2, col: 1, dir: "across", clue: "ここで（話します）はいけません", number: 1},
                     { word: "キイテ", row: 5, col: 0, dir: "across", clue: "先生の話を（聞きます）ください", number: 2},
@@ -196,7 +196,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 5",
                 width: 6,
                 height: 5,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "イソイデ", row: 1, col: 0, dir: "across", clue: "雨がふりそうです。（急ぎます）ください", number: 1},
                     { word: "ケシテ", row: 3, col: 3, dir: "across", clue: "電気を（消けします", number: 2},
@@ -208,7 +208,7 @@ window.crosswordsData.n5 = {
                 name: "Кроссворд て-форма 6",
                 width: 5,
                 height: 5,
-                price: 100,
+                price: 50,
                 words: [
                     { word: "カイテ", row: 0, col: 2, dir: "across", clue: "ここに名前を（書きます）ください", number: 1},
                     { word: "カエツテ", row: 0, col: 2, dir: "down", clue: "兄が家に（帰ります）きます", number: 1.2},
