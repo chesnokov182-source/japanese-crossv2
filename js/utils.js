@@ -39,12 +39,36 @@ export const audio = {
 };
 
 // ========== КОНФЕТТИ И ТОСТЫ ==========
+let toastQueue = [];
+let isToastShowing = false;
+
 export function showToast(message, type = 'info') {
+    toastQueue.push({ message, type });
+    if (!isToastShowing) {
+        processToastQueue();
+    }
+}
+
+function processToastQueue() {
+    if (toastQueue.length === 0) {
+        isToastShowing = false;
+        return;
+    }
+    isToastShowing = true;
+    const { message, type } = toastQueue.shift();
+    
     const toast = document.getElementById('toast');
     if (!toast) return;
+    
     toast.textContent = message;
     toast.className = `toast ${type} show`;
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            processToastQueue();
+        }, 200);
+    }, 2500);
 }
 
 export function showConfetti() {
