@@ -6,7 +6,7 @@ import {
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
 import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
-import { loadThemesData, getAvailableThemes, applyTheme, purchaseTheme, renderThemesList, currentThemeId, purchasedThemes } from './themes.js';
+import { loadThemesData, getAvailableThemes, applyTheme, purchaseTheme, confirmPurchaseTheme, currentThemeId, purchasedThemes } from './themes.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -52,18 +52,31 @@ const themeBtn = document.getElementById('themeBtn');
 const themeDropdown = document.getElementById('themeDropdown');
 
 function updateThemeDropdown() {
+    if (!themeDropdown) return;
     const themes = getAvailableThemes();
     themeDropdown.innerHTML = '';
     themes.forEach(theme => {
         const btn = document.createElement('button');
-        btn.textContent = `${theme.name} ${theme.price > 0 ? `(${theme.price})` : '(бесплатно)'}`;
-        if (theme.id === currentThemeId) btn.style.fontWeight = 'bold';
-        btn.addEventListener('click', () => {
+        let displayText;
+        if (theme.id === currentThemeId) {
+            displayText = `${theme.name} ✓`;
+        } else if (purchasedThemes.includes(theme.id)) {
+            displayText = theme.name;
+        } else {
+            displayText = `${theme.name} (${theme.price} очков)`;
+        }
+        btn.textContent = displayText;
+        if (theme.id === currentThemeId) {
+            btn.style.fontWeight = 'bold';
+        }
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
             if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
-                if (purchaseTheme(theme.id)) {
+                const ok = await confirmPurchaseTheme(theme.id);
+                if (ok) {
                     updateThemeDropdown();
                 }
-            } else {
+            } else if (purchasedThemes.includes(theme.id)) {
                 applyTheme(theme.id);
                 updateThemeDropdown();
             }
@@ -72,20 +85,6 @@ function updateThemeDropdown() {
         themeDropdown.appendChild(btn);
     });
 }
-btn.addEventListener('click', async (e) => {   
-    e.stopPropagation();
-    if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
-        const confirmed = await confirmPurchaseTheme(theme.id);
-        if (confirmed) {
-            updateThemeDropdown();
-        }
-    } else {
-        applyTheme(theme.id);
-        updateThemeDropdown();
-    }
-    themeDropdown.style.display = 'none';
-});
-
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
