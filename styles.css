@@ -1209,9 +1209,14 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ (ДО 768px) ========== */
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ – ФИНАЛЬНАЯ ВЕРСИЯ ========== */
 @media (max-width: 768px) {
-    /* Основной контейнер */
+    /* Скрываем панель с вопросами (подсказки) – обязательно */
+    .clues-section {
+        display: none !important;
+    }
+
+    /* Убираем лишние отступы */
     body {
         padding: 5px;
     }
@@ -1221,27 +1226,14 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         gap: 8px;
     }
 
-    /* Скрываем панель с вопросами (подсказки) – на телефонах не нужна */
-    .clues-section {
-        display: none !important;
-    }
-
-    /* Секция с сеткой – полная ширина, прокрутка по горизонтали */
-    .grid-section {
-        min-width: auto;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Сетка – убираем лишние промежутки между ячейками */
+    /* Сетка – плотная, без больших промежутков */
     .crossword-grid {
-        gap: 1px;          /* минимальный зазор, чтобы ячейки сливались */
-        background: #333;  /* цвет линий сетки */
+        gap: 1px !important;   /* минимальный зазор */
+        background: #333;
         border-width: 1px;
     }
 
-    /* Ячейки – компактные, но достаточно большие для касания */
+    /* Ячейки – удобного размера */
     .cell {
         width: min(50px, 13vw);
         height: min(50px, 13vw);
@@ -1258,12 +1250,11 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         font-size: min(32px, 8vw);
     }
 
-    /* Панель кнопок – вертикальный стек */
+    /* Кнопки и селекторы – вертикально */
     .level-selector {
         flex-direction: column;
         align-items: stretch;
         gap: 6px;
-        margin-bottom: 10px;
     }
     .selector-group {
         width: 100%;
@@ -1272,19 +1263,18 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         width: 100%;
         padding: 6px 10px;
         font-size: 13px;
-        margin: 0;
     }
 
-    /* Плавающая подсказка – компактная и не перекрывает модалки */
+    /* Плавающая подсказка – компактная, внизу */
     #floatingClue {
         position: fixed;
         bottom: 10px;
         left: 10px;
         right: 10px;
         top: auto;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(0,0,0,0.85);
         color: white;
-        border-radius: 25px;
+        border-radius: 30px;
         padding: 8px 12px;
         font-size: 14px;
         text-align: center;
@@ -1293,120 +1283,40 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
         backdrop-filter: blur(4px);
         white-space: normal;
         word-break: break-word;
-        max-width: calc(100% - 20px);
-        margin: 0 auto;
         border-left: none;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    /* Для тёмной и сакура-тем тоже одинаковый стиль плавающей подсказки */
-    body.dark #floatingClue,
-    body.sakura #floatingClue,
-    body.bamboo #floatingClue,
-    body.fuji #floatingClue {
-        background: rgba(0, 0, 0, 0.85);
-        color: white;
-        border-left: none;
     }
 
     /* Модальные окна – выше плавающей подсказки */
     .modal {
         z-index: 10050 !important;
     }
-    .modal-content {
-        width: 95%;
-        max-width: 95%;
-        padding: 16px;
-        margin: 20px auto;
-    }
-    .modal-message {
-        font-size: 16px;
-    }
-    .modal-btn {
-        padding: 8px 20px;
-        font-size: 15px;
-    }
 
-    /* Ежедневные задания – компактно */
+    /* Другие элементы для компактности */
     .daily-tasks {
         margin-top: 10px;
         padding: 8px;
     }
-    .daily-task {
-        gap: 6px;
-        font-size: 12px;
-    }
-    .task-progress {
-        width: 70px;
-    }
-    .task-reward {
-        font-size: 12px;
-    }
-
-    /* Магазин и списки */
     .skin-item, .upgrade-item {
         flex-wrap: wrap;
-        padding: 8px;
     }
-    .skin-info {
-        width: 100%;
-    }
-    .skin-btn, .upgrade-btn {
-        width: 100%;
-        margin-top: 6px;
-    }
-
-    /* Рулетка */
     .roulette-spin-area {
         font-size: 28px;
         min-height: 80px;
         padding: 10px;
     }
-    .roulette-spin-btn {
-        width: 100%;
-        font-size: 16px;
-        padding: 10px;
-    }
-    .roulette-result {
-        font-size: 16px;
-    }
-    .roulette-info {
-        font-size: 12px;
-    }
-
-    /* Статус и счёт */
     .status {
         font-size: 13px;
         padding: 6px;
-        margin-top: 12px;
     }
     .score-container {
-        font-size: 13px;
-        padding: 6px;
         flex-direction: column;
         align-items: center;
         gap: 4px;
     }
-
-    /* Прогресс уровня */
-    .level-progress {
-        font-size: 13px;
-    }
-
-    /* Выпадающий список тем – на мобильных не абсолютный, нормальный поток */
-    .theme-dropdown {
-        position: static;
-        width: 100%;
-        margin-top: 4px;
-        max-width: none;
-        white-space: normal;
-    }
-    #themeBtn {
-        width: 100%;
-        min-width: auto;
-    }
 }
 
-/* Для очень узких экранов (iPhone SE, < 400px) – ещё мельче */
+/* Для очень узких экранов (≤400px) */
 @media (max-width: 400px) {
     .cell {
         width: min(42px, 11vw);
@@ -1415,28 +1325,11 @@ body.fuji #floatingClue { background: var(--bg-container); color: var(--text); b
     .cell input {
         font-size: min(20px, 5vw);
     }
-    .cell-number {
-        font-size: 8px;
-        top: 1px;
-        left: 2px;
-    }
-    .cell-skin {
-        font-size: min(26px, 7vw);
-    }
     #floatingClue {
         font-size: 12px;
         padding: 6px 10px;
         bottom: 5px;
         left: 5px;
         right: 5px;
-        border-radius: 20px;
-    }
-    select, button {
-        font-size: 12px;
-        padding: 5px 8px;
-    }
-    .modal-btn {
-        padding: 6px 16px;
-        font-size: 14px;
     }
 }
