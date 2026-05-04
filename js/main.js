@@ -72,13 +72,19 @@ function updateThemeDropdown() {
         themeDropdown.appendChild(btn);
     });
 }
-themeBtn.addEventListener('click', (e) => {
+btn.addEventListener('click', async (e) => {   
     e.stopPropagation();
-    const isVisible = themeDropdown.style.display === 'block';
-    themeDropdown.style.display = isVisible ? 'none' : 'block';
-    if (!isVisible) updateThemeDropdown();
+    if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
+        const confirmed = await confirmPurchaseTheme(theme.id);
+        if (confirmed) {
+            updateThemeDropdown();
+        }
+    } else {
+        applyTheme(theme.id);
+        updateThemeDropdown();
+    }
+    themeDropdown.style.display = 'none';
 });
-document.addEventListener('click', () => { themeDropdown.style.display = 'none'; });
 
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
