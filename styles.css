@@ -155,7 +155,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
     position: relative;
     caret-color: #4a6fa5;
     transition: background 0.2s;
-    margin: -1px 0 0 -1px;   /* перекрываем двойные границы */
+    margin: -1px 0 0 -1px;
     padding: 0;
     border: 1px solid #888;
     box-sizing: border-box;
@@ -536,6 +536,7 @@ body.dark .daily-tasks { background: var(--bg-container-dark); }
 body.dark .task-name { color: var(--text-dark); }
 body.dark .task-progress { background: #4a4a5a; }
 
+/* ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ (контрастный для каждой темы) ========== */
 .selector-group {
     position: relative;
     display: inline-block;
@@ -546,8 +547,6 @@ body.dark .task-progress { background: #4a4a5a; }
     right: 0;
     left: auto;
     margin-top: 4px;
-    background: #2c3e50;
-    border: 1px solid #aaa;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     overflow: hidden;
@@ -561,33 +560,64 @@ body.dark .task-progress { background: #4a4a5a; }
     width: 100%;
     text-align: left;
     padding: 10px 16px;
-    background: #2c3e50;
     border: none;
-    border-bottom: 1px solid #4a6a8a;
-    color: #ecf0f1;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     font-size: 15px;
     cursor: pointer;
     transition: background 0.1s;
 }
 .theme-dropdown button:last-child { border-bottom: none; }
-.theme-dropdown button:hover { background: #1a2a3a; }
-/* Переопределяем для каждой темы, чтобы текст хорошо читался */
-body.light .theme-dropdown, body.light .theme-dropdown button { background: #f0f0f0; color: #111; border-color: #ccc; }
-body.light .theme-dropdown button:hover { background: #e0e0e0; }
-body.sakura .theme-dropdown, body.sakura .theme-dropdown button { background: #fce4ec; color: #5d4037; border-color: #f8bbd0; }
-body.sakura .theme-dropdown button:hover { background: #f8bbd0; }
-body.bamboo .theme-dropdown, body.bamboo .theme-dropdown button { background: #eaf4cf; color: #3a5e3a; border-color: #8cae6e; }
-body.bamboo .theme-dropdown button:hover { background: #c0d6a0; }
-body.fuji .theme-dropdown, body.fuji .theme-dropdown button { background: #e0edf8; color: #2c4b6e; border-color: #8ab3cf; }
-body.fuji .theme-dropdown button:hover { background: #c1d9f0; }
-body.dark .theme-dropdown, body.dark .theme-dropdown button { background: #2c3e50; color: #ecf0f1; border-color: #4a6a8a; }
+
+/* Светлая тема (по умолчанию) */
+.theme-dropdown,
+.theme-dropdown button {
+    background: #f0f0f0;
+    color: #111;
+}
+.theme-dropdown button:hover { background: #e0e0e0; }
+
+/* Тёмная тема */
+body.dark .theme-dropdown,
+body.dark .theme-dropdown button {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-bottom-color: #4a6a8a;
+}
 body.dark .theme-dropdown button:hover { background: #1a2a3a; }
 
+/* Сакура */
+body.sakura .theme-dropdown,
+body.sakura .theme-dropdown button {
+    background: #fce4ec;
+    color: #5d4037;
+    border-bottom-color: #f8bbd0;
+}
+body.sakura .theme-dropdown button:hover { background: #f8bbd0; }
+
+/* Бамбук */
+body.bamboo .theme-dropdown,
+body.bamboo .theme-dropdown button {
+    background: #eaf4cf;
+    color: #3a5e3a;
+    border-bottom-color: #8cae6e;
+}
+body.bamboo .theme-dropdown button:hover { background: #c0d6a0; }
+
+/* Фудзи */
+body.fuji .theme-dropdown,
+body.fuji .theme-dropdown button {
+    background: #e0edf8;
+    color: #2c4b6e;
+    border-bottom-color: #8ab3cf;
+}
+body.fuji .theme-dropdown button:hover { background: #c1d9f0; }
+
+/* Кнопка "Тема" – наследует фон от темы (как все кнопки) */
 #themeBtn {
     min-width: 100px;
     text-align: center;
 }
-/* Убираем подчёркивание у кнопки Тема – абсолютно */
+/* Убираем подчёркивание, границы, но НЕ трогаем фон (он берётся из правил button) */
 #themeBtn,
 #themeBtn:hover,
 #themeBtn:focus,
@@ -598,7 +628,6 @@ button#themeBtn {
     border-top: none !important;
     outline: none !important;
     box-shadow: none !important;
-    background: inherit !important;
 }
 .selector-group {
     border-bottom: none !important;
@@ -667,15 +696,7 @@ body.sakura #floatingClue {
     .task-progress { width: 80px; }
     .status { font-size: 14px; padding: 8px; }
     .toast { font-size: 14px; padding: 12px 18px; max-width: 90vw; bottom: 20px; right: 20px; }
-    .theme-dropdown {
-        position: absolute !important;
-        top: 100%;
-        right: 0 !important;
-        left: auto !important;
-        width: auto;
-        min-width: 180px;
-        white-space: nowrap;
-    }
+    .theme-dropdown { position: absolute !important; top: 100%; right: 0 !important; left: auto !important; width: auto; min-width: 180px; white-space: nowrap; }
     #themeBtn { width: 100%; }
 }
 @media (max-width: 480px) {
@@ -842,7 +863,7 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ========== ГАРАНТИИ СМЫКАНИЯ (перекрытие двойных линий) ========== */
+/* ========== ГАРАНТИЯ СМЫКАНИЯ ЯЧЕЕК (оставлено как есть) ========== */
 .crossword-grid {
     display: inline-grid !important;
     gap: 0 !important;
