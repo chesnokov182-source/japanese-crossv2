@@ -154,11 +154,11 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* ========== СЕТКА КРОССВОРДА ========== */
+/* ========== СЕТКА КРОССВОРДА (исправлено: без чёрных промежутков) ========== */
 .crossword-grid {
     display: grid;
-    gap: 2px;
-    background: #333;
+    gap: 0;               /* убираем зазор, ячейки будут вплотную */
+    background: #333;     /* цвет линий сетки */
     border: 2px solid #333;
     width: fit-content;
     margin: 0 auto;
@@ -176,7 +176,7 @@ button:disabled {
     position: relative;
     caret-color: #4a6fa5;
     transition: background 0.2s;
-    border: 1px solid #888;
+    border: 1px solid #888;   /* границы ячеек */
 }
 
 body.dark .cell {
@@ -367,6 +367,7 @@ body.dark .status {
     color: #8bc34a;
 }
 
+/* Блок очков и слов – общий для всех */
 .score-container {
     background: var(--bg-container-light);
     padding: 10px;
@@ -409,7 +410,7 @@ body.dark .progress-fill {
     background: #6c8fb5;
 }
 
-/* ========== ТОСТЫ (С ОЧЕРЕДЬЮ) ========== */
+/* ========== ТОСТЫ ========== */
 .toast {
     position: fixed;
     bottom: 30px;
@@ -802,7 +803,7 @@ body.dark .cell.correct-animation {
     100% { transform: scale(1); }
 }
 
-/* ========== ПЛАВАЮЩАЯ ПОДСКАЗКА (базовая) ========== */
+/* ========== ПЛАВАЮЩАЯ ПОДСКАЗКА ========== */
 #floatingClue {
     display: none;
     position: absolute;
@@ -844,17 +845,15 @@ body.sakura #floatingClue {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-    /* Очень важно: убираем двойные границы, чтобы сетка была плотной */
+    /* Сетка: без зазоров, у ячеек убираем внешние отступы, чтобы они прилегали */
     .crossword-grid {
-        gap: 1px;
-        background: #333;
+        gap: 0;
         border: 1px solid #333;
     }
     .cell {
         width: 55px;
         height: 55px;
-        border: none;          /* убираем собственную рамку – линии от фона сетки */
-        background: var(--cell-bg-light);
+        border: 1px solid #888;  /* одинарная граница, без двойных линий */
     }
     .cell input {
         font-size: 28px;
@@ -868,10 +867,28 @@ body.sakura #floatingClue {
     .cell-skin {
         font-size: 36px;
     }
+    /* Панель с вопросами скрываем */
+    .clues-section {
+        display: none;
+    }
+    /* Показываем блок очков и прогресса вверху (компактно) */
+    .score-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 14px;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+    }
+    .level-progress {
+        display: none;  /* скрываем прогресс уровня на телефонах, чтобы не загромождать */
+    }
+    /* Кнопки и селекторы вертикально */
     .level-selector {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
+        margin-bottom: 12px;
     }
     .selector-group {
         width: 100%;
@@ -881,15 +898,10 @@ body.sakura #floatingClue {
         padding: 8px 12px;
         font-size: 14px;
     }
-    /* Скрываем секцию с подсказками (ПК) */
-    .clues-section {
-        display: none;
-    }
-    /* Плавающая подсказка: остаёмся абсолютной, но сдвигаем вниз, если мало места (это уже делает JS) */
+    /* Плавающая подсказка: уменьшаем шрифт */
     #floatingClue {
         font-size: 13px;
         padding: 6px 12px;
-        white-space: nowrap;
         border-radius: 20px;
         background: rgba(0,0,0,0.85);
         color: white;
@@ -901,6 +913,7 @@ body.sakura #floatingClue {
         color: white;
         border-left: none;
     }
+    /* Модальные окна */
     .modal-content {
         width: 95%;
         padding: 20px;
@@ -912,6 +925,7 @@ body.sakura #floatingClue {
         padding: 10px 20px;
         font-size: 16px;
     }
+    /* Магазин */
     .skin-item, .upgrade-item {
         flex-wrap: wrap;
     }
@@ -922,6 +936,7 @@ body.sakura #floatingClue {
         width: 100%;
         margin-top: 6px;
     }
+    /* Рулетка */
     .roulette-spin-area {
         font-size: 32px;
         min-height: 100px;
@@ -930,6 +945,7 @@ body.sakura #floatingClue {
         width: 100%;
         padding: 12px;
     }
+    /* Ежедневные задания */
     .daily-tasks {
         padding: 12px;
     }
@@ -940,12 +956,6 @@ body.sakura #floatingClue {
         font-size: 14px;
         padding: 8px;
     }
-    .score-container {
-        font-size: 14px;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-    }
     .toast {
         font-size: 14px;
         padding: 12px 18px;
@@ -953,6 +963,7 @@ body.sakura #floatingClue {
         bottom: 20px;
         right: 20px;
     }
+    /* Выпадающий список тем – статический на мобильных */
     .theme-dropdown {
         position: static;
         margin-top: 4px;
@@ -984,6 +995,9 @@ body.sakura #floatingClue {
     #floatingClue {
         font-size: 11px;
         padding: 4px 10px;
+    }
+    .score-container {
+        font-size: 12px;
     }
 }
 
