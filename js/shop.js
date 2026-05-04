@@ -2,6 +2,7 @@ import { gameStats, saveGameStats, subtractPoints, addPoints, updateScoreUI, inc
 import { audio, showToast, showConfetti } from './utils.js';
 import { updateAllBlockedSkins, updateButtonStates } from './crossword.js';
 import { updateTaskProgress } from './dailyTasks.js';
+import { updateAchievementProgress } from './achievements.js';
 
 export const availableSkins = [
     { id: "default", name: "Без скина", emoji: "", price: 0, default: true },
@@ -61,6 +62,7 @@ function purchaseSkin(skinId, price) {
         showToast(`Скин куплен и применён!`, "success");
         updateTaskProgress('buy_skin', 1);
         updateTaskProgress('spend_200_points', price);
+        updateAchievementProgress('skins', purchasedSkins.length - 1);
         return true;
     }
     return false;
