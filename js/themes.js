@@ -2,6 +2,7 @@ import { subtractPoints, addPoints, gameStats, saveGameStats, updateScoreUI } fr
 import { showToast, showConfetti, audio } from './utils.js';
 import { updateTaskProgress } from './dailyTasks.js';
 import { showConfirmDialog } from './utils.js';
+import { updateAchievementProgress } from './achievements.js';
 
 export const freeThemes = [
     { id: 'light', name: 'Светлая', price: 0, cssClass: '' },
@@ -61,6 +62,7 @@ export function purchaseTheme(themeId) {
         showToast(`Тема "${theme.name}" куплена!`, 'success');
         updateTaskProgress('spend_200_points', theme.price);
         updateTaskProgress('buy_skin', 1); // переиспользуем задание на покупку
+        updateAchievementProgress('themes', purchasedThemes.filter(...).length);
         return true;
     }
     return false;
