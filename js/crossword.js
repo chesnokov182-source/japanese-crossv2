@@ -859,4 +859,4 @@ export function giveHint() {
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
 }
 
-export { cellElements, cellTdElements, updateAllBlockedSkins };
+export { cellElements, cellTdElements };
