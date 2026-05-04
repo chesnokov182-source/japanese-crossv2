@@ -1177,7 +1177,6 @@ body.fuji .cell {
 }
 
 #themeBtn {
-    all: revert;
     background: var(--btn-bg-light);
     color: white;
     border-radius: 30px;
