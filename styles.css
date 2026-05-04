@@ -1353,3 +1353,7 @@ body.fuji #floatingClue {
     min-width: 100px;   
     text-align: center;
 }
+
+.toast {
+    transition: opacity 0.2s ease;
+}
