@@ -134,15 +134,14 @@ button:hover { background: var(--btn-hover-light); }
 body.dark button:hover { background: var(--btn-hover-dark); }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* ========== СЕТКА КРОССВОРДА (плотная) ========== */
+/* ========== СЕТКА КРОССВОРДА – АБСОЛЮТНОЕ СМЫКАНИЕ ========== */
 .crossword-grid {
-    display: grid;
+    display: inline-grid;
     gap: 0;
-    background: transparent;
-    width: fit-content;
+    background: #888;
+    border: none;
     margin: 0 auto;
     justify-content: start;
-    align-content: start;
 }
 .cell {
     width: 70px;
@@ -156,14 +155,14 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
     position: relative;
     caret-color: #4a6fa5;
     transition: background 0.2s;
-    margin: 0;
+    margin: -1px 0 0 -1px;   /* перекрываем двойные границы */
     padding: 0;
-    border: none;
-    box-shadow: inset 0 0 0 1px #888;
+    border: 1px solid #888;
+    box-sizing: border-box;
 }
 body.dark .cell {
     background: var(--cell-bg-dark);
-    box-shadow: inset 0 0 0 1px #666;
+    border-color: #666;
 }
 .cell input {
     width: 100%;
@@ -182,8 +181,14 @@ body.dark .cell {
     position: relative;
     z-index: 2;
 }
-.cell.blocked { background: var(--cell-blocked-light); box-shadow: inset 0 0 0 1px #888; }
-body.dark .cell.blocked { background: var(--cell-blocked-dark); box-shadow: inset 0 0 0 1px #666; }
+.cell.blocked {
+    background: var(--cell-blocked-light);
+    border-color: #888;
+}
+body.dark .cell.blocked {
+    background: var(--cell-blocked-dark);
+    border-color: #666;
+}
 .cell.highlight { background: var(--highlight-light); }
 body.dark .cell.highlight { background: var(--highlight-dark); }
 .cell.active-word { background: var(--active-word-light); }
@@ -192,13 +197,13 @@ body.dark .cell.active-word { background: var(--active-word-dark); }
 body.dark .cell.wrong { background: var(--wrong-dark); }
 .cell-number {
     position: absolute;
-    top: 3px;
+    top: 2px;
     left: 5px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: normal;
     color: #666;
     pointer-events: none;
-    z-index: 1;
+    z-index: 3;
 }
 body.dark .cell-number { color: #aaa; }
 .cell-skin {
@@ -266,47 +271,14 @@ body.dark .clue-num { color: #8aadff; }
 .clue-text { flex: 1; }
 
 /* ========== СТАТУС И ИНФОРМАЦИЯ ========== */
-.status {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 18px;
-    padding: 12px;
-    background: rgba(0,0,0,0.05);
-    border-radius: 12px;
-    color: #2c6e2c;
-    width: 100%;
-    box-sizing: border-box;
-}
-body.dark .status {
-    background: rgba(255,255,255,0.05);
-    color: #8bc34a;
-}
-.score-container {
-    background: var(--bg-container-light);
-    padding: 10px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    border: 1px solid var(--border-light);
-}
+.status { margin-top: 24px; text-align: center; font-size: 18px; padding: 12px; background: rgba(0,0,0,0.05); border-radius: 12px; color: #2c6e2c; }
+body.dark .status { background: rgba(255,255,255,0.05); color: #8bc34a; }
+.score-container { background: var(--bg-container-light); padding: 10px; border-radius: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; font-weight: bold; border: 1px solid var(--border-light); }
 body.dark .score-container { background: var(--bg-container-dark); }
 .level-progress { margin-bottom: 20px; }
-.progress-bar {
-    background: #e0e0e0;
-    border-radius: 10px;
-    height: 10px;
-    overflow: hidden;
-    margin-top: 5px;
-}
+.progress-bar { background: #e0e0e0; border-radius: 10px; height: 10px; overflow: hidden; margin-top: 5px; }
 body.dark .progress-bar { background: #4a4a5a; }
-.progress-fill {
-    background: #4a6fa5;
-    width: 0%;
-    height: 100%;
-    transition: width 0.3s;
-}
+.progress-fill { background: #4a6fa5; width: 0%; height: 100%; transition: width 0.3s; }
 body.dark .progress-fill { background: #6c8fb5; }
 
 /* ========== ТОСТЫ ========== */
@@ -564,7 +536,6 @@ body.dark .daily-tasks { background: var(--bg-container-dark); }
 body.dark .task-name { color: var(--text-dark); }
 body.dark .task-progress { background: #4a4a5a; }
 
-/* ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ ========== */
 .selector-group {
     position: relative;
     display: inline-block;
@@ -575,10 +546,10 @@ body.dark .task-progress { background: #4a4a5a; }
     right: 0;
     left: auto;
     margin-top: 4px;
-    background: var(--bg-container);
-    border: 1px solid var(--border);
+    background: #2c3e50;
+    border: 1px solid #aaa;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     overflow: hidden;
     z-index: 10000;
     min-width: 180px;
@@ -590,23 +561,33 @@ body.dark .task-progress { background: #4a4a5a; }
     width: 100%;
     text-align: left;
     padding: 10px 16px;
-    background: transparent;
+    background: #2c3e50;
     border: none;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
+    border-bottom: 1px solid #4a6a8a;
+    color: #ecf0f1;
     font-size: 15px;
     cursor: pointer;
     transition: background 0.1s;
-    border-radius: 0;
 }
 .theme-dropdown button:last-child { border-bottom: none; }
-.theme-dropdown button:hover { background: var(--highlight); }
+.theme-dropdown button:hover { background: #1a2a3a; }
+/* Переопределяем для каждой темы, чтобы текст хорошо читался */
+body.light .theme-dropdown, body.light .theme-dropdown button { background: #f0f0f0; color: #111; border-color: #ccc; }
+body.light .theme-dropdown button:hover { background: #e0e0e0; }
+body.sakura .theme-dropdown, body.sakura .theme-dropdown button { background: #fce4ec; color: #5d4037; border-color: #f8bbd0; }
+body.sakura .theme-dropdown button:hover { background: #f8bbd0; }
+body.bamboo .theme-dropdown, body.bamboo .theme-dropdown button { background: #eaf4cf; color: #3a5e3a; border-color: #8cae6e; }
+body.bamboo .theme-dropdown button:hover { background: #c0d6a0; }
+body.fuji .theme-dropdown, body.fuji .theme-dropdown button { background: #e0edf8; color: #2c4b6e; border-color: #8ab3cf; }
+body.fuji .theme-dropdown button:hover { background: #c1d9f0; }
+body.dark .theme-dropdown, body.dark .theme-dropdown button { background: #2c3e50; color: #ecf0f1; border-color: #4a6a8a; }
+body.dark .theme-dropdown button:hover { background: #1a2a3a; }
 
 #themeBtn {
     min-width: 100px;
     text-align: center;
 }
-/* Убираем подчёркивание и границы */
+/* Убираем подчёркивание у кнопки Тема – абсолютно */
 #themeBtn,
 #themeBtn:hover,
 #themeBtn:focus,
@@ -617,8 +598,8 @@ button#themeBtn {
     border-top: none !important;
     outline: none !important;
     box-shadow: none !important;
+    background: inherit !important;
 }
-/* Дополнительная гарантия для родителя */
 .selector-group {
     border-bottom: none !important;
     border-top: none !important;
@@ -667,23 +648,15 @@ body.sakura #floatingClue {
     body { padding: 10px; }
     .crossword-container { flex-direction: column; padding: 16px; gap: 16px; }
     .grid-section { min-width: auto; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .cell { width: 55px; height: 55px; }
+    .cell { width: 55px; height: 55px; font-size: 28px; margin: -1px 0 0 -1px; border: 1px solid #888; }
     .cell input { font-size: 28px; }
-    .cell-number { font-size: 11px; top: 2px; left: 4px; }
+    .cell-number { font-size: 10px; top: 2px; left: 4px; }
     .cell-skin { font-size: 36px; }
     .clues-section { display: none; }
     .level-selector { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
     .selector-group { width: 100%; }
     select, button { width: 100%; padding: 8px 12px; font-size: 14px; }
-    #floatingClue {
-        font-size: 13px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        background: rgba(0,0,0,0.85);
-        color: white;
-        border-left: none;
-    }
-    body.dark #floatingClue, body.sakura #floatingClue { background: rgba(0,0,0,0.85); color: white; }
+    #floatingClue { font-size: 13px; padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.85); color: white; border-left: none; }
     .modal-content { width: 95%; padding: 20px; }
     .skin-item, .upgrade-item { flex-wrap: wrap; }
     .skin-info { width: 100%; }
@@ -706,9 +679,9 @@ body.sakura #floatingClue {
     #themeBtn { width: 100%; }
 }
 @media (max-width: 480px) {
-    .cell { width: 45px; height: 45px; }
+    .cell { width: 45px; height: 45px; font-size: 22px; margin: -1px 0 0 -1px; }
     .cell input { font-size: 22px; }
-    .cell-number { font-size: 9px; top: 1px; left: 2px; }
+    .cell-number { font-size: 8px; top: 1px; left: 2px; }
     .cell-skin { font-size: 28px; }
     #floatingClue { font-size: 11px; padding: 4px 10px; }
 }
@@ -869,31 +842,19 @@ body.fuji .daily-tasks { background: var(--bg-container); }
 body.fuji .task-progress { background: #c1d9f0; }
 body.fuji #floatingClue { background: var(--bg-container); color: var(--text); border-left-color: var(--btn-bg); }
 
-/* ========== ФИНАЛЬНЫЕ ГАРАНТИИ (СМЫКАНИЕ ЯЧЕЕК И КНОПКА) ========== */
+/* ========== ГАРАНТИИ СМЫКАНИЯ (перекрытие двойных линий) ========== */
 .crossword-grid {
+    display: inline-grid !important;
     gap: 0 !important;
+    background: #888 !important;
     justify-content: start !important;
-    align-content: start !important;
-    width: fit-content !important;
-    background: transparent !important;
 }
 .cell {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    box-shadow: inset 0 0 0 1px #888 !important;
-}
-/* Убираем подчёркивание кнопки окончательно */
-#themeBtn, .selector-group {
-    border-bottom: none !important;
-    border-top: none !important;
-}
-#themeBtn,
-#themeBtn:hover,
-#themeBtn:focus,
-#themeBtn:active {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    outline: none !important;
+    margin: -1px 0 0 -1px !important;
+    border: 1px solid #888 !important;
     box-shadow: none !important;
 }
+body.dark .cell { border-color: #666 !important; }
+body.sakura .cell { border-color: #e0a0b0 !important; }
+body.bamboo .cell { border-color: var(--border) !important; }
+body.fuji .cell { border-color: var(--border) !important; }
