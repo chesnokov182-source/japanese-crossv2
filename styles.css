@@ -1113,3 +1113,24 @@ body.fuji .cell.wrong { background: var(--wrong); }
 body.fuji button { background: var(--btn-bg); }
 body.fuji button:hover { background: var(--btn-hover); }
 /* ... и так далее для остальных селекторов */
+
+.theme-dropdown {
+    margin-top: 5px;
+    background: var(--bg-container);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.theme-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+}
+.theme-dropdown button:hover {
+    background: var(--highlight);
+}
