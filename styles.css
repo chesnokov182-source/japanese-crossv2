@@ -1334,8 +1334,9 @@ body.fuji #floatingClue {
 
 .theme-dropdown {
     position: absolute;
-    top: 100%;         
-    left: 0;
+    top: 100%;
+    right: 0;         
+    left: auto;        
     margin-top: 4px;
     background: var(--bg-container);
     border: 1px solid var(--border);
@@ -1344,7 +1345,8 @@ body.fuji #floatingClue {
     overflow: hidden;
     z-index: 1000;
     min-width: 180px;
-    white-space: nowrap; 
+    max-width: 90vw;    
+    white-space: nowrap;
 }
 
 #themeBtn {
