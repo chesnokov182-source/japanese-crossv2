@@ -39,14 +39,46 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
-    document.getElementById("themeToggle").addEventListener("click", () => {
+    /*document.getElementById("themeToggle").addEventListener("click", () => {
         audio.click();
         const current = localStorage.getItem('theme') || 'light';
         const next = current === 'light' ? 'dark' : (current === 'dark' ? 'sakura' : 'light');
         document.body.classList.remove('dark', 'sakura');
         if (next !== 'light') document.body.classList.add(next);
         localStorage.setItem('theme', next);
+    });*/
+    // Выпадающий список тем
+const themeBtn = document.getElementById('themeBtn');
+const themeDropdown = document.getElementById('themeDropdown');
+
+function updateThemeDropdown() {
+    const themes = getAvailableThemes();
+    themeDropdown.innerHTML = '';
+    themes.forEach(theme => {
+        const btn = document.createElement('button');
+        btn.textContent = `${theme.name} ${theme.price > 0 ? `(${theme.price})` : '(бесплатно)'}`;
+        if (theme.id === currentThemeId) btn.style.fontWeight = 'bold';
+        btn.addEventListener('click', () => {
+            if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
+                if (purchaseTheme(theme.id)) {
+                    updateThemeDropdown();
+                }
+            } else {
+                applyTheme(theme.id);
+                updateThemeDropdown();
+            }
+            themeDropdown.style.display = 'none';
+        });
+        themeDropdown.appendChild(btn);
     });
+}
+themeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = themeDropdown.style.display === 'block';
+    themeDropdown.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) updateThemeDropdown();
+});
+document.addEventListener('click', () => { themeDropdown.style.display = 'none'; });
 
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
