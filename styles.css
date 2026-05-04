@@ -1295,22 +1295,31 @@ body.fuji #floatingClue {
     border-left-color: var(--btn-bg);
 }
 
+
 .theme-dropdown {
     margin-top: 5px;
     background: var(--bg-container);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 0px;        
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden;      
 }
 .theme-dropdown button {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 8px 12px;
-    background: none;
+    padding: 10px 16px;
+    background: transparent;
     border: none;
+    border-bottom: 1px solid var(--border);
     color: var(--text);
+    font-size: 15px;
     cursor: pointer;
+    transition: background 0.1s;
+    border-radius: 0;          
+}
+.theme-dropdown button:last-child {
+    border-bottom: none;
 }
 .theme-dropdown button:hover {
     background: var(--highlight);
