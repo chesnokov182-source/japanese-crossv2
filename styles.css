@@ -1326,3 +1326,28 @@ body.fuji #floatingClue {
 .theme-dropdown button:hover {
     background: var(--highlight);
 }
+
+.selector-group {
+    position: relative;  
+    display: inline-block;
+}
+
+.theme-dropdown {
+    position: absolute;
+    top: 100%;         
+    left: 0;
+    margin-top: 4px;
+    background: var(--bg-container);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 1000;
+    min-width: 180px;
+    white-space: nowrap; 
+}
+
+#themeBtn {
+    min-width: 100px;   
+    text-align: center;
+}
