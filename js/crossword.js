@@ -374,28 +374,29 @@ function setActiveWord(wordId){
     updateFloatingCluePosition();
 }
 
-function applyHighlight(){
-    for(let i=0;i<gridHeight;i++){
-        for(let j=0;j<gridWidth;j++){
-            const cellDiv = cellElements[i]?.[j]?.parentElement;
-            if(cellDiv) cellDiv.classList.remove("highlight", "active-word");
+function applyHighlight() {
+    for (let i = 0; i < gridHeight; i++) {
+        for (let j = 0; j < gridWidth; j++) {
+            const td = cellTdElements[i]?.[j];
+            if (td) td.classList.remove("highlight", "active-word");
         }
     }
-    if(activeWordId !== null){
+    if (activeWordId !== null) {
         const activeWord = wordsList.find(w => w.id === activeWordId);
-        if(activeWord){
-            for(let cell of activeWord.cells){
-                const cellDiv = cellElements[cell.row]?.[cell.col]?.parentElement;
-                if(cellDiv) cellDiv.classList.add("active-word");
+        if (activeWord) {
+            for (let cell of activeWord.cells) {
+                const td = cellTdElements[cell.row]?.[cell.col];
+                if (td) td.classList.add("active-word");
             }
         }
     }
     document.querySelectorAll(".clue-list li").forEach(li => li.classList.remove("active-clue"));
-    if(activeWordId !== null){
+    if (activeWordId !== null) {
         let target = document.querySelector(`.clue-list li[data-word-id='${activeWordId}']`);
-        if(target) target.classList.add("active-clue");
+        if (target) target.classList.add("active-clue");
     }
 }
+
 function clearHighlight() { activeWordId = null; applyHighlight(); updateFloatingCluePosition(); }
 
 function getNextEmptyCellInWord(word, currentRow, currentCol) {
