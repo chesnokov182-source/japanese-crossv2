@@ -6,7 +6,7 @@ import {
     updatePuzzleSelect, resetCrossword, buyCurrentPuzzle, giveHint, isPuzzleUnlocked
 } from './crossword.js';
 import { loadDailyTasks, renderDailyTasksPanel } from './dailyTasks.js';
-import { loadThemesData, getAvailableThemes, applyTheme, purchaseTheme, confirmPurchaseTheme, currentThemeId, purchasedThemes } from './themes.js';
+import { loadThemesData, getAvailableThemes, applyTheme, confirmPurchaseTheme, currentThemeId, purchasedThemes } from './themes.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -39,52 +39,77 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePuzzleSelect();
     loadCrossword(startLvl, startIdx);
 
-    /*document.getElementById("themeToggle").addEventListener("click", () => {
-        audio.click();
-        const current = localStorage.getItem('theme') || 'light';
-        const next = current === 'light' ? 'dark' : (current === 'dark' ? 'sakura' : 'light');
-        document.body.classList.remove('dark', 'sakura');
-        if (next !== 'light') document.body.classList.add(next);
-        localStorage.setItem('theme', next);
-    });*/
-    // Выпадающий список тем
+// ========== ВЫПАДАЮЩИЙ СПИСОК ТЕМ (ИСПРАВЛЕННЫЙ) ==========
 const themeBtn = document.getElementById('themeBtn');
 const themeDropdown = document.getElementById('themeDropdown');
 
-function updateThemeDropdown() {
-    if (!themeDropdown) return;
-    const themes = getAvailableThemes();
-    themeDropdown.innerHTML = '';
-    themes.forEach(theme => {
-        const btn = document.createElement('button');
-        let displayText;
-        if (theme.id === currentThemeId) {
-            displayText = `${theme.name} ✓`;
-        } else if (purchasedThemes.includes(theme.id)) {
-            displayText = theme.name;
-        } else {
-            displayText = `${theme.name} (${theme.price} очков)`;
-        }
-        btn.textContent = displayText;
-        if (theme.id === currentThemeId) {
-            btn.style.fontWeight = 'bold';
-        }
-        btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
-                const ok = await confirmPurchaseTheme(theme.id);
-                if (ok) {
+if (themeBtn && themeDropdown) {
+    function updateThemeDropdown() {
+        const themes = getAvailableThemes();
+        themeDropdown.innerHTML = '';
+        themes.forEach(theme => {
+            const btn = document.createElement('button');
+            let displayText;
+            if (theme.id === currentThemeId) {
+                displayText = `${theme.name} ✓`;
+            } else if (purchasedThemes.includes(theme.id)) {
+                displayText = theme.name;
+            } else {
+                displayText = `${theme.name} (${theme.price} очков)`;
+            }
+            btn.textContent = displayText;
+            if (theme.id === currentThemeId) {
+                btn.style.fontWeight = 'bold';
+            }
+            // Стили для кнопок внутри выпадающего списка
+            Object.assign(btn.style, {
+                display: 'block',
+                width: '100%',
+                textAlign: 'left',
+                padding: '8px 12px',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: '1px solid var(--border, #ccc)',
+                cursor: 'pointer',
+                fontSize: '14px',
+                color: 'inherit'
+            });
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                if (theme.price > 0 && !purchasedThemes.includes(theme.id)) {
+                    const ok = await confirmPurchaseTheme(theme.id);
+                    if (ok) {
+                        updateThemeDropdown();
+                    }
+                } else if (purchasedThemes.includes(theme.id)) {
+                    applyTheme(theme.id);
                     updateThemeDropdown();
                 }
-            } else if (purchasedThemes.includes(theme.id)) {
-                applyTheme(theme.id);
-                updateThemeDropdown();
-            }
-            themeDropdown.style.display = 'none';
+                themeDropdown.style.display = 'none';
+            });
+            themeDropdown.appendChild(btn);
         });
-        themeDropdown.appendChild(btn);
+    }
+
+    // Открытие / закрытие при клике на кнопку
+    themeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isVisible = themeDropdown.style.display === 'block';
+        if (isVisible) {
+            themeDropdown.style.display = 'none';
+        } else {
+            updateThemeDropdown();      // заполняем свежими данными
+            themeDropdown.style.display = 'block';
+        }
     });
+    document.addEventListener('click', () => {
+        themeDropdown.style.display = 'none';
+    });
+    themeDropdown.addEventListener('click', (e) => e.stopPropagation());
+} else {
+    console.error('❌ Не найдены #themeBtn или #themeDropdown');
 }
+    
     document.getElementById("levelSelect").addEventListener("change", (e) => {
         audio.click();
         const newLvl = e.target.value;
