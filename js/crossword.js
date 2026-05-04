@@ -858,3 +858,5 @@ export function giveHint() {
     updateAchievementProgress('hints', totalHintsUsed);
     showToast(`Открыта буква "${correctChar}" за 20 очков.`, "success");
 }
+
+export { cellElements, cellTdElements, updateAllBlockedSkins };
