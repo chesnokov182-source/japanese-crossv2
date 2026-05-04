@@ -991,3 +991,29 @@ body.dark .cell-number {
         font-size: 28px;
     }
 }
+
+/* Табличная сетка кроссворда */
+.crossword-grid {
+    display: table;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: #888;       /* цвет линий */
+    table-layout: fixed;    /* фиксированная ширина ячеек */
+    width: auto;
+}
+.crossword-grid tr {
+    display: table-row;
+}
+.crossword-grid td {
+    display: table-cell;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #888;
+    background: var(--cell-bg-light);
+    width: 70px;
+    height: 70px;
+    position: relative;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+}
