@@ -104,7 +104,7 @@ export function showToast(message, type = 'info') {
                 toastContainer = null;
             }
         }, 300);
-    }, 2500);
+    }, 5500);
     
     // Ограничение стека: максимум 3 тоста одновременно
     if (activeToasts.size > 3) {
