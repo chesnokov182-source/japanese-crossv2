@@ -116,7 +116,7 @@ function showNextToast() {
                 }
             }, 300);
         }
-    }, 5000);
+    }, 3500);
 }
 
 export function showToast(message, type = 'info') {
