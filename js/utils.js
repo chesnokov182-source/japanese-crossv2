@@ -39,36 +39,85 @@ export const audio = {
 };
 
 // ========== КОНФЕТТИ И ТОСТЫ ==========
-let toastQueue = [];
-let isToastShowing = false;
+// ========== ТОСТЫ СТЕКОМ (ВЕРТИКАЛЬНАЯ СТОПКА) ==========
+let toastContainer = null;
+let activeToasts = new Set();
 
-export function showToast(message, type = 'info') {
-    toastQueue.push({ message, type });
-    if (!isToastShowing) {
-        processToastQueue();
+function getToastContainer() {
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toastStack';
+        toastContainer.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        `;
+        document.body.appendChild(toastContainer);
     }
+    return toastContainer;
 }
 
-function processToastQueue() {
-    if (toastQueue.length === 0) {
-        isToastShowing = false;
-        return;
-    }
-    isToastShowing = true;
-    const { message, type } = toastQueue.shift();
-    
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    
+export function showToast(message, type = 'info') {
+    const container = getToastContainer();
+    const toast = document.createElement('div');
+    toast.className = `toast-stack ${type}`;
     toast.textContent = message;
-    toast.className = `toast ${type} show`;
+    toast.style.cssText = `
+        background: var(--bg-container-light);
+        color: var(--text-light);
+        border-radius: 12px;
+        padding: 12px 20px;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-left: 4px solid ${type === 'success' ? '#2c6e2c' : (type === 'error' ? '#c94f4f' : '#4a6fa5')};
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        max-width: 350px;
+        word-wrap: break-word;
+    `;
+    container.appendChild(toast);
+    activeToasts.add(toast);
     
+    // Анимация появления
     setTimeout(() => {
-        toast.classList.remove('show');
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Удаление через 2.5 секунды
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50px)';
         setTimeout(() => {
-            processToastQueue();
-        }, 200);
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+            activeToasts.delete(toast);
+            // Если контейнер пуст, можно удалить его (необязательно)
+            if (activeToasts.size === 0 && container.parentNode) {
+                container.parentNode.removeChild(container);
+                toastContainer = null;
+            }
+        }, 300);
     }, 2500);
+    
+    // Ограничение стека: максимум 3 тоста одновременно
+    if (activeToasts.size > 3) {
+        const oldest = [...activeToasts][0];
+        if (oldest && oldest.parentNode) {
+            oldest.style.opacity = '0';
+            oldest.style.transform = 'translateX(50px)';
+            setTimeout(() => {
+                if (oldest.parentNode) oldest.parentNode.removeChild(oldest);
+                activeToasts.delete(oldest);
+            }, 300);
+        }
+    }
 }
 
 export function showConfetti() {
