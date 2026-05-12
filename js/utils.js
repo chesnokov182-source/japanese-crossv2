@@ -39,9 +39,10 @@ export const audio = {
 };
 
 // ========== КОНФЕТТИ И ТОСТЫ ==========
-// ========== ТОСТЫ СТЕКОМ (ВЕРТИКАЛЬНАЯ СТОПКА) ==========
-let toastContainer = null;
+// ========== ТОСТЫ С ОЧЕРЕДЬЮ И МАКСИМУМОМ 3 ОДНОВРЕМЕННО ==========
+let toastQueue = [];
 let activeToasts = new Set();
+let toastContainer = null;
 
 function getToastContainer() {
     if (!toastContainer) {
@@ -62,8 +63,7 @@ function getToastContainer() {
     return toastContainer;
 }
 
-export function showToast(message, type = 'info') {
-    const container = getToastContainer();
+function createToastElement(message, type) {
     const toast = document.createElement('div');
     toast.className = `toast-stack ${type}`;
     toast.textContent = message;
@@ -81,7 +81,18 @@ export function showToast(message, type = 'info') {
         pointer-events: none;
         max-width: 350px;
         word-wrap: break-word;
+        margin: 0;
     `;
+    return toast;
+}
+
+function showNextToast() {
+    if (toastQueue.length === 0) return;
+    if (activeToasts.size >= 3) return;
+    
+    const { message, type } = toastQueue.shift();
+    const container = getToastContainer();
+    const toast = createToastElement(message, type);
     container.appendChild(toast);
     activeToasts.add(toast);
     
@@ -91,35 +102,27 @@ export function showToast(message, type = 'info') {
         toast.style.transform = 'translateX(0)';
     }, 10);
     
-    // Удаление через 2.5 секунды
     setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(50px)';
-        setTimeout(() => {
-            if (toast.parentNode) toast.parentNode.removeChild(toast);
-            activeToasts.delete(toast);
-            // Если контейнер пуст, можно удалить его (необязательно)
-            if (activeToasts.size === 0 && container.parentNode) {
-                container.parentNode.removeChild(container);
-                toastContainer = null;
-            }
-        }, 300);
-    }, 5500);
-    
-    // Ограничение стека: максимум 3 тоста одновременно
-    if (activeToasts.size > 3) {
-        const oldest = [...activeToasts][0];
-        if (oldest && oldest.parentNode) {
-            oldest.style.opacity = '0';
-            oldest.style.transform = 'translateX(50px)';
+        if (toast.parentNode) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(50px)';
             setTimeout(() => {
-                if (oldest.parentNode) oldest.parentNode.removeChild(oldest);
-                activeToasts.delete(oldest);
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+                activeToasts.delete(toast);
+                showNextToast(); // Запускаем следующий из очереди
+                if (activeToasts.size === 0 && toastContainer && toastContainer.parentNode) {
+                    toastContainer.parentNode.removeChild(toastContainer);
+                    toastContainer = null;
+                }
             }, 300);
         }
-    }
+    }, 5000);
 }
 
+export function showToast(message, type = 'info') {
+    toastQueue.push({ message, type });
+    showNextToast();
+}
 export function showConfetti() {
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
